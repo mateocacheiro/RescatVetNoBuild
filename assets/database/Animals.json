@@ -1,0 +1,50 @@
+[
+    {
+        "Class": "ave",
+        "ID": 1,
+        "Name": "Paloma",
+        "Tags": "plumaje, gris, diurno, pequeño"
+    },
+    {
+        "Class": "mamifero",
+        "ID": 2,
+        "Name": "Gato",
+        "Tags": "peludo, felino, diurno, pequeño"
+    },
+    {
+        "Class": "mamifero",
+        "ID": 3,
+        "Name": "Perro",
+        "Tags": "peludo, canino, diurno"
+    },
+    {
+        "Class": "mamifero",
+        "ID": 4,
+        "Name": "Conejo",
+        "Tags": "peludo, herviboro, herviboro, diurno"
+    },
+    {
+        "Class": "anfibio",
+        "ID": 5,
+        "Name": "Tortuga",
+        "Tags": "caparazon, duro, verde"
+    },
+    {
+        "Class": "mamifero",
+        "ID": 6,
+        "Name": "Aye-aye",
+        "Tags": "peludo, feo, oscuro, nocturno"
+    },
+    {
+        "Class": "reptil",
+        "ID": 7,
+        "Name": "Iguana",
+        "Tags": "insectivoro, diurno, verde, escamas, alargado"
+    },
+    {
+        "Class": "mamifero",
+        "ID": 8,
+        "Name": "Huron",
+        "Tags": "peludo, alargado, pequeño"
+    }
+]

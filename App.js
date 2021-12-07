@@ -1,13 +1,27 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import DrawerNavigator from './navigation/DrawerNavigator';
+import { Provider } from 'react-redux';
+import { useFonts } from 'expo-font';
+import LoadingScreen from './screens/LoadingScreen';
+import store from './store/App';
 
 export default function App() {
+
+  let [fontsLoaded] = useFonts({
+    'montserrat': require('./assets/fonts/Montserrat-Regular.ttf'),
+    'montserrat-bold': require('./assets/fonts/Montserrat-Bold.ttf'),
+  })
+
+  if(!fontsLoaded) {
+    return <LoadingScreen />
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <DrawerNavigator />
+    </Provider>
   );
 }
 
