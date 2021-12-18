@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react'
-import { StyleSheet, Text, View, FlatList, TextInput, Dimensions, ScrollView, Pressable } from 'react-native'
+import React, {useState, useEffect, Fragment} from 'react'
+import { StyleSheet, Text, View, FlatList, TextInput, Dimensions, TouchableOpacity, Pressable } from 'react-native'
 import AnimalsData from '../assets/database/Animals.json'
 import { searchActions } from '../store/search-slice';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,7 +11,7 @@ import Card from '../components/Card';
 import CaracteristicaModal from '../components/CaracteristicaModal';
 import Caracteristicas from '../components/Caracteristicas';
 import Colors from '../constants/Colors'
-
+import HomeData from '../assets/database/Home.json'
 
 const HomeScreen = ({ navigation }) => {
 
@@ -23,6 +23,8 @@ const HomeScreen = ({ navigation }) => {
 
     const selectedChars = useSelector(state => state.search.caracteristicas)
 
+    const [characteristicsMessage, setCharacteristicsMessage] = useState('Ninguna característica seleccionada')
+
     const [filteredAnimal, setFilteredAnimal] = useState([])
 
     const modalClassVisible = useSelector(state => state.search.modals.class_modal_visible)
@@ -30,6 +32,37 @@ const HomeScreen = ({ navigation }) => {
     const modalCaracteristicaVisible = useSelector(state => state.search.modals.caracteristica_modal_visible)
 
     const [classTitle, setClassTitle] = useState('Clase de animal')
+
+    const HOME_DATA_MAP = HomeData.filter(item => item.ID === 1)[0]
+
+    const HOME_DATA_RESOURCES = HomeData.filter(item => item.ID === 2)[0]
+
+    const currentLanguage = useSelector(state => state.language.selectedLenguage)
+
+    const VirtualizedList = ({children}) => {
+        return (
+            <FlatList
+                data={[]}
+                keyExtractor={() => "key"}
+                renderItem={null}
+                ListHeaderComponent={
+                    <>{children}</>
+                }
+                style={{backgroundColor: Colors.lightBG}}
+            />
+        )
+    }
+
+    useEffect(() => {
+        renderCards()
+        if (currentLanguage === 'ES' && classSelected === 'all' || currentLanguage === 'ES' && classSelected === '') {
+            setClassTitle('Clase de animal')
+            setCharacteristicsMessage('Ninguna característica seleccionada')
+        } else if (currentLanguage === 'EN' && classSelected === 'all' || currentLanguage === 'EN' && classSelected === '') {
+            setClassTitle('Animal Kingdom')
+            setCharacteristicsMessage('No characteristic selected')
+        }
+    }, [currentLanguage])
 
     useEffect(() => {
         // All fields are filled
@@ -116,7 +149,11 @@ const HomeScreen = ({ navigation }) => {
         }
         renderAnimals()
         if(classSelected === 'all' || classSelected === '') {
-            setClassTitle('Clase de animal')
+            if (currentLanguage === 'ES') {
+                setClassTitle('Clase de animal')
+            } else {
+                setClassTitle('Animal kingdom')
+            }
         } else {
             const title = classSelected.charAt(0).toUpperCase() + classSelected.slice(1)
             setClassTitle(title)
@@ -174,9 +211,49 @@ const HomeScreen = ({ navigation }) => {
             )
         } else {
             return (
-                <Text style={styles.text}>Ninguna característica seleccionada</Text>
+                <Text style={styles.text}>{characteristicsMessage}</Text>
             )
         }
+    }
+
+    const renderCards = () => {
+        let map_title
+        let map_description
+        let resources_title
+        let resources_description
+
+        if (currentLanguage === 'ES') {
+            map_title = HOME_DATA_MAP.Title_ES
+            map_description = HOME_DATA_MAP.Description_ES
+            resources_title = HOME_DATA_RESOURCES.Title_ES
+            resources_description = HOME_DATA_RESOURCES.Description_ES
+        } else {
+            map_title = HOME_DATA_MAP.Title_EN
+            map_description = HOME_DATA_MAP.Description_EN
+            resources_title = HOME_DATA_RESOURCES.Title_EN
+            resources_description = HOME_DATA_RESOURCES.Description_EN
+        }
+
+        return(
+            <View>
+                <Card>
+                    <Pressable style={{width: Dimensions.get('window').width*0.95, position: 'absolute', height: '100%', zIndex: 10}} onPress={() => {
+                        navigation.navigate('MapScreenStack')
+                    }}></Pressable>
+                    <MaterialIcons name="map" size={50} color={Colors.primary} />
+                    <Text style={styles.title}>{map_title}</Text>
+                    <View style={styles.divider} orientation='horizontal'></View>
+                    <Text style={styles.description}>{map_description}</Text>
+                </Card>
+                <Card>
+                    <MaterialIcons name="info" size={50} color={Colors.primary} />
+                    <Text style={styles.title}>{resources_title}</Text>
+                    <View style={styles.divider} orientation='horizontal'></View>
+                    <Text style={styles.description}>{resources_description}</Text>
+                </Card>
+                
+            </View>
+        )
     }
 
     const renderAnimals = () => {
@@ -236,41 +313,25 @@ const HomeScreen = ({ navigation }) => {
             )
         }
     }
+
     return (
-        <ScrollView contentContainerStyle={{backgroundColor: Colors.lightBG}} nestedScrollEnabled={true}>
+        <VirtualizedList>
             <View style={styles.block}>
                 {modalClassVisible && <ClassModal />}
                 {modalCaracteristicaVisible && <CaracteristicaModal />}
-                <Pressable style={{paddingTop: 0, marginBottom: 5, height: Dimensions.get('window').height*0.4}} onPress={() => {
-                    navigation.navigate("MapScreenStack")
-                }}>
-                    <Card>
-                        <MaterialIcons name="map" size={50} color={Colors.primary} />
-                        <Text style={styles.title}>¿Te has encontrado un animal herido y/o abandonado?</Text>
-                        <View style={styles.divider} orientation='horizontal'></View>
-                        <Text style={styles.description}>Esta aplicación te guiará durante los primeros auxilios en caso de emergencia veterinaria. Una vez realizados los primeros auxilios, recomendamos siempre que vayas al veterinario.</Text>
-                        <View style={styles.paddingText}></View>
-                        <Text style={styles.description}>Podrás encontrar un mapa con las clínicas más cercanas haciendo click aquí, o desde la segunda opción del menú.</Text>
-                    </Card>
-                </Pressable>
-                <Card>
-                    <MaterialIcons name="info" size={50} color={Colors.primary} />
-                    <Text style={styles.title}>¿Dónde encontrar recursos de ayuda?</Text>
-                    <View style={styles.divider} orientation='horizontal'></View>
-                    <Text style={styles.description}>En el menú inferior de cada animal, haciendo click en el icono derecho, podrás ver recursos externos relacionados con la misma, incluyendo grupos de Facebook, perfiles de Instagram, páginas web relacionadas, etc.</Text>
-                </Card>
+                {renderCards()}
                 <Card>
                     <MaterialIcons name="filter-list-alt" size={50} color={Colors.primary} />
-                    <Text style={styles.title}>Filtrar especies animales</Text>
+                    <Text style={styles.title}>{currentLanguage === 'ES' ? 'Filtrar especies animales' : 'Filter animal species'}</Text>
                     <View style={styles.divider} orientation='horizontal'></View>
-                    <TextInput style={styles.textInput} placeholder="Buscar por nombre del animal" placeholderTextColor="#E6E6E6" onChangeText={text => {
+                    <TextInput style={styles.textInput} placeholder={currentLanguage === 'ES' ? "Buscar por nombre del animal" : "Search by animal name"} placeholderTextColor="#E6E6E6" onChangeText={text => {
                         text = text.toLowerCase()
                         dispatch(searchActions.updateSearch(text))}
                     } />
                     <PickerBtn title={classTitle} onSelect={() => {
                         dispatch(searchActions.toggleModal(1))
                     }} />
-                    <PickerBtn title="Característica(s)" onSelect={() => {
+                    <PickerBtn title={currentLanguage === 'ES' ? "Característica(s)" : "Characteristic(s)"} onSelect={() => {
                         dispatch(searchActions.toggleModal(2))
                     }} />
                     {renderChars()}
@@ -281,7 +342,7 @@ const HomeScreen = ({ navigation }) => {
                 </Card>
                 {renderAnimals()}
             </View>
-        </ScrollView>
+        </VirtualizedList>
     )
 }
 
@@ -331,9 +392,10 @@ const styles = StyleSheet.create({
     },
     description: {
         fontSize: 14,
+        width: '100%',
         fontFamily: 'montserrat',
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'justify'
     },
     divider: {
         width: '100%',

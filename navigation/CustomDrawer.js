@@ -7,20 +7,17 @@ import { useSelector, useDispatch } from 'react-redux'
 import { languageActions } from '../store/language-slice'
 
 const CustomDrawer = ({...props}) => {
-    
     const dispatch = useDispatch()
     
     const currentLanguage = useSelector(state => state.language.selectedLenguage)
     
     const showLanguages = useSelector(state => state.language.showLanguages)
 
-    const drawerLabel = 'Language          ' + currentLanguage
-
     return (
         <DrawerContentScrollView {...props} style={{backgroundColor: '#222'}}>
             <DrawerItemList {...props}/>
             <DrawerItem 
-                label={drawerLabel} 
+                label={currentLanguage === 'ES' ? 'Idioma               ES' : 'Language          EN'} 
                 labelStyle={{color: 'white', fontFamily: 'montserrat'}} 
                 icon={() => <MaterialIcons name="translate" color="white" size={30}/>} 
                 onPress={() => {

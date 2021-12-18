@@ -11,8 +11,6 @@ const AboutUs = () => {
     
     const currentLanguage = useSelector(state => state.language.selectedLenguage)
 
-    console.log(currentLanguage)
-
     useEffect(() => {
         renderContent()
     }, [currentLanguage])
@@ -23,19 +21,22 @@ const AboutUs = () => {
     const renderContent = () => {
         let description_0
         let description_1
+        let pageTitle 
 
         if (currentLanguage === 'ES') {
             description_0 = data_0.Description_ES
             description_1 = data_1.Description_ES
+            pageTitle = 'Sobre Nosotros'
         } else {
             description_0 = data_0.Description_EN
             description_1 = data_1.Description_EN
+            pageTitle = 'About Us'
         }
         return(
             <ScrollView>
                 <Card>
                     <MaterialIcons name="info" size={50} color={Colors.primary} />
-                    <Text style={styles.title}>Sobre nosotros</Text>
+                    <Text style={styles.title}>{pageTitle}</Text>
                     <View style={styles.divider}></View>
                     <View style={styles.imageContainer}>
                         <Image source={require('../assets/img/woman_vector.png')} style={{

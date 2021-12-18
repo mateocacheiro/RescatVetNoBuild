@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, Modal } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions, Modal, Pressable } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { searchActions } from '../store/search-slice'
 
@@ -13,7 +13,7 @@ const ClassModal = () => {
 
     return (
             <Modal animationType='fade' transparent={true} visible={modalVisible}>
-                <View style={styles.modal}>
+                <Pressable style={styles.modal} onPress={() => {dispatch(searchActions.toggleModal(1))}}>
                     <View style={styles.inner}>
                         <View>
                             <TouchableOpacity style={styles.option} onPress={() => {
@@ -66,7 +66,7 @@ const ClassModal = () => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                </View>
+                </Pressable>
             </Modal>
     )
 }

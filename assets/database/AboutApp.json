@@ -1,0 +1,38 @@
+[
+    {
+        "Description_EN": "This application was born out of the necessity, both public and personal, of a veterinary assistance guide in case of emergency. It's a free and non-profit application (which is why you will never see any ads), created exclusively with the aim to help anyone who might encounter an animal in need of medical assistance and be able to provide the required first aids, until they can take the animal to a veterinary clinic / hospital.",
+        "Description_ES": "Esta aplicación ha nacido de la necesidad, tanto personal como pública, de una guía de asistencia veterinaria en caso de urgencia. Es una aplicación gratuita y sin ánimo de lucro (la razón por la que no hay ninguna publicidad integrada), creada únicamente con el fin de ayudar a quien se encuentre a un animal en apuros a darle los primeros auxilios hasta poder llevarle a una clínica veterinaria. ",
+        "ID": 1,
+        "Icon": "source-fork",
+        "IconPackage": "MaterialCommunityIcons",
+        "Title_EN": "Origin",
+        "Title_ES": "Origen"
+    },
+    {
+        "Description_EN": "From the technical point of view, the front-end programming of this application was done with React Native and redux-toolkit (Javascript), SQLite for the database (due to the relatively small amount of information, making the offline use much faster), and the back-end was done with Django (Python).\r\n\r\nFurthermore, as we want to support open-source software and applications, we decided to use OpenStreetMap and Overpass API's.",
+        "Description_ES": "Desde el punto de vista técnico, la programación de esta aplicación se ha llevado a cabo en el Front End con React Native (un entorno de desarrollo multiplataforma basado en Javascript), la base de datos SQLite (ya que nuestra base de datos no es muy grande de momento y ésta facilita el uso de la aplicación sin necesidad de tener internet, sincronizándose con la base de datos online cuando hay conexión en el móvil) y el Back End está desarrollado con Django (basado en el lenguaje Python).\r\n\r\nTambién, como queremos dar todo el apoyo posible al software y aplicaciones de código libre, se ha usado la API OpenStreetMap para el mapa y la API Overpass para las peticiones de datos.",
+        "ID": 2,
+        "Icon": "code",
+        "IconPackage": "MaterialIcons",
+        "Title_EN": "Development",
+        "Title_ES": "Desarrollo"
+    },
+    {
+        "Description_EN": "Due to the source code being available online for everyone to see and this being a non-profit application, the commercial use of said code is not allowed. This is why we decided to sign every form of communication (being that email, social media posts, etc) with our PGP key to avoid impersonations. You can find our public PGP Key in the Contact section.",
+        "Description_ES": "Dado que todo el código está disponible online y es una aplicación sin ánimo de lucro, no se permite la distribución de la misma con fines comerciales. \r\n\r\nEs por ello que hemos decidido firmar mediante PGP todas las publicaciones que hagamos para evitar que alguien se pueda hacer pasar por nosotros, especialmente por si nuestras redes sociales se ven comprometidas en algún momento. \r\n\r\nNuestra clave pública la encontrarás en la sección de Contacto, y así podrás verificar siempre nuestra identidad.",
+        "ID": 3,
+        "Icon": "verified-user",
+        "IconPackage": "MaterialIcons",
+        "Title_EN": "Identity",
+        "Title_ES": "Identidad"
+    },
+    {
+        "Description_EN": "This application is in constant development. Bit by bit we will be adding more animal species to the database and more potential situations as we gather information from veterinary professionals.\r\n\r\nAs this is open source, if you want to check out the source code or contribute to it, you can find the link to the repository at bottom of this card, or simply search for RescatVet in Github and you will find it right away.  In case of any contributions to the code, we suggest cloning the repository to your computer and then do a pull request to the secondary branch. We will contact you back shortly after checking it out.\r\n\r\n https://www.github.com/rescatvet/rescatvet",
+        "Description_ES": "La aplicación está en constante desarrollo. Poco a poco iremos añadiendo protocolos de actuación para más especies y en más situaciones, así que agradecemos cualquier sugerencia. \r\n\r\nPor ello esta aplicación es de código abierto, lo que quiere decir que está accesible a todo el mundo en Github y cualquiera puede proponer soluciones nuevas o añadir nuevas funciones, lo cual valoraremos personalmente para implementar en futuras actualizaciones. \r\n\r\nEn este repositorio, encontrarás todo el código fuente de la aplicación. Si quieres colaborar en el desarrollo de la misma, clona el repositorio en tu ordenador y cuando actualices o añadas lo que veas oportuno, haz un pull request y nosotros lo analizaremos y nos pondremos en contacto contigo lo más pronto posible.\r\n\r\nhttps://www.github.com/rescatvet/rescatvet",
+        "ID": 4,
+        "Icon": "handshake",
+        "IconPackage": "MaterialCommunityIcons",
+        "Title_EN": "Collaboration",
+        "Title_ES": "Colaboración"
+    }
+]
