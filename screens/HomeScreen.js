@@ -1,17 +1,18 @@
-import React, {useState, useEffect, Fragment} from 'react'
-import { StyleSheet, Text, View, FlatList, TextInput, Dimensions, TouchableOpacity, Pressable } from 'react-native'
+import React, {useState, useEffect, useRef} from 'react'
+import { StyleSheet, Text, View, FlatList, TextInput, Dimensions, Button, Pressable, TouchableOpacity } from 'react-native'
 import AnimalsData from '../assets/database/Animals.json'
 import { searchActions } from '../store/search-slice';
 import { useSelector, useDispatch } from 'react-redux';
 import AnimalItem from '../components/AnimalItem';
 import ClassModal from '../components/ClassModal';
 import PickerBtn from '../components/PickerBtn';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Card from '../components/Card';
 import CaracteristicaModal from '../components/CaracteristicaModal';
 import Caracteristicas from '../components/Caracteristicas';
 import Colors from '../constants/Colors'
 import HomeData from '../assets/database/Home.json'
+import { screenActions } from '../store/screen-slice';
 
 const HomeScreen = ({ navigation }) => {
 
@@ -39,10 +40,15 @@ const HomeScreen = ({ navigation }) => {
 
     const currentLanguage = useSelector(state => state.language.selectedLenguage)
 
+    const topRef = useRef()
+
+    //const textInputValue = useSelector(state => state.language.search.textInputValue)
+
     const VirtualizedList = ({children}) => {
         return (
             <FlatList
                 data={[]}
+                ref={topRef}
                 keyExtractor={() => "key"}
                 renderItem={null}
                 ListHeaderComponent={
@@ -52,6 +58,10 @@ const HomeScreen = ({ navigation }) => {
             />
         )
     }
+
+    useEffect(() => {
+        dispatch(screenActions.changeCurrentScreen('Home'))
+    }, [])
 
     useEffect(() => {
         renderCards()
@@ -236,16 +246,16 @@ const HomeScreen = ({ navigation }) => {
 
         return(
             <View>
-                <Card>
+                <Card style={{zIndex: 1, position: 'relative'}}>
                     <Pressable style={{width: Dimensions.get('window').width*0.95, position: 'absolute', height: '100%', zIndex: 10}} onPress={() => {
-                        navigation.navigate('MapScreenStack')
+                        navigation.navigate('MapScreen')
                     }}></Pressable>
                     <MaterialIcons name="map" size={50} color={Colors.primary} />
                     <Text style={styles.title}>{map_title}</Text>
                     <View style={styles.divider} orientation='horizontal'></View>
                     <Text style={styles.description}>{map_description}</Text>
                 </Card>
-                <Card>
+                <Card style={{zIndex: 1, position: 'relative'}}>
                     <MaterialIcons name="info" size={50} color={Colors.primary} />
                     <Text style={styles.title}>{resources_title}</Text>
                     <View style={styles.divider} orientation='horizontal'></View>
@@ -254,6 +264,10 @@ const HomeScreen = ({ navigation }) => {
                 
             </View>
         )
+    }
+
+    const scrollToBottom = () => {
+        topRef.current.scrollToOffset({animated: true, offset: 1200})
     }
 
     const renderAnimals = () => {
@@ -315,6 +329,19 @@ const HomeScreen = ({ navigation }) => {
     }
 
     return (
+        <View style={{flex: 1, alignItems: 'center', backgroundColor: Colors.lightBG}}>
+            <View 
+                style={{
+                    width: 50, 
+                    height: 50,
+                    zIndex: 200,
+                    marginTop: Dimensions.get('window').height - 135,
+                    position: 'absolute',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}>
+                    <TouchableOpacity activeOpacity={0.6} onPress={scrollToBottom}><MaterialCommunityIcons name="arrow-down-circle" size={50} color="rgba(255, 255, 255, 0.5)" /></TouchableOpacity>
+            </View>
         <VirtualizedList>
             <View style={styles.block}>
                 {modalClassVisible && <ClassModal />}
@@ -336,13 +363,14 @@ const HomeScreen = ({ navigation }) => {
                     }} />
                     {renderChars()}
                     <View style={[styles.divider, {marginTop: 15}]} orientation='horizontal'></View>
-                    <PickerBtn title="¿Sabes qué le ha pasado?" onSelect={() => {
+                    <PickerBtn title={currentLanguage === 'ES' ? "¿Sabes qué le ha pasado?" : "Do you know what happened?"} onSelect={() => {
                         dispatch(searchActions.toggleModal(1))
                     }} />
                 </Card>
                 {renderAnimals()}
             </View>
         </VirtualizedList>
+        </View>
     )
 }
 
@@ -400,7 +428,7 @@ const styles = StyleSheet.create({
     divider: {
         width: '100%',
         height: 0.5,
-        backgroundColor: 'white',
+        backgroundColor: '#aaa',
         marginBottom: 15
     },
     paddingText: {

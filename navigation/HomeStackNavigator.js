@@ -1,8 +1,9 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from '../screens/HomeScreen';
+import HomeScreen_v2 from '../screens/HomeScreen_v2';
 import AnimalTabNavigator from './AnimalTabNavigator';
 import React from 'react'
 import MapScreen from '../screens/MapScreen';
+import AnimalBasicCareScreen from '../screens/AnimalBasicCareScreen';
 
 const Stack = createStackNavigator();
 
@@ -11,9 +12,10 @@ function MyStack() {
     <Stack.Navigator initialRouteName="Home" screenOptions={{
         headerShown: false
     }}>
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Home" component={HomeScreen_v2} />
       <Stack.Screen name="AnimalScreenStack" component={AnimalTabNavigator} />
-      <Stack.Screen name="MapScreenStack" component={MapScreen} />
+      <Stack.Screen name="MapScreen" component={MapScreen} />
+      <Stack.Screen name="BasicCareScreen" component={AnimalBasicCareScreen} />
     </Stack.Navigator>
   );
 }

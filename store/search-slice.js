@@ -8,11 +8,13 @@ const searchSlice = createSlice({
         modals: {
             class_modal_visible: false,
             caracteristica_modal_visible: false,
-            ayuda_modal_visible: false
+            ayuda_modal_visible: false,
+            situation_modal_visible: false
         },
         caracteristicas: [],
         textInputValue: '',
         animalSelected_id: 0,
+        situation_selected: ''
     },
     reducers: {
         updateSearch(state, action) {
@@ -35,6 +37,8 @@ const searchSlice = createSlice({
                 case 3:
                     state.modals.ayuda_modal_visible = !state.modals.ayuda_modal_visible
                     break;
+                case 4:
+                    state.modals.situation_modal_visible = !state.modals.situation_modal_visible
                 default:
                     break;
             }
@@ -50,6 +54,10 @@ const searchSlice = createSlice({
         animalSelected(state, action) {
             const id = action.payload
             state.animalSelected_id = id
+        },
+        situationSelected(state, action) {
+            const situation = action.payload
+            state.situation_selected = situation
         }
     }
 })

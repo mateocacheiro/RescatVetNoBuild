@@ -4,13 +4,15 @@
         "Description_ES": "Esta aplicación te guiará durante los primeros auxilios en caso de emergencia veterinaria. Una vez realizados los primeros auxilios, recomendamos siempre que lleves al animal al veterinario.\r\n\r\nPodrás encontrar un mapa con las clínicas más cercanas haciendo click aquí en esta tarjeta, o desde la segunda opción del menú llamada \"Mapa\".",
         "ID": 1,
         "Title_EN": "Have you encountered an injured and / or abandoned animal?",
-        "Title_ES": "¿Te has encontrado un animal herido y/o abandonado?"
+        "Title_ES": "¿Te has encontrado un animal herido y/o abandonado?",
+        "Icon": "map"
     },
     {
         "Description_EN": "Right after selecting any of the cards you will find at the bottom of this page, corresponding to each animal, you will see a bottom navigation bar with three icons. Tap on the right one with the name “External resources” to find links social media pages, profiles and groups; websites, videos, etc; with helpful information related to the selected animal.",
         "Description_ES": "Al hacer click en cualquiera de las tarjetas que están al fondo de esta página, correspondientes a cada especie, verás una barra de navegación inferior con tres iconos. Haz click en el de la derecha donde pone \"Recursos externos\" para encontrar enlaces como grupos, perfiles y páginas de redes sociales, páginas web, vídeos, etc, relacionados con la especie seleccionada.",
         "ID": 2,
         "Title_EN": "Where to find helpful external resources?",
-        "Title_ES": "¿Donde encontrar recursos de ayuda?"
+        "Title_ES": "¿Donde encontrar recursos de ayuda?",
+        "Icon": "info"
     }
 ]

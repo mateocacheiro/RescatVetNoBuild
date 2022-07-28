@@ -10,7 +10,8 @@ import Colors from '../constants/Colors'
 import HomeStackNavigator from './HomeStackNavigator'
 import ContactScreen from '../screens/ContactScreen';
 import CustomDrawer from './CustomDrawer';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { screenActions } from '../store/screen-slice';
 
 const Drawer = createDrawerNavigator()
 
@@ -18,7 +19,12 @@ const DrawerNavigator = ({navigation}) => {
 
     const currentLanguage = useSelector(state => state.language.selectedLenguage)
 
+    const currentScreen = useSelector(state => state.screen.currentScreen)
+
+    const dispatch = useDispatch()
+
     useEffect(() => {
+        
         renderNavigator()
     }, [])
 
@@ -46,6 +52,9 @@ const DrawerNavigator = ({navigation}) => {
                             <AntDesign name="menuunfold" size={30} color="white" style={{paddingLeft: 20}} onPress={() => {navigation.toggleDrawer()}}/>
                             <TouchableOpacity onPress={() => {
                                 navigation.navigate('Home')
+                                dispatch(screenActions.changeCurrentScreen('Home'))
+                                dispatch(screenActions.getInterfaceHelp(0))
+                                dispatch(screenActions.hideInterfaceHelp())
                             }}>
                                 <Image source={require('../assets/img/Logo.png')} style={{
                                     width: 50,
@@ -53,7 +62,24 @@ const DrawerNavigator = ({navigation}) => {
                                     height: 50
                                 }}/>
                             </TouchableOpacity>
-                            <AntDesign name="questioncircleo" size={30} color="white" style={{paddingRight: 20}}/>
+                            <TouchableOpacity onPress={() => {
+                                // get the current screen and display the interface help
+                                if (currentScreen === 'Home') {
+                                    dispatch(screenActions.getInterfaceHelp(0))
+                                }
+                                else if (currentScreen === 'Emergency') {
+                                    dispatch(screenActions.getInterfaceHelp(1))
+                                }
+                                else if (currentScreen === 'Map') {
+                                    dispatch(screenActions.getInterfaceHelp(2))
+                                }
+                                else if (currentScreen === 'Contact') {
+                                    dispatch(screenActions.getInterfaceHelp(3))
+                                }
+                                dispatch(screenActions.showInterfaceHelp())
+                            }}>
+                                <AntDesign name="questioncircleo" size={30} color="white" style={{paddingRight: 20}}/>
+                            </TouchableOpacity>
                         </View>,
                     drawerContentContainerStyle: {
                         backgroundColor: '#222',

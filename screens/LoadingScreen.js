@@ -2,6 +2,7 @@ import React from 'react'
 import { Dimensions, StyleSheet, Text, View, Image } from 'react-native'
 import Colors from '../constants/Colors'
 
+
 const LoadingScreen = () => {
     return (
         <View style={styles.container}>

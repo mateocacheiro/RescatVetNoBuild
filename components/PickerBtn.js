@@ -9,7 +9,7 @@ const d_height = Dimensions.get('screen').height
 const PickerBtn = props => {
     return (
         <View style={{height: 60, width: '100%'}}>
-            <TouchableOpacity style={styles.container} onPress={props.onSelect}>
+            <TouchableOpacity style={[props.style, styles.container]} onPress={props.onSelect}>
                 <Text style={styles.text}>{props.title}</Text>
                 <AntDesign name="down" size={20} color="green" />
             </TouchableOpacity>
@@ -21,7 +21,6 @@ export default PickerBtn
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
         borderWidth: 1,
         borderRadius: 5,
         borderColor: Colors.primary,
@@ -34,6 +33,6 @@ const styles = StyleSheet.create({
     },
     text: {
         fontFamily: 'montserrat',
-        color: 'white'
+        color: '#ccc'
     }
 })

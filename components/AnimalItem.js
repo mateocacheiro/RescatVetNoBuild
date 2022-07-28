@@ -31,13 +31,13 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     image: {
-        width: Dimensions.get('window').height*0.23,
-        height: Dimensions.get('window').width*0.3,
+        width: Dimensions.get('window').height*0.218,
+        height: Dimensions.get('window').width*0.25,
         borderRadius: 5
     },
     text: {
         position: 'relative',
-        bottom: 23,
+        bottom: 20,
         color: 'white',
         fontSize: 15,
         fontFamily: 'montserrat-bold'

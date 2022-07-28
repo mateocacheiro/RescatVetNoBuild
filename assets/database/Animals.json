@@ -34,17 +34,5 @@
         "ID": 6,
         "Name": "Aye-aye",
         "Tags": "peludo, feo, oscuro, nocturno"
-    },
-    {
-        "Class": "reptil",
-        "ID": 7,
-        "Name": "Iguana",
-        "Tags": "insectivoro, diurno, verde, escamas, alargado"
-    },
-    {
-        "Class": "mamifero",
-        "ID": 8,
-        "Name": "Huron",
-        "Tags": "peludo, alargado, pequeño"
     }
 ]
