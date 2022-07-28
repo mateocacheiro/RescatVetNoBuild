@@ -47,7 +47,7 @@ const InfoModal = (props) => {
             <Pressable style={styles.modal} onPress={() => dispatch(emergencyActions.toggleModal())}>
             <View style={styles.inner}>
                 <View style={styles.close}>
-                    <MaterialCommunityIcons name="close" size={25} color="#aaa" />
+                    <MaterialCommunityIcons name="close" size={25} color="#fff" />
                 </View>
                 <Text style={styles.text}>{info_text}</Text>
             </View>
