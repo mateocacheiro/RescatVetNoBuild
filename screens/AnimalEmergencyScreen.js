@@ -802,6 +802,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
                     setArtificialBreathingPosition(artificial_breathing_layout.y)
                     console.log('Artificial Breathing Y: ', artificialBreathingPosition)
                 }}><AccordionItem title="Si tiene pulso pero no respira" animalID={1} contentID={22} onScrollToNoPulse={() => {
+                    setRenderRcp(1)
                     moveTo(4)
                 }} onScrollToChoking={() => {
                     console.log("Scroll to Choking")
@@ -818,8 +819,10 @@ const AnimalEmergencyScreen = ({navigation}) => {
                 }} onScrollToDislocatedLeg={() => {
                     moveTo(3)
                 }} onScrollToNoPulse={() => {
+                    setRenderRcp(1)
                     moveTo(4)
                 }} onScrollToArtificialBreathing={() => {
+                    setRenderArtificialBreathing(1)
                     moveTo(5)
                 }}/>}
                 {renderDislocatedWing == 1 && <View onLayout={event => {
@@ -847,21 +850,45 @@ const AnimalEmergencyScreen = ({navigation}) => {
                 {renderPox == 1 && <AccordionItem title="Viruela" animalID={1} contentID={12}/>}
                 {renderTricho == 1 && <AccordionItem title="Tricomonas" animalID={1} contentID={13}/>}
                 {renderHairs == 1 && <AccordionItem title="Pelos o hilos enredados en los dedos" animalID={1} contentID={14}/>}
-                {renderPoisoning == 1 && <AccordionItem title="Envenenamiento" animalID={1} contentID={15} onScrollToNoPulse={() => {moveTo(4)}}/>}
-                {renderHeat == 1 && <AccordionItem title="Golpe de calor" animalID={1} contentID={16} onScrollToNoPulse={() => {moveTo(4)}} onScrollToArtificialBreathing={() => {moveTo(5)}} />}
-                {renderHypothermia == 1 && <AccordionItem title="Hipotermia" animalID={1} contentID={21} onScrollToNoPulse={() => {moveTo(4)}} onScrollToArtificialBreathing={() => {moveTo(5)}}/>}
+                {renderPoisoning == 1 && <AccordionItem title="Envenenamiento" animalID={1} contentID={15} onScrollToNoPulse={() => {
+                        setRenderRcp(1)
+                        moveTo(4)
+                    }}/>}
+                {renderHeat == 1 && <AccordionItem title="Golpe de calor" animalID={1} contentID={16} onScrollToNoPulse={() => {
+                        setRenderRcp(1)
+                        moveTo(4)
+                    }} onScrollToArtificialBreathing={() => {
+                        setRenderArtificialBreathing(1)
+                        moveTo(5)
+                    }} />}
+                {renderHypothermia == 1 && <AccordionItem title="Hipotermia" animalID={1} contentID={21} onScrollToNoPulse={() => {
+                        setRenderRcp(1)
+                        moveTo(4)
+                    }} onScrollToArtificialBreathing={() => {
+                        setRenderArtificialBreathing(1)
+                        moveTo(5)}
+                    }/>}
                 {renderBite == 1 && <AccordionItem title="Mordedura" animalID={1} contentID={17}/>}
                 {renderVomit == 1 && <AccordionItem title="Vómito/Regurgitación" animalID={1} contentID={20} />}
                 {renderChoking == 1 && <View onLayout={event => {
                     const choking_layout = event.nativeEvent.layout
                     setChokingPosition(choking_layout.y)
                     console.log('Choking Y: ', chokingPosition)
-                }}><AccordionItem title="Atragantamiento" animalID={1} contentID={23} onScrollToNoPulse={() => {moveTo(4)}} onScrollToArtificialBreathing={() => {moveTo(5)}} /></View>}
+                }}><AccordionItem title="Atragantamiento" animalID={1} contentID={23} onScrollToNoPulse={() => {
+                        setRenderRcp(1)
+                        moveTo(4)
+                    }} onScrollToArtificialBreathing={() => {
+                        setRenderArtificialBreathing(1)
+                        moveTo(5)
+                    }} /></View>}
                 {renderAsphyxiation == 1 && <View onLayout={event => {
                     const asph_layout = event.nativeEvent.layout
                     setAsphyxiationPosition(asph_layout.y)
                     console.log('Asphyxiation Y: ', asphyxiationPosition)
-                }}><AccordionItem title="Ahogamiento" animalID={1} contentID={24} onScrollToNoPulse={() => {moveTo(4)}} /></View>}
+                }}><AccordionItem title="Ahogamiento" animalID={1} contentID={24} onScrollToNoPulse={() => {
+                        setRenderRcp(1)
+                        moveTo(4)
+                    }} /></View>}
                 {renderForeignObject == 1 && <AccordionItem title="Cuerpo extraño" animalID={1} contentID={25} onScrollToChoking={() => {
                     console.log("Scroll to choking")
                     moveTo(6)
