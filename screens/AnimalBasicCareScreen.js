@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import AccordionItem from '../components/AccordionItem'
 import { useSelector, useDispatch } from 'react-redux'
 import { careActions } from '../store/care-slice'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 //<Image source={require('../assets/img/pigeon_screen.jpg')} style={styles.image}/>
 
@@ -13,6 +14,12 @@ const AnimalBasicCareScreen = () => {
     const dispatch = useDispatch()
     const navigatedToSplay = useSelector(state => state.care.navigatedToSplay)
     const splayPosition = useSelector(state => state.care.splayPosition)
+    const animalID = useSelector(state => state.search.animalSelected_id)
+    
+    const [headerImg, setHeaderImg] = useState()
+    const [spaceTitle, setSpaceTitle] = useState('')
+    const [renderML, setRenderML] = useState(false)
+    const [animalName, setAnimalName] = useState('')
 
     useEffect(() => {
         console.log(navigatedToSplay)
@@ -28,18 +35,47 @@ const AnimalBasicCareScreen = () => {
         }
     }
 
+    useEffect(() => {
+        if(animalID == 1) {
+            setSpaceTitle('Espacio de la paloma en casa')
+            setHeaderImg(require('../assets/img/pigeon_screen.jpg'))
+            setAnimalName('Paloma')
+        } else if(animalID == 2) {
+            setSpaceTitle('Espacio del gato en casa')
+            setHeaderImg(require('../assets/img/2.jpg'))
+            setAnimalName('Gato')
+        } else if (animalID == 3) {
+            setSpaceTitle('Espacio del perro en casa')
+            setHeaderImg(require('../assets/img/3.jpg'))
+            setAnimalName('Perro')
+        } else if (animalID == 4) {
+            setSpaceTitle('Espacio del conejo en casa')
+            setHeaderImg(require('../assets/img/4.jpg'))
+            setAnimalName('Conejo')
+        } else if (animalID == 5) {
+            setSpaceTitle('Espacio de la tortuga en casa')
+            setHeaderImg(require('../assets/img/turtle_screen.jpg'))
+            setAnimalName('Tortuga')
+            setRenderML(true)
+        } else if (animalID == 6) {
+            setSpaceTitle('Espacio del aye-aye en casa')
+            setHeaderImg(require('../assets/img/5.jpg'))
+            setAnimalName('Aye-aye')
+        }
+    }, [animalID])
+
     const renderSections = () => {
         return(
             <View style={styles.contentBlock}>
                 <AccordionItem animalID={0} contentID={19} title="Botiquín" />
-                <AccordionItem animalID={1} contentID={1} title="Alimentación" />
-                <AccordionItem animalID={1} contentID={2} title="Espacio de la paloma en casa" />
+                <AccordionItem animalID={animalID} contentID={1} title="Alimentación" />
+                <AccordionItem animalID={animalID} contentID={2} title={spaceTitle} />
                 <View onLayout={event => {
                     if (navigatedToSplay) {
                         moveTo(0)
                     }
-                }}><AccordionItem animalID={1} contentID={3} title="Posibles complicaciones" open_default={navigatedToSplay ? true : false} /></View>
-                <AccordionItem animalID={1} contentID={4} title="Pensando en la liberación" />
+                }}><AccordionItem animalID={animalID} contentID={3} title="Posibles complicaciones" open_default={navigatedToSplay ? true : false} /></View>
+                <AccordionItem animalID={animalID} contentID={4} title="Pensando en la liberación" />
             </View>
         )
     }
@@ -47,13 +83,13 @@ const AnimalBasicCareScreen = () => {
     return (
         <View style={styles.container}>
             <ScrollView ref={refScrollView}>
-                <ImageBackground source={require('../assets/img/pigeon_screen.jpg')} resizeMode="cover" style={styles.headerBlock}>
+                <ImageBackground source={headerImg} resizeMode="cover" style={styles.headerBlock}>
                     <View style={styles.breadCrumbs}>
                         <TouchableWithoutFeedback>
                             <Text style={styles.text}>Inicio</Text>
                         </TouchableWithoutFeedback>
                         <Text style={styles.text}>&gt;</Text>
-                        <Text style={styles.text}>Paloma</Text>
+                        <Text style={styles.text}>{animalName}</Text>
                         <Text style={styles.text}>&gt;</Text>
                         <Text style={styles.text}>Cuidados Básicos</Text>
                     </View>
@@ -66,6 +102,14 @@ const AnimalBasicCareScreen = () => {
                         <Text style={[styles.text, {textAlign: 'center'}]}>A continuación podrás ver toda la información necesaria para darle el mejor cuidado a una paloma, separada por categorías.</Text>
                     </View> 
                 </ImageBackground>
+                {renderML && <TouchableOpacity activeOpacity={0.9} style={[styles.contentBlock, {marginBottom: 30, justifyContent: 'center', alignItems: 'center'}]} onPress={() => {
+                    alert('Machine Learning Magic')
+                }}>
+                    <MaterialCommunityIcons name="image-filter-center-focus-strong-outline" size={50} color={Colors.primary} />
+                    <Text style={[styles.title, {marginVertical: 15}]}>¿No sabes con qué especie de tortuga te encuentras?</Text>
+                    <Text style={[styles.text, {width: '90%', textAlign: 'left', marginBottom: 15}]}>Debido a que la información proporcionada en esta página varía en función de la especie de la tortuga, te recomendamos que le saques una foto con la cámara del móvil y la aplicación detectará de que especie se trata.</Text>
+                    <Text style={[styles.text, {width: '90%', textAlign: 'left'}]}>Tan sólo tienes que hacer click en esta tarjeta y te guiaremos por el proceso.</Text>
+                </TouchableOpacity>}
                 {renderSections()}
             </ScrollView>
         </View>
@@ -109,7 +153,9 @@ const styles = StyleSheet.create({
     },
     title: {
         fontFamily: 'montserrat-bold',
+        width: '90%',
         color: Colors.primary,
+        alignSelf: 'center',
         fontSize: 18,
         textAlign: 'center',
         marginBottom: 10

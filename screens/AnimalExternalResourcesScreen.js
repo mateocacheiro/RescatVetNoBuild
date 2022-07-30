@@ -1,19 +1,55 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, ImageBackground, ScrollView, Dimensions, TouchableWithoutFeedback, Linking } from 'react-native'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import Colors from '../constants/Colors'
+import { useSelector } from 'react-redux'
 
 const AnimalExternalResourcesScreen = () => {
+
+    const animalID = useSelector(state => state.search.animalSelected_id)
+    
+    const [headerImg, setHeaderImg] = useState()
+    const [animalName, setAnimalName] = useState()
+    const [noResourcesInfo, setNoResourcesInfo] = useState(true)
+
+    useEffect(() => {
+        if(animalID == 1) {
+            setHeaderImg(require('../assets/img/pigeon_screen.jpg'))
+            setAnimalName('Paloma')
+            setNoResourcesInfo(false)
+        }
+        else if(animalID == 2) {
+            setHeaderImg(require('../assets/img/2.jpg'))
+            setAnimalName('Gato')
+        }
+        else if(animalID == 3) {
+            setHeaderImg(require('../assets/img/3.jpg'))
+            setAnimalName('Perro')
+        }
+        else if(animalID == 4) {
+            setHeaderImg(require('../assets/img/4.jpg'))
+            setAnimalName('Conejo')
+        }
+        else if(animalID == 5) {
+            setHeaderImg(require('../assets/img/turtle_screen.jpg'))
+            setAnimalName('Tortuga')
+        }
+        else if(animalID == 6) {
+            setHeaderImg(require('../assets/img/6.jpg'))
+            setAnimalName('Aye-aye')
+        }
+    }, [animalID])
+
     return (
         <View style={styles.container}>
             <ScrollView>
-                <ImageBackground source={require('../assets/img/pigeon_screen.jpg')} resizeMode="cover" style={styles.headerBlock}>
+                <ImageBackground source={headerImg} resizeMode="cover" style={styles.headerBlock}>
                     <View style={styles.breadCrumbs}>
                         <TouchableWithoutFeedback>
                             <Text style={styles.text}>Inicio</Text>
                         </TouchableWithoutFeedback>
                         <Text style={styles.text}>&gt;</Text>
-                        <Text style={styles.text}>Paloma</Text>
+                        <Text style={styles.text}>{animalName}</Text>
                         <Text style={styles.text}>&gt;</Text>
                         <Text style={styles.text}>Recursos externos</Text>
                     </View>
@@ -26,7 +62,7 @@ const AnimalExternalResourcesScreen = () => {
                         <Text style={[styles.text, {textAlign: 'center'}]}>En esta página tendrás acceso a enlaces de páginas y grupos de redes sociales y otras webs, relacionadas con las palomas.</Text>
                     </View> 
                 </ImageBackground>
-                <View style={styles.contentBlock}>
+                {!noResourcesInfo && <View style={styles.contentBlock}>
                     <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginBottom: 10}}>
                         <MaterialCommunityIcons name="facebook" size={40} color={Colors.primary} />
                         <Text style={styles.mediaTitle}>Facebook</Text>
@@ -197,6 +233,10 @@ const AnimalExternalResourcesScreen = () => {
                         <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Henfluencers</Text>
                     </View>
                 </View>
+            }
+            {noResourcesInfo && <View style={styles.contentBlock}>
+                <Text style={[styles.text, {alignSelf: 'center'}]}>No hay recursos externos para {animalName}</Text>
+            </View>}
             </ScrollView>
         </View>
     )

@@ -92,6 +92,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
     const [renderFecesSub3, setRenderFecesSub3] = useState(0)
     const [renderFecesSub4, setRenderFecesSub4] = useState(0)
 
+    const [renderForm, setRenderForm] = useState(0)
     const [renderBlock1, setRenderBlock1] = useState(1)
     const [renderBlock2, setRenderBlock2] = useState(0)
     const [renderBlock3, setRenderBlock3] = useState(0)
@@ -133,9 +134,26 @@ const AnimalEmergencyScreen = ({navigation}) => {
     const [chokingPosition, setChokingPosition] = useState(0)
     const [asphyxiationPosition, setAsphyxiationPosition] = useState(0)
 
+    const [noInfoEmergency, setNoInfoEmergency] = useState('')
+    const [headerImg, setHeaderImg] = useState()
+
     const af_answers_list = []
 
     const refScrollView = useRef(null);
+
+    /*
+
+    Scroll ID's:
+    - 0 --> Broken Wing
+    - 1 --> Broken Leg
+    - 2 --> Dislocated Wing
+    - 3 --> Dislocated Leg
+    - 4 --> RCP
+    - 5 --> Artificial Breathing
+    - 6 --> Choking
+    - 7 --> Asphyxiation
+
+    */
 
     const moveTo = (section) => {
     if (section == 0) { //Broken wing
@@ -167,434 +185,436 @@ const AnimalEmergencyScreen = ({navigation}) => {
   }
 
     useEffect(()=>{
-        if(last_answer_id == 0) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon is breathing")
-                setRenderBreathing(0)
-                setRenderBreathingSub1(1)
-                setRenderBreathingSub2(0)
-                setRenderBreathingSub3(0)
-                setIsBreathing(1)
-                dispatch(emergencyActions.updateChevronStates({id: 0, value: 1}))
-                
-            } else {
-                console.log("Pigeon is not breathing")
-                setRenderBreathing(1)
-                setRenderBreathingSub1(0)
-                setRenderBreathingSub2(0)
-                setRenderBreathingSub3(0)
-                setRenderPulse(0)
-                setIsBreathing(0)
-                setRenderChoking(1)
-                setRenderAsphyxiation(1)
-                dispatch(emergencyActions.updateChevronStates({id: 0, value: 0}))
-                //setFormComplete(true)
-                setRenderContusion(1)
-                const sub_ids = cont_sub_ids
-                sub_ids.push(0)
-                setCont_sub_ids(sub_ids)
-            }
-           setRenderConscious(1) 
-        }
-        if (last_answer_id == 4) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon has heavy breathing")
-                setHasHeavyBreathing(1)
-                setRenderBreathingSub1(0)
-                setRenderBreathingSub2(1)
-                setRenderBreathingSub3(0)
-                setRenderBreathing(0)
-                setRenderAsphyxiation(0)
-            } else {
-                console.log("Pigeon doesn't have heavy breathing")
-                setHasHeavyBreathing(0)
-                setRenderBreathing(0)
-                setRenderBreathingSub1(0)
-                setRenderBreathingSub2(1)
-                setRenderBreathingSub3(0)
-                setRenderTricho(1)
-            }
-            dispatch(emergencyActions.updateChevronStates({id: 4, value: hasHeavyBreathing}))
-        }
-        if (last_answer_id == 5) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon has slow breathing")
-                setHasSlowBreathing(1)
-                setRenderBreathingSub1(0)
-                setRenderBreathingSub3(0)
-                setRenderBreathing(0)
-                setRenderConscious(1)
-                setRenderContusion(1)
-            } else {
-                console.log("Pigeon doesn't have slow breathing")
-                setHasSlowBreathing(0)
-                setRenderBreathing(0)
-                setRenderBreathingSub1(0)
-                setRenderBreathingSub2(0)
-                setRenderBreathingSub3(1)
-                
-            }
-            dispatch(emergencyActions.updateChevronStates({id: 5, value: hasSlowBreathing}))
-        }
-        if (last_answer_id == 6) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon has fast breathing")
-                setHasFastBreathing(1)
-                setRenderBreathingSub1(0)
-                setRenderBreathingSub2(0)
-                setRenderBreathingSub3(1)
-                setRenderBreathing(0)
-                setRenderConscious(1)
-                setRenderContusion(1)
-                setRenderHeat(1)
-                setRenderBite(1)
-            } else {
-                console.log("Pigeon doesn't have fast breathing")
-                setHasFastBreathing(0)
-                setRenderBreathing(0)
-                setRenderBreathingSub1(0)
-                setRenderBreathingSub2(0)
-                setRenderBreathingSub3(1)
-                setRenderConscious(1)
-            }
-            dispatch(emergencyActions.updateChevronStates({id: 6, value: hasFastBreathing}))
-        }
-        if(last_answer_id == 1) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon is conscious")
-                setIsConscious(1)
-                if (hasFastBreathing == 1) {
-                    cont_sub_ids.push(2)
+        if (animalID == 1) {
+            if(last_answer_id == 0) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon is breathing")
+                    setRenderBreathing(0)
+                    setRenderBreathingSub1(1)
+                    setRenderBreathingSub2(0)
+                    setRenderBreathingSub3(0)
+                    setIsBreathing(1)
+                    dispatch(emergencyActions.updateChevronStates({id: 0, value: 1}))
+                    
+                } else {
+                    console.log("Pigeon is not breathing")
+                    setRenderBreathing(1)
+                    setRenderBreathingSub1(0)
+                    setRenderBreathingSub2(0)
+                    setRenderBreathingSub3(0)
+                    setRenderPulse(0)
+                    setIsBreathing(0)
+                    setRenderChoking(1)
+                    setRenderAsphyxiation(1)
+                    dispatch(emergencyActions.updateChevronStates({id: 0, value: 0}))
+                    //setFormComplete(true)
+                    setRenderContusion(1)
+                    const sub_ids = cont_sub_ids
+                    sub_ids.push(0)
+                    setCont_sub_ids(sub_ids)
                 }
-                setRenderAsphyxiation(1)
-                setRenderChoking(1)
-            } else {
-                console.log("Pigeon is unconscious")
-                setRenderPulse(0)
-                //setFormComplete(true)
-                setRenderContusion(1)
-                setRenderAsphyxiation(1)
-                setRenderChoking(1)
-                setRenderHeat(1)
-                const sub_ids = cont_sub_ids
-                sub_ids.push(1)
-                setCont_sub_ids(sub_ids)
+            setRenderConscious(1) 
             }
-            setRenderPulse(1)
-        }
-        if(last_answer_id == 2) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon has a pulse")
-                setHasPulse(1)
-                setRenderChoking(1)
-            } else {
-                console.log("Pigeon doesn't have a pulse")
-                setRenderPupils(0)
-                setHasPulse(0)
-                setRenderRcp(true)
-                //setFormComplete(true)
-                setRenderChoking(1)
-                setRenderContusion(1)
-                const sub_ids = cont_sub_ids
-                sub_ids.push(5)
-                setCont_sub_ids(sub_ids)
+            if (last_answer_id == 4) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon has heavy breathing")
+                    setHasHeavyBreathing(1)
+                    setRenderBreathingSub1(0)
+                    setRenderBreathingSub2(1)
+                    setRenderBreathingSub3(0)
+                    setRenderBreathing(0)
+                    setRenderAsphyxiation(0)
+                } else {
+                    console.log("Pigeon doesn't have heavy breathing")
+                    setHasHeavyBreathing(0)
+                    setRenderBreathing(0)
+                    setRenderBreathingSub1(0)
+                    setRenderBreathingSub2(1)
+                    setRenderBreathingSub3(0)
+                    setRenderTricho(1)
+                }
+                dispatch(emergencyActions.updateChevronStates({id: 4, value: hasHeavyBreathing}))
             }
-            setRenderPupils(1)
-        }
-        if(last_answer_id == 3) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon's pupils react to light")
-                setPupils(1)
-                setRenderContusion(1)
-            } else {
-                console.log("Pigeon's pupils don't react to light")
-                setPupils(0)
+            if (last_answer_id == 5) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon has slow breathing")
+                    setHasSlowBreathing(1)
+                    setRenderBreathingSub1(0)
+                    setRenderBreathingSub3(0)
+                    setRenderBreathing(0)
+                    setRenderConscious(1)
+                    setRenderContusion(1)
+                } else {
+                    console.log("Pigeon doesn't have slow breathing")
+                    setHasSlowBreathing(0)
+                    setRenderBreathing(0)
+                    setRenderBreathingSub1(0)
+                    setRenderBreathingSub2(0)
+                    setRenderBreathingSub3(1)
+                    
+                }
+                dispatch(emergencyActions.updateChevronStates({id: 5, value: hasSlowBreathing}))
             }
-        }
+            if (last_answer_id == 6) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon has fast breathing")
+                    setHasFastBreathing(1)
+                    setRenderBreathingSub1(0)
+                    setRenderBreathingSub2(0)
+                    setRenderBreathingSub3(1)
+                    setRenderBreathing(0)
+                    setRenderConscious(1)
+                    setRenderContusion(1)
+                    setRenderHeat(1)
+                    setRenderBite(1)
+                } else {
+                    console.log("Pigeon doesn't have fast breathing")
+                    setHasFastBreathing(0)
+                    setRenderBreathing(0)
+                    setRenderBreathingSub1(0)
+                    setRenderBreathingSub2(0)
+                    setRenderBreathingSub3(1)
+                    setRenderConscious(1)
+                }
+                dispatch(emergencyActions.updateChevronStates({id: 6, value: hasFastBreathing}))
+            }
+            if(last_answer_id == 1) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon is conscious")
+                    setIsConscious(1)
+                    if (hasFastBreathing == 1) {
+                        cont_sub_ids.push(2)
+                    }
+                    setRenderAsphyxiation(1)
+                    setRenderChoking(1)
+                } else {
+                    console.log("Pigeon is unconscious")
+                    setRenderPulse(0)
+                    //setFormComplete(true)
+                    setRenderContusion(1)
+                    setRenderAsphyxiation(1)
+                    setRenderChoking(1)
+                    setRenderHeat(1)
+                    const sub_ids = cont_sub_ids
+                    sub_ids.push(1)
+                    setCont_sub_ids(sub_ids)
+                }
+                setRenderPulse(1)
+            }
+            if(last_answer_id == 2) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon has a pulse")
+                    setHasPulse(1)
+                    setRenderChoking(1)
+                } else {
+                    console.log("Pigeon doesn't have a pulse")
+                    setRenderPupils(0)
+                    setHasPulse(0)
+                    setRenderRcp(true)
+                    //setFormComplete(true)
+                    setRenderChoking(1)
+                    setRenderContusion(1)
+                    const sub_ids = cont_sub_ids
+                    sub_ids.push(5)
+                    setCont_sub_ids(sub_ids)
+                }
+                setRenderPupils(1)
+            }
+            if(last_answer_id == 3) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon's pupils react to light")
+                    setPupils(1)
+                    setRenderContusion(1)
+                } else {
+                    console.log("Pigeon's pupils don't react to light")
+                    setPupils(0)
+                }
+            }
 
-        if(last_answer_id == 7) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon is wobbly")
-                setIsFalling(1)
-                setRenderContusion(1)
-                setRenderPoisoning(1)
-                setRenderHeat(1)
-                const sub_ids = cont_sub_ids
-                sub_ids.push(3)
-                setCont_sub_ids(sub_ids)
-            } else {
-                console.log("Pigeon is not wobbly")
-                setIsFalling(0)
+            if(last_answer_id == 7) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon is wobbly")
+                    setIsFalling(1)
+                    setRenderContusion(1)
+                    setRenderPoisoning(1)
+                    setRenderHeat(1)
+                    const sub_ids = cont_sub_ids
+                    sub_ids.push(3)
+                    setCont_sub_ids(sub_ids)
+                } else {
+                    console.log("Pigeon is not wobbly")
+                    setIsFalling(0)
+                }
             }
-        }
-        
-        if(last_answer_id == 8) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon has blood")
-                setHasBlood(1)
-                setRenderBlood(0)
-                setRenderBloodSub1(1)
-                setRenderBrokenWing(1)
-                setRenderBite(1)
-                setRenderForeignObject(1)   
-            } else {
-                console.log("Pigeon doesn't have blood")
-                setHasBlood(0)
+            
+            if(last_answer_id == 8) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon has blood")
+                    setHasBlood(1)
+                    setRenderBlood(0)
+                    setRenderBloodSub1(1)
+                    setRenderBrokenWing(1)
+                    setRenderBite(1)
+                    setRenderForeignObject(1)   
+                } else {
+                    console.log("Pigeon doesn't have blood")
+                    setHasBlood(0)
+                }
             }
-        }
-        
-        if(last_answer_id == 9) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon has blood coming out of an orifice")
-                setHasBlood(1)
-                setRenderBloodSub1(0)
-                setRenderBloodSub2(1)
-                setRenderContusion(1)
-                setRenderPoisoning(1)
-                const sub_ids = cont_sub_ids
-                sub_ids.push(4)
-                setCont_sub_ids(sub_ids)
-            } else {
-                console.log("Pigeon doesn't have blood coming out of an orifice")
-                setHasBlood(0)
+            
+            if(last_answer_id == 9) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon has blood coming out of an orifice")
+                    setHasBlood(1)
+                    setRenderBloodSub1(0)
+                    setRenderBloodSub2(1)
+                    setRenderContusion(1)
+                    setRenderPoisoning(1)
+                    const sub_ids = cont_sub_ids
+                    sub_ids.push(4)
+                    setCont_sub_ids(sub_ids)
+                } else {
+                    console.log("Pigeon doesn't have blood coming out of an orifice")
+                    setHasBlood(0)
+                }
             }
-        }
-        if(last_answer_id == 10) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon has open wounds")
-                setHasOpenWounds(1)
-                setRenderContusion(1)
-                setRenderBrokenWing(1)
-                setRenderBrokenLeg(1)
-                setRenderBite(1)
-                const sub_ids = cont_sub_ids
-                sub_ids.push(5, 6)
-                setCont_sub_ids(sub_ids)
-            } else {
-                console.log("Pigeon doesn't have open wounds")
-                setHasOpenWounds(0)
+            if(last_answer_id == 10) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon has open wounds")
+                    setHasOpenWounds(1)
+                    setRenderContusion(1)
+                    setRenderBrokenWing(1)
+                    setRenderBrokenLeg(1)
+                    setRenderBite(1)
+                    const sub_ids = cont_sub_ids
+                    sub_ids.push(5, 6)
+                    setCont_sub_ids(sub_ids)
+                } else {
+                    console.log("Pigeon doesn't have open wounds")
+                    setHasOpenWounds(0)
+                }
             }
-        }
-        if(last_answer_id == 11) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon's temperature is low")
-                setHasLowTemp(1)
-                setRenderContusion(1)
-                setRenderPoisoning(1)
-                setRenderAsphyxiation(1)
-            } else {
-                console.log("Pigeon's temperature is not low")
-                setHasLowTemp(0)
+            if(last_answer_id == 11) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon's temperature is low")
+                    setHasLowTemp(1)
+                    setRenderContusion(1)
+                    setRenderPoisoning(1)
+                    setRenderAsphyxiation(1)
+                } else {
+                    console.log("Pigeon's temperature is not low")
+                    setHasLowTemp(0)
+                }
             }
-        }
-        if(last_answer_id == 12) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon is tired")
-                setIsTired(1)
-                setRenderCoccidios(1)
-                setRenderPoisoning(1)
-                setRenderAsphyxiation(1)
-            } else {
-                console.log("Pigeon is not tired")
-                setIsTired(0)
+            if(last_answer_id == 12) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon is tired")
+                    setIsTired(1)
+                    setRenderCoccidios(1)
+                    setRenderPoisoning(1)
+                    setRenderAsphyxiation(1)
+                } else {
+                    console.log("Pigeon is not tired")
+                    setIsTired(0)
+                }
             }
-        }
-        if(last_answer_id == 13) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon's head is in an unnatural position")
-                setNaturalHead(1)
-                setRenderParamixovirus(1)
-                setRenderPoisoning(1)
-            } else {
-                console.log("Pigeon's head is in an unnatural position")
-                setNaturalHead(0)
+            if(last_answer_id == 13) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon's head is in an unnatural position")
+                    setNaturalHead(1)
+                    setRenderParamixovirus(1)
+                    setRenderPoisoning(1)
+                } else {
+                    console.log("Pigeon's head is in an unnatural position")
+                    setNaturalHead(0)
+                }
             }
-        }
-        if(last_answer_id == 14) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon's wing is in an unnatural position")
-                setNaturalWing(1)
-                setRenderDislocatedWing(1)
-                setRenderBrokenWing(1)
-                setRenderContusion(1)
-                const sub_ids = cont_sub_ids
-                sub_ids.push(7)
-                setCont_sub_ids(sub_ids)
-            } else {
-                console.log("Pigeon's wing is in an unnatural position")
-                setNaturalWing(0)
+            if(last_answer_id == 14) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon's wing is in an unnatural position")
+                    setNaturalWing(1)
+                    setRenderDislocatedWing(1)
+                    setRenderBrokenWing(1)
+                    setRenderContusion(1)
+                    const sub_ids = cont_sub_ids
+                    sub_ids.push(7)
+                    setCont_sub_ids(sub_ids)
+                } else {
+                    console.log("Pigeon's wing is in an unnatural position")
+                    setNaturalWing(0)
+                }
             }
-        }
-        if(last_answer_id == 15) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon's leg is in an unnatural position")
-                setNaturalLeg(1)
-                setRenderContusion(1)
-                setRenderDislocatedLeg(1)
-            } else {
-                console.log("Pigeon's leg is in an unnatural position")
-                setNaturalLeg(0)
+            if(last_answer_id == 15) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon's leg is in an unnatural position")
+                    setNaturalLeg(1)
+                    setRenderContusion(1)
+                    setRenderDislocatedLeg(1)
+                } else {
+                    console.log("Pigeon's leg is in an unnatural position")
+                    setNaturalLeg(0)
+                }
             }
-        }
-        if(last_answer_id == 16) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon's cloaca is dirty")
-                setDirtyCloaca(1)
-                setRenderCoccidios(1)
-                setRenderTricho(1)
-            } else {
-                console.log("Pigeon's cloaca is not dirty")
-                setDirtyCloaca(0)
+            if(last_answer_id == 16) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon's cloaca is dirty")
+                    setDirtyCloaca(1)
+                    setRenderCoccidios(1)
+                    setRenderTricho(1)
+                } else {
+                    console.log("Pigeon's cloaca is not dirty")
+                    setDirtyCloaca(0)
+                }
             }
-        }
-        if(last_answer_id == 17) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon has liquid coming out of the beak")
-                setLiquidBeak(1)
-                setRenderAsphyxiation(1)
-            } else {
-                console.log("Pigeon doesn't have liquid coming out of the beak")
-                setLiquidBeak(0)
+            if(last_answer_id == 17) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon has liquid coming out of the beak")
+                    setLiquidBeak(1)
+                    setRenderAsphyxiation(1)
+                } else {
+                    console.log("Pigeon doesn't have liquid coming out of the beak")
+                    setLiquidBeak(0)
+                }
             }
-        }
-        if(last_answer_id == 18) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon has swollen buche")
-                setBuche(1)
-            } else {
-                console.log("Pigeon doesn't have swollen buche")
-                setBuche(0)
+            if(last_answer_id == 18) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon has swollen buche")
+                    setBuche(1)
+                } else {
+                    console.log("Pigeon doesn't have swollen buche")
+                    setBuche(0)
+                }
             }
-        }
-        if(last_answer_id == 19) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon has feces")
-                setFeces(1)
-                setRenderFeces(0)
-                setRenderFecesSub1(1)
-            } else {
-                console.log("Pigeon doesn't have feces")
-                setFeces(0)
+            if(last_answer_id == 19) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon has feces")
+                    setFeces(1)
+                    setRenderFeces(0)
+                    setRenderFecesSub1(1)
+                } else {
+                    console.log("Pigeon doesn't have feces")
+                    setFeces(0)
+                }
             }
-        }
-        if(last_answer_id == 20) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon has liquid feces")
-                setLiquidFeces(1)
-                setRenderFecesSub1(0)
-                setRenderFecesSub2(1)
-                setRenderParamixovirus(1)
-                setRenderCoccidios(1)
-            } else {
-                console.log("Pigeon doesn't have liquid feces")
-                setLiquidFeces(0)
-                setRenderFecesSub1(0)
-                setRenderFecesSub2(1)
+            if(last_answer_id == 20) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon has liquid feces")
+                    setLiquidFeces(1)
+                    setRenderFecesSub1(0)
+                    setRenderFecesSub2(1)
+                    setRenderParamixovirus(1)
+                    setRenderCoccidios(1)
+                } else {
+                    console.log("Pigeon doesn't have liquid feces")
+                    setLiquidFeces(0)
+                    setRenderFecesSub1(0)
+                    setRenderFecesSub2(1)
+                }
             }
-        }
-        if(last_answer_id == 21) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon has green feces")
-                setGreenFeces(1)
-                setRenderFecesSub2(0)
-                setRenderFecesSub3(1)
-                setRenderCoccidios(1)
-            } else {
-                console.log("Pigeon doesn't have green feces")
-                setGreenFeces(0)
-                setRenderFecesSub2(0)
-                setRenderFecesSub3(1)
+            if(last_answer_id == 21) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon has green feces")
+                    setGreenFeces(1)
+                    setRenderFecesSub2(0)
+                    setRenderFecesSub3(1)
+                    setRenderCoccidios(1)
+                } else {
+                    console.log("Pigeon doesn't have green feces")
+                    setGreenFeces(0)
+                    setRenderFecesSub2(0)
+                    setRenderFecesSub3(1)
+                }
             }
-        }
-        if(last_answer_id == 22) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon has blood feces")
-                setBloodFeces(1)
-                setRenderFecesSub3(0)
-                setRenderFecesSub4(1)
-                setRenderParamixovirus(1)
-                setRenderCoccidios(1)
-            } else {
-                console.log("Pigeon doesn't have blood feces")
-                setBloodFeces(0)
-                setRenderFecesSub3(0)
-                setRenderFecesSub4(1)
+            if(last_answer_id == 22) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon has blood feces")
+                    setBloodFeces(1)
+                    setRenderFecesSub3(0)
+                    setRenderFecesSub4(1)
+                    setRenderParamixovirus(1)
+                    setRenderCoccidios(1)
+                } else {
+                    console.log("Pigeon doesn't have blood feces")
+                    setBloodFeces(0)
+                    setRenderFecesSub3(0)
+                    setRenderFecesSub4(1)
+                }
             }
-        }
-        if(last_answer_id == 23) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon has dense feces")
-                setDenseFeces(1)
-                setRenderCoccidios(1)
-            } else {
-                console.log("Pigeon doesn't dense feces")
-                setDenseFeces(0)
+            if(last_answer_id == 23) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon has dense feces")
+                    setDenseFeces(1)
+                    setRenderCoccidios(1)
+                } else {
+                    console.log("Pigeon doesn't dense feces")
+                    setDenseFeces(0)
+                }
             }
-        }
-        if(last_answer_id == 24) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon has papules")
-                setPapulas(1)
-                setRenderPox(1)
-            } else {
-                console.log("Pigeon doesn't have papules")
-                setPapulas(0)
+            if(last_answer_id == 24) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon has papules")
+                    setPapulas(1)
+                    setRenderPox(1)
+                } else {
+                    console.log("Pigeon doesn't have papules")
+                    setPapulas(0)
+                }
             }
-        }
-        if(last_answer_id == 25) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon has plaques")
-                setPlacas(1)
-                setRenderTricho(1)
-            } else {
-                console.log("Pigeon doesn't have plaques")
-                setPlacas(0)
+            if(last_answer_id == 25) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon has plaques")
+                    setPlacas(1)
+                    setRenderTricho(1)
+                } else {
+                    console.log("Pigeon doesn't have plaques")
+                    setPlacas(0)
+                }
             }
-        }
-        if(last_answer_id == 26) {
-            if(last_answer_value == 'yes') {
-                console.log("Pigeon has hairs")
-                setHairs(1)
-            } else {
-                console.log("Pigeon doesn't have hairs")
-                setHairs(0)
+            if(last_answer_id == 26) {
+                if(last_answer_value == 'yes') {
+                    console.log("Pigeon has hairs")
+                    setHairs(1)
+                } else {
+                    console.log("Pigeon doesn't have hairs")
+                    setHairs(0)
+                }
             }
-        }
-        if(last_answer_id == 27) {
-            if(last_answer_value == 'yes') {
-                console.log('Pigeon has puked')
-                setVomit(1)
-                setRenderVomit(1)
-            } else {
-                setVomit(0)
+            if(last_answer_id == 27) {
+                if(last_answer_value == 'yes') {
+                    console.log('Pigeon has puked')
+                    setVomit(1)
+                    setRenderVomit(1)
+                } else {
+                    setVomit(0)
+                }
             }
-        }
-        if(last_answer_id == 28) {
-            if(last_answer_value == 'yes') {
-                console.log('Pigeon has a foreign object')
-                setRenderForeignObject(1)
-            }
-            setFormComplete(true)
-        }
-        
-        if (isBreathing == 0 || isConscious == 0 || hasPulse == 0) {
-            setRenderContusion(1)
-        }
-
-        if (isBreathing == 0 && hasPulse == 1) {
-            setRenderArtificialBreathing(1)
-        }
-
-        if(hasSlowBreathing == 1 || hasFastBreathing == 1) {
-            if (isConscious == 1 && hasPulse == 1 && pupils != 2 && isFalling != 2 && hasBlood != 2 && hasLowTemp != 2 && isTired != 2 && naturalHead != 2 && naturalWing != 2 && naturalLeg !=2 && dirtyCloaca != 2 && liquidBeak != 2 && buche != 2 && papulas != 2 && placas != 2 && hairs != 2) {
+            if(last_answer_id == 28) {
+                if(last_answer_value == 'yes') {
+                    console.log('Pigeon has a foreign object')
+                    setRenderForeignObject(1)
+                }
                 setFormComplete(true)
-                // conditions for contusion
-                if (hasSlowBreathing == 1 || hasFastBreathing == 1 || pupils == 1 || bloodOrifice == 1 || naturalLeg == 1 || naturalWing == 1 || isFalling == 1 || hasOpenWounds == 1 || hasLowTemp == 1) {
-                    setRenderContusion(true)
-                }
-                // conditions for dislocated wing
-                if (naturalWing == 1) {
-                    setRenderDislocatedWing(true)
+            }
+            
+            if (isBreathing == 0 || isConscious == 0 || hasPulse == 0) {
+                setRenderContusion(1)
+            }
+
+            if (isBreathing == 0 && hasPulse == 1) {
+                setRenderArtificialBreathing(1)
+            }
+
+            if(hasSlowBreathing == 1 || hasFastBreathing == 1) {
+                if (isConscious == 1 && hasPulse == 1 && pupils != 2 && isFalling != 2 && hasBlood != 2 && hasLowTemp != 2 && isTired != 2 && naturalHead != 2 && naturalWing != 2 && naturalLeg !=2 && dirtyCloaca != 2 && liquidBeak != 2 && buche != 2 && papulas != 2 && placas != 2 && hairs != 2) {
+                    setFormComplete(true)
+                    // conditions for contusion
+                    if (hasSlowBreathing == 1 || hasFastBreathing == 1 || pupils == 1 || bloodOrifice == 1 || naturalLeg == 1 || naturalWing == 1 || isFalling == 1 || hasOpenWounds == 1 || hasLowTemp == 1) {
+                        setRenderContusion(true)
+                    }
+                    // conditions for dislocated wing
+                    if (naturalWing == 1) {
+                        setRenderDislocatedWing(true)
+                    }
                 }
             }
         }
@@ -673,8 +693,35 @@ const AnimalEmergencyScreen = ({navigation}) => {
     }
 
     useEffect(() => {
-        if (animalID === 0) {
+        if (animalID === 1) {
             setAnimalName('Paloma')
+            setRenderForm(1)
+            setHeaderImg(require('../assets/img/pigeon_screen.jpg'))
+        }
+        else if (animalID === 2) {
+            setAnimalName('Gato')
+            setNoInfoEmergency('No hay datos para el formulario de gato.')
+            setHeaderImg(require('../assets/img/2.jpg'))
+        }
+        else if (animalID === 3) {
+            setAnimalName('Perro')
+            setNoInfoEmergency('No hay datos para el formulario de perro.')
+            setHeaderImg(require('../assets/img/3.jpg'))
+        }
+        else if (animalID === 4) {
+            setAnimalName('Conejo')
+            setNoInfoEmergency('No hay datos para el formulario de conejo.')
+            setHeaderImg(require('../assets/img/4.jpg'))
+        }
+        else if(animalID === 5) {
+            setAnimalName('Tortuga')
+            setNoInfoEmergency('No hay datos para el formulario de tortuga.')
+            setHeaderImg(require('../assets/img/turtle_screen.jpg'))
+        }
+        else if(animalID === 6) {
+            setAnimalName('Aye-aye')
+            setNoInfoEmergency('No hay datos para el formulario de aye-aye.')
+            setHeaderImg(require('../assets/img/6.jpg'))
         }
     }, [animalID])
 
@@ -682,13 +729,13 @@ const AnimalEmergencyScreen = ({navigation}) => {
         <View style={{backgroundColor: "#333", height: '100%'}}>
         {EmergencyHelpShown && renderHelp()}
         <ScrollView contentContainerStyle={styles.container} ref={refScrollView}>
-            <ImageBackground source={require('../assets/img/pigeon_screen.jpg')} resizeMode="cover" style={styles.headerBlock}>
+            <ImageBackground source={headerImg} resizeMode="cover" style={styles.headerBlock}>
                 <View style={styles.breadCrumbs}>
                     <TouchableWithoutFeedback>
                         <Text style={styles.text}>Inicio</Text>
                     </TouchableWithoutFeedback>
                     <Text style={styles.text}>&gt;</Text>
-                    <Text style={styles.text}>Paloma</Text>
+                    <Text style={styles.text}>{animalName}</Text>
                     <Text style={styles.text}>&gt;</Text>
                     <Text style={styles.text}>Emergencias</Text>
                 </View>
@@ -698,9 +745,9 @@ const AnimalEmergencyScreen = ({navigation}) => {
                 <Text style={styles.title}>Formulario de emergencias</Text>
             </ImageBackground>
             <View style={styles.animalPicking}>
-                <AccordionItem title="Cómo coger al animal" animalID={1} contentID={26} />
+                <AccordionItem title="Cómo coger al animal" animalID={animalID} contentID={26} />
             </View>
-            <View style={styles.formContainer}>
+            {renderForm == 1 && <View style={styles.formContainer}>
                 {modal_info_visible && <InfoModal id={info_id} />}
                 {renderBlock1 == 1 && <View>
                     {renderBreathing == 1 && <FormQuestion id={0} isMultiple={true} hasInfo={false} />}
@@ -788,6 +835,11 @@ const AnimalEmergencyScreen = ({navigation}) => {
                 <View style={[styles.progressBarActive, {width: activeBarWidth}]} />
                 <View style={styles.progressBarBG} />
             </View>
+            }
+            {renderForm == 0 && <View style={styles.formContainer}>
+                <Text style={styles.text}>{noInfoEmergency}</Text>    
+            </View>
+            } 
             {formComplete && <View style={styles.action}>
                 <Text style={styles.title}>Plan de actuación</Text>
                 <View style={styles.subdivider} />
