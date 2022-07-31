@@ -6,11 +6,12 @@ import AccordionItem from '../components/AccordionItem'
 import { useSelector, useDispatch } from 'react-redux'
 import { careActions } from '../store/care-slice'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-
+import { useNavigation } from '@react-navigation/native'
 //<Image source={require('../assets/img/pigeon_screen.jpg')} style={styles.image}/>
 
 const AnimalBasicCareScreen = () => {
 
+    const navigation = useNavigation()
     const dispatch = useDispatch()
     const navigatedToSplay = useSelector(state => state.care.navigatedToSplay)
     const splayPosition = useSelector(state => state.care.splayPosition)
@@ -103,7 +104,7 @@ const AnimalBasicCareScreen = () => {
                     </View> 
                 </ImageBackground>
                 {renderML && <TouchableOpacity activeOpacity={0.9} style={[styles.contentBlock, {marginBottom: 30, justifyContent: 'center', alignItems: 'center'}]} onPress={() => {
-                    alert('Machine Learning Magic')
+                    navigation.push('ClassifierScreen')
                 }}>
                     <MaterialCommunityIcons name="image-filter-center-focus-strong-outline" size={50} color={Colors.primary} />
                     <Text style={[styles.title, {marginVertical: 15}]}>¿No sabes con qué especie de tortuga te encuentras?</Text>

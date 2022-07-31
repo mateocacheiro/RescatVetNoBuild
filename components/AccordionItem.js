@@ -43,12 +43,10 @@ const AccordionItem = (props) => {
                         <Text style={styles.text}>- Transportín / caja</Text>
                         <Text style={styles.text}>- Toallas / mantas</Text>
                         <Text style={styles.text}>- Collar con arnés</Text>
-                        <Text style={styles.text}>- Collar con arnés</Text>
                         <Text style={styles.text}>- Bozal</Text>
-                        <Text style={styles.text}>- Guantes (?)</Text>
+                        <Text style={styles.text}>- Guantes</Text>
                         <Text style={styles.text}>- Linterna</Text>
                         <Text style={styles.text}>- Alimento para traerle (adaptado a la especie)</Text>
-                        <Text style={styles.text}>- Guantes de látex</Text>
                         <Text style={styles.text}>- Gasas</Text>
                         <Text style={styles.text}>- Desinfectante (cristalmina o betadine)</Text>
                         <Text style={styles.text}>- Vendas</Text>

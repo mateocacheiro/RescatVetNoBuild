@@ -4,6 +4,7 @@ import AnimalTabNavigator from './AnimalTabNavigator';
 import React from 'react'
 import MapScreen from '../screens/MapScreen';
 import AnimalBasicCareScreen from '../screens/AnimalBasicCareScreen';
+import ClassifierScreen from '../screens/ClassifierScreen';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,7 @@ function MyStack() {
       <Stack.Screen name="AnimalScreenStack" component={AnimalTabNavigator} />
       <Stack.Screen name="MapScreen" component={MapScreen} />
       <Stack.Screen name="BasicCareScreen" component={AnimalBasicCareScreen} />
+      <Stack.Screen name="ClassifierScreen" component={ClassifierScreen} />
     </Stack.Navigator>
   );
 }

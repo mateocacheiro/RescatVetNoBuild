@@ -27,6 +27,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "expo-image-picker": {
+      "cameraPermission": "The app accesses your photos to let you share them with your friends."
     }
   }
 }
