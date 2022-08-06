@@ -13,6 +13,8 @@ const modelWeights = require('../model/weights.bin');
 // 3: RGB image
 const TENSORFLOW_CHANNEL = 3;
 
+wrapper
+
 export const getModel = async () => {
   try {
     // wait until tensorflow is ready

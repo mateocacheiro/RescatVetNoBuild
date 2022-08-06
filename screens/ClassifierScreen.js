@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import Colors from '../constants/Colors'
 import * as MediaLibrary from 'expo-media-library'
 import * as ImagePicker from 'expo-image-picker';
-import { CAMERA } from 'expo-permissions'
+//import {cropPicture} from '../helpers/image-helper.js';
 
 
 const ClassifierScreen = () => {

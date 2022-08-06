@@ -1,0 +1,27 @@
+[
+    {
+        "ID": 1,
+        "Name_EN": "Runover",
+        "Name_ES": "Atropello"
+    },
+    {
+        "ID": 2,
+        "Name_EN": "Fall",
+        "Name_ES": "Caída"
+    },
+    {
+        "ID": 3,
+        "Name_EN": "Poisoning",
+        "Name_ES": "Envenenamiento"
+    },
+    {
+        "ID": 4,
+        "Name_EN": "Choking",
+        "Name_ES": "Ahogamiento"
+    },
+    {
+        "ID": 5,
+        "Name_EN": "Asphyxiation",
+        "Name_ES": "Asfixiamiento"
+    }
+]
