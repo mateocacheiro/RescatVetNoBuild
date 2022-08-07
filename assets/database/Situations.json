@@ -1,27 +1,110 @@
 [
     {
+        "Animal_ID": 0,
         "ID": 1,
-        "Name_EN": "Runover",
-        "Name_ES": "Atropello"
+        "Name_EN": "It doesn't have a pulse",
+        "Name_ES": "No tiene pulso"
     },
     {
+        "Animal_ID": 0,
         "ID": 2,
-        "Name_EN": "Fall",
-        "Name_ES": "Caída"
+        "Name_EN": "It has a pulse but doesn't breathe",
+        "Name_ES": "Tiene pulso pero no respira"
     },
     {
+        "Animal_ID": 0,
         "ID": 3,
+        "Name_EN": "Asphyxiation",
+        "Name_ES": "Ahogamiento"
+    },
+    {
+        "Animal_ID": 0,
+        "ID": 4,
+        "Name_EN": "Choking",
+        "Name_ES": "Atragantamiento"
+    },
+    {
+        "Animal_ID": 0,
+        "ID": 5,
+        "Name_EN": "Contusions",
+        "Name_ES": "Contusiones"
+    },
+    {
+        "Animal_ID": 0,
+        "ID": 6,
+        "Name_EN": "Heat stroke",
+        "Name_ES": "Golpe de calor"
+    },
+    {
+        "Animal_ID": 0,
+        "ID": 7,
+        "Name_EN": "Hypothermia",
+        "Name_ES": "Hipotermia"
+    },
+    {
+        "Animal_ID": 0,
+        "ID": 8,
+        "Name_EN": "Vomit",
+        "Name_ES": "Vómito"
+    },
+    {
+        "Animal_ID": 0,
+        "ID": 9,
+        "Name_EN": "Bites",
+        "Name_ES": "Mordeduras"
+    },
+    {
+        "Animal_ID": 0,
+        "ID": 10,
         "Name_EN": "Poisoning",
         "Name_ES": "Envenenamiento"
     },
     {
-        "ID": 4,
-        "Name_EN": "Choking",
-        "Name_ES": "Ahogamiento"
+        "Animal_ID": 0,
+        "ID": 11,
+        "Name_EN": "Foreign object",
+        "Name_ES": "Cuerpo extraño"
     },
     {
-        "ID": 5,
-        "Name_EN": "Asphyxiation",
-        "Name_ES": "Asfixiamiento"
+        "Animal_ID": 0,
+        "ID": 12,
+        "Name_EN": "Fractures",
+        "Name_ES": "Fracturas"
+    },
+    {
+        "Animal_ID": 0,
+        "ID": 13,
+        "Name_EN": "Seizures",
+        "Name_ES": "Convulsiones"
+    },
+    {
+        "Animal_ID": 0,
+        "ID": 14,
+        "Name_EN": "Stings",
+        "Name_ES": "Picaduras"
+    },
+    {
+        "Animal_ID": 0,
+        "ID": 15,
+        "Name_EN": "Digestive problems",
+        "Name_ES": "Problemas digestivos"
+    },
+    {
+        "Animal_ID": 0,
+        "ID": 16,
+        "Name_EN": "Birth giving",
+        "Name_ES": "Parto"
+    },
+    {
+        "Animal_ID": 1,
+        "ID": 17,
+        "Name_EN": "Egg retention",
+        "Name_ES": "Retención de huevos"
+    },
+    {
+        "Animal_ID": 0,
+        "ID": 18,
+        "Name_EN": "Burns",
+        "Name_ES": "Quemaduras"
     }
 ]

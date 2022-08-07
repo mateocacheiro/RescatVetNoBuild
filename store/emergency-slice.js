@@ -7,6 +7,7 @@ const emergencySlice = createSlice({
         value: '',
         info_id: -1,
         modal_info_visible: false,
+        situation_modal_visible: true,
         chevron_state: {
             isBreathing: 2,
             hasHeavyBreathing: 2,
@@ -53,6 +54,9 @@ const emergencySlice = createSlice({
         changeQuestion(state, action) {
             const qid = action.payload
             state.question_change = qid
+        },
+        toggleSituation(state) {
+            state.situation_modal_visible = !state.situation_modal_visible
         }
     }
 })

@@ -14,7 +14,7 @@ const searchSlice = createSlice({
         caracteristicas: [],
         textInputValue: '',
         animalSelected_id: 0,
-        situation_selected: ''
+        situation_selected: 0
     },
     reducers: {
         updateSearch(state, action) {

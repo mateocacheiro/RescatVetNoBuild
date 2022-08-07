@@ -171,7 +171,6 @@ const HomeScreen_v2 = ({ navigation }) => {
             <View style={styles.block}>
                 {situationModalVisible && <SituationModal />}
                 {renderCards()}
-                {renderSituation()}
                 {renderAnimals()}
             </View>
         </VirtualizedList>
@@ -187,6 +186,7 @@ const heightD = Dimensions.get('screen').height
 
 const styles = StyleSheet.create({
     container: {
+        width: widthD,
         flex: 1,
         backgroundColor: '#222',
         alignItems: 'center',
@@ -272,12 +272,13 @@ const styles = StyleSheet.create({
         left: Dimensions.get('window').width/2 - 36
     },
     animalsContainer: {
-        width: widthD*0.98,
         backgroundColor: Colors.darkBG,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 7.5,
-        marginBottom: 15
+        marginBottom: 15,
+        width: '95.5%',
+        paddingVertical: 10
     },
     picker: {
         width: '92%',

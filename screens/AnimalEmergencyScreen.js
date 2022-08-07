@@ -10,6 +10,7 @@ import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 import AccordionItem from '../components/AccordionItem'
 import InterfaceModal from '../components/InterfaceModal'
 import { useNavigation } from '@react-navigation/native';
+import SituationModal from '../components/SituationModal'
 
 const AnimalEmergencyScreen = ({navigation}) => {
 
@@ -18,6 +19,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
 
     const interface_id = useSelector(state => state.screen.interfaceHelp)
     const interface_help_shown = useSelector(state => state.screen.interfaceHelpShown)
+    const situation_selected = useSelector(state => state.search.situation_selected)
 
     const [EmergencyHelpShown, setEmergencyHelpShown] = useState(false)
 
@@ -31,10 +33,80 @@ const AnimalEmergencyScreen = ({navigation}) => {
         }
     }, [interface_id, interface_help_shown])
 
+    useEffect(() => {
+        console.log("Situation selected: ", situation_selected)
+        if (situation_selected != 0) {
+            setRenderForm(0)
+            setFormComplete(true)
+        }
+        switch(situation_selected) {
+            case 0: { // No situation selected - initial state
+                setRenderForm(1)
+                setFormComplete(false)
+                break
+            }
+            case 1: { // No pulse
+                setRenderRcp(1)
+                break
+            }
+            case 2: { // Breathing with no pulse
+                setRenderArtificialBreathing(1)
+                break
+            }
+            case 3: { // Asphyxiation
+                setRenderRcp(1)
+                setRenderArtificialBreathing(1)
+                setRenderAsphyxiation(1)
+                break
+            }
+            case 4: { // Choking
+                setRenderRcp(1)
+                setRenderArtificialBreathing(1)
+                setRenderChoking(1)
+                break
+            }
+            case 5: { // Contusions
+                setCont_sub_ids([0, 1, 2, 3, 4, 5, 6])
+                setRenderContusion(1)
+                break
+            }
+            case 6: { // Heat stroke
+                setRenderHeat(1)
+                break
+            }
+            case 7: { // Hypothermia
+                setRenderHypothermia(1)
+                break
+            }
+            case 8: { // Vomit
+                setRenderVomit(1)
+                break
+            }
+            case 9: { // Bites
+                setRenderBite(1)
+                break
+            }
+            case 10: { // Poisoning
+                setRenderPoisoning(1)
+                break
+            }
+            case 11: { // Foreign body
+                setRenderForeignObject(1)
+                break
+            }
+            case 12: { // Fractures
+                setRenderBrokenLeg(1)
+                setRenderBrokenWing(1)
+                break
+            }
+        }
+    }, [situation_selected])
+
     // States for each question
 
     const animalID = useSelector(state => state.search.animalSelected_id)
     const modal_info_visible = useSelector(state => state.emergency.modal_info_visible)
+    const SituationModalVisible = useSelector(state => state.emergency.situation_modal_visible)
     const info_id = useSelector(state => state.emergency.info_id)
     const question_change = useSelector(state => state.emergency.question_change)
     
@@ -625,6 +697,11 @@ const AnimalEmergencyScreen = ({navigation}) => {
     }, [modal_info_visible])
 
     useEffect(() => {
+        console.log("Situation modal: ", SituationModalVisible)
+        console.log(animalID)
+    }, [SituationModalVisible])
+
+    useEffect(() => {
         console.log('Question change to ', question_change)
         if(question_change == 0) {
             setRenderBreathing(1)
@@ -695,7 +772,6 @@ const AnimalEmergencyScreen = ({navigation}) => {
     useEffect(() => {
         if (animalID === 1) {
             setAnimalName('Paloma')
-            setRenderForm(1)
             setHeaderImg(require('../assets/img/pigeon_screen.jpg'))
         }
         else if (animalID === 2) {
@@ -728,6 +804,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
     return (
         <View style={{backgroundColor: "#333", height: '100%'}}>
         {EmergencyHelpShown && renderHelp()}
+        {SituationModalVisible && <SituationModal />}
         <ScrollView contentContainerStyle={styles.container} ref={refScrollView}>
             <ImageBackground source={headerImg} resizeMode="cover" style={styles.headerBlock}>
                 <View style={styles.breadCrumbs}>
@@ -834,10 +911,6 @@ const AnimalEmergencyScreen = ({navigation}) => {
                 </View>
                 <View style={[styles.progressBarActive, {width: activeBarWidth}]} />
                 <View style={styles.progressBarBG} />
-            </View>
-            }
-            {renderForm == 0 && <View style={styles.formContainer}>
-                <Text style={styles.text}>{noInfoEmergency}</Text>    
             </View>
             } 
             {formComplete && <View style={styles.action}>

@@ -21,6 +21,7 @@ const AnimalBasicCareScreen = () => {
     const [spaceTitle, setSpaceTitle] = useState('')
     const [renderML, setRenderML] = useState(false)
     const [animalName, setAnimalName] = useState('')
+    const [careDescription, setCareDescription] = useState('')
 
     useEffect(() => {
         console.log(navigatedToSplay)
@@ -41,26 +42,32 @@ const AnimalBasicCareScreen = () => {
             setSpaceTitle('Espacio de la paloma en casa')
             setHeaderImg(require('../assets/img/pigeon_screen.jpg'))
             setAnimalName('Paloma')
+            setCareDescription('una paloma')
         } else if(animalID == 2) {
             setSpaceTitle('Espacio del gato en casa')
             setHeaderImg(require('../assets/img/2.jpg'))
+            setCareDescription('un gato')
             setAnimalName('Gato')
         } else if (animalID == 3) {
             setSpaceTitle('Espacio del perro en casa')
             setHeaderImg(require('../assets/img/3.jpg'))
+            setCareDescription('un perro')
             setAnimalName('Perro')
         } else if (animalID == 4) {
             setSpaceTitle('Espacio del conejo en casa')
             setHeaderImg(require('../assets/img/4.jpg'))
+            setCareDescription('un conejo')
             setAnimalName('Conejo')
         } else if (animalID == 5) {
             setSpaceTitle('Espacio de la tortuga en casa')
             setHeaderImg(require('../assets/img/turtle_screen.jpg'))
+            setCareDescription('una tortuga')
             setAnimalName('Tortuga')
             setRenderML(true)
         } else if (animalID == 6) {
             setSpaceTitle('Espacio del aye-aye en casa')
             setHeaderImg(require('../assets/img/5.jpg'))
+            setCareDescription('un aye-aye')
             setAnimalName('Aye-aye')
         }
     }, [animalID])
@@ -100,7 +107,7 @@ const AnimalBasicCareScreen = () => {
                     <Text style={styles.title}> ¿Cuales son los cuidados básicos?</Text>
                     <View style={{justifyContent: 'center', alignItems: 'center', marginBottom: 10}}><View style={styles.divider}/></View>
                     <View style={styles.descriptionBlock}>
-                        <Text style={[styles.text, {textAlign: 'center'}]}>A continuación podrás ver toda la información necesaria para darle el mejor cuidado a una paloma, separada por categorías.</Text>
+                        <Text style={[styles.text, {textAlign: 'center'}]}>A continuación podrás ver toda la información necesaria para darle el mejor cuidado a {careDescription}, separada por categorías.</Text>
                     </View> 
                 </ImageBackground>
                 {renderML && <TouchableOpacity activeOpacity={0.9} style={[styles.contentBlock, {marginBottom: 30, justifyContent: 'center', alignItems: 'center'}]} onPress={() => {
