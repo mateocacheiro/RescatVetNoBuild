@@ -60,8 +60,6 @@ const AnimalEmergencyScreen = ({navigation}) => {
                 break
             }
             case 4: { // Choking
-                setRenderRcp(1)
-                setRenderArtificialBreathing(1)
                 setRenderChoking(1)
                 break
             }
@@ -84,6 +82,8 @@ const AnimalEmergencyScreen = ({navigation}) => {
             }
             case 9: { // Bites
                 setRenderBite(1)
+                setRenderBrokenLeg(1)
+                setRenderBrokenWing(1)
                 break
             }
             case 10: { // Poisoning
@@ -950,6 +950,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
                     setRenderArtificialBreathing(1)
                     moveTo(5)
                 }}/>}
+                {renderBite == 1 && <AccordionItem title="Mordedura" animalID={1} contentID={17}/>}
                 {renderDislocatedWing == 1 && <View onLayout={event => {
                     const dislocated_wing_layout = event.nativeEvent.layout
                     setdislocatedWingPosition(dislocated_wing_layout.y)
@@ -993,7 +994,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
                         setRenderArtificialBreathing(1)
                         moveTo(5)}
                     }/>}
-                {renderBite == 1 && <AccordionItem title="Mordedura" animalID={1} contentID={17}/>}
+                
                 {renderVomit == 1 && <AccordionItem title="Vómito/Regurgitación" animalID={1} contentID={20} />}
                 {renderChoking == 1 && <View onLayout={event => {
                     const choking_layout = event.nativeEvent.layout

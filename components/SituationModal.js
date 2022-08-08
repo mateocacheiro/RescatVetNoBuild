@@ -67,8 +67,8 @@ const SituationModal = () => {
                     <TouchableOpacity style={styles.close} onPress={() => {
                         dispatch(emergencyActions.toggleSituation())
                     }}><MaterialCommunityIcons name="close" color="#fff" size={30}/></TouchableOpacity>
-                    <Text style={styles.title}>¿Sabes lo que le ha pasado?</Text>
-                    <Text style={styles.text}>Si eres consciente de la situación en la que se encuentra el animal, selecciónalo aquí para ver cómo actuar directamente. En caso contrario, puedes cerrar esta ventana pulsando en la X.</Text>
+                    <Text style={styles.title}>¿Sabes qué le ha pasado?</Text>
+                    <Text style={styles.text}>Si sabes qué ha sucedido, selecciónalo aquí. En caso contrario cierra esta ventana pulsando sobre la X.</Text>
                     <PickerBtn title="Selecciona una situación" onSelect={() => {setSelectionItemsVisible(true)}}/>
                 </View>} 
             </View>

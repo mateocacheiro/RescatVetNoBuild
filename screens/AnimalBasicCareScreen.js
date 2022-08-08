@@ -115,7 +115,7 @@ const AnimalBasicCareScreen = () => {
                 }}>
                     <MaterialCommunityIcons name="image-filter-center-focus-strong-outline" size={50} color={Colors.primary} />
                     <Text style={[styles.title, {marginVertical: 15}]}>¿No sabes con qué especie de tortuga te encuentras?</Text>
-                    <Text style={[styles.text, {width: '90%', textAlign: 'left', marginBottom: 15}]}>Debido a que la información proporcionada en esta página varía en función de la especie de la tortuga, te recomendamos que le saques una foto con la cámara del móvil y la aplicación detectará de que especie se trata.</Text>
+                    <Text style={[styles.text, {width: '90%', textAlign: 'left', marginBottom: 15}]}>Debido a que la información proporcionada en esta página varía en función de la especie de la tortuga, te recomendamos que le saques una foto con la cámara del móvil y la aplicación detectará de qué especie se trata.</Text>
                     <Text style={[styles.text, {width: '90%', textAlign: 'left'}]}>Tan sólo tienes que hacer click en esta tarjeta y te guiaremos por el proceso.</Text>
                 </TouchableOpacity>}
                 {renderSections()}
