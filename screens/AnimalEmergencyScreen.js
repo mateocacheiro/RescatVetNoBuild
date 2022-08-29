@@ -131,6 +131,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
     const [hasBlood, setHasBlood] = useState(2)
     const [bloodOrifice, setBloodOrifice] = useState(2)
     const [hasOpenWounds, setHasOpenWounds] = useState(2)
+    const [hasVisibleGuts, setHasVisibleGuts] = useState(2)
     const [hasLowTemp, setHasLowTemp] = useState(2)
     const [naturalHead, setNaturalHead] = useState(2)
     const [naturalWing, setNaturalWing] = useState(2)
@@ -138,6 +139,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
     const [dirtyCloaca, setDirtyCloaca] = useState(2)
     const [liquidBeak, setLiquidBeak] = useState(2)
     const [buche, setBuche] = useState(2)
+    const [swollenAbdomen, setSwollenAbdomen] = useState(2)
     const [feces, setFeces] = useState(2)
     const [liquidFeces, setLiquidFeces] = useState(2)
     const [greenFeces, setGreenFeces] = useState(2)
@@ -158,6 +160,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
     const [renderBlood, setRenderBlood] = useState(1)
     const [renderBloodSub1, setRenderBloodSub1] = useState(0)
     const [renderBloodSub2, setRenderBloodSub2] = useState(0)
+    const [renderBloodSub3, setRenderBloodSub3] = useState(0)
     const [renderFeces, setRenderFeces] = useState(1)
     const [renderFecesSub1, setRenderFecesSub1] = useState(0)
     const [renderFecesSub2, setRenderFecesSub2] = useState(0)
@@ -170,6 +173,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
     const [renderBlock3, setRenderBlock3] = useState(0)
     const [renderBlock4, setRenderBlock4] = useState(0)
     const [renderBlock5, setRenderBlock5] = useState(0)
+    const [renderBlock6, setRenderBlock6] = useState(0)
     
     const [renderContusion, setRenderContusion] = useState(0)
     const [renderDislocatedWing, setRenderDislocatedWing] = useState(0)
@@ -191,6 +195,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
     const [renderRcp, setRenderRcp] = useState(0)
     const [renderVomit, setRenderVomit] = useState(0)
     const [renderArtificialBreathing, setRenderArtificialBreathing] = useState(0)
+    const [renderEggs, setRenderEggs] = useState(0)
     const [cont_sub_ids, setCont_sub_ids] = useState([])
 
 
@@ -339,6 +344,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
                     setRenderContusion(1)
                     setRenderHeat(1)
                     setRenderBite(1)
+                    setRenderEggs(1)
                 } else {
                     console.log("Pigeon doesn't have fast breathing")
                     setHasFastBreathing(0)
@@ -454,6 +460,8 @@ const AnimalEmergencyScreen = ({navigation}) => {
                 if(last_answer_value == 'yes') {
                     console.log("Pigeon has open wounds")
                     setHasOpenWounds(1)
+                    setRenderBloodSub3(1)
+                    setRenderBloodSub2(0)
                     setRenderContusion(1)
                     setRenderBrokenWing(1)
                     setRenderBrokenLeg(1)
@@ -464,6 +472,23 @@ const AnimalEmergencyScreen = ({navigation}) => {
                 } else {
                     console.log("Pigeon doesn't have open wounds")
                     setHasOpenWounds(0)
+                    setRenderBloodSub2(0)
+                    setRenderBloodSub3(1)
+                }
+            }
+            if(last_answer_id == 29) {
+                if(last_answer_value == 'yes') {
+                    console.log('Pigeon has visible guts')
+                    const sub_ids = cont_sub_ids
+                    sub_ids.push(8)
+                    setCont_sub_ids(sub_ids)
+                    setHasVisibleGuts(1)
+                    setRenderBite(1)
+                    setRenderEggs(1)
+                }
+                else {
+                    console.log("Pigeon doesn't have visible guts")
+                    setHasVisibleGuts(0)
                 }
             }
             if(last_answer_id == 11) {
@@ -485,6 +510,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
                     setRenderCoccidios(1)
                     setRenderPoisoning(1)
                     setRenderAsphyxiation(1)
+                    setRenderEggs(1)
                 } else {
                     console.log("Pigeon is not tired")
                     setIsTired(0)
@@ -522,6 +548,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
                     setNaturalLeg(1)
                     setRenderContusion(1)
                     setRenderDislocatedLeg(1)
+                    setRenderEggs(1)
                 } else {
                     console.log("Pigeon's leg is in an unnatural position")
                     setNaturalLeg(0)
@@ -667,6 +694,17 @@ const AnimalEmergencyScreen = ({navigation}) => {
                 }
                 setFormComplete(true)
             }
+
+            if (last_answer_id == 30) {
+                if (last_answer_value == 'yes') {
+                    console.log('Pigeon has a swollen abdomen')
+                    setSwollenAbdomen(1)
+                    setRenderEggs(1)
+                } else {
+                    console.log("Pigeon doesn't have a swollen abdomen")
+                    setSwollenAbdomen(0)
+                }
+            }
             
             if (isBreathing == 0 || isConscious == 0 || hasPulse == 0) {
                 setRenderContusion(1)
@@ -717,14 +755,23 @@ const AnimalEmergencyScreen = ({navigation}) => {
             setRenderBloodSub1(0)
             setRenderBlood(1)
             setRenderBloodSub2(0)
+            setRenderBloodSub3(0)
         } else if (question_change == 9) {
             setRenderBloodSub1(1)
             setRenderBlood(0)
             setRenderBloodSub2(0)
+            setRenderBloodSub3(0)
         } else if (question_change == 10) {
             setRenderBloodSub2(1)
             setRenderBlood(0)
             setRenderBloodSub1(0)
+            setRenderBloodSub3(0)
+        }
+        else if (question_change == 29) {
+            setRenderBlood(0)
+            setRenderBloodSub1(0)
+            setRenderBloodSub2(0)
+            setRenderBloodSub3(1)
         }
         else if (question_change == 19) {
             setRenderFeces(1)
@@ -840,6 +887,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
                     {renderBlood == 1 && <FormQuestion id={8} isMultiple={true} hasInfo={false} />}
                     {renderBloodSub1 == 1 && <FormQuestion id={9} isMultiple={true} hasInfo={false} />}
                     {renderBloodSub2 == 1 && <FormQuestion id={10} isMultiple={true} hasInfo={false} />}
+                    {renderBloodSub3 == 1 && <FormQuestion id={29} isMultiple={true} hasInfo={false} />}
                     <FormQuestion id={11} isMultiple={false} hasInfo={true} />
                     <FormQuestion id={12} isMultiple={false} hasInfo={true} />
                 </View>}
@@ -852,17 +900,20 @@ const AnimalEmergencyScreen = ({navigation}) => {
                 {renderBlock4 == 1 && <View>
                     <FormQuestion id={17} isMultiple={false} hasInfo={false} />
                     <FormQuestion id={18} isMultiple={false} hasInfo={false} />
+                    <FormQuestion id={30} isMultiple={false} hasInfo={false} />
                     <FormQuestion id={27} isMultiple={false} hasInfo={false} />
+                </View>}
+                {renderBlock5 == 1 && <View>
                     {renderFeces == 1 && <FormQuestion id={19} isMultiple={true} hasInfo={false} />}
                     {renderFecesSub1 == 1 && <FormQuestion id={20} isMultiple={true} hasInfo={false} />}
                     {renderFecesSub2 == 1 && <FormQuestion id={21} isMultiple={true} hasInfo={false} />}
                     {renderFecesSub3 == 1 && <FormQuestion id={22} isMultiple={true} hasInfo={false} />}
                     {renderFecesSub4 == 1 && <FormQuestion id={23} isMultiple={true} hasInfo={false} />}
-                </View>}
-                {renderBlock5 == 1 && <View>
                     <FormQuestion id={24} isMultiple={false} hasInfo={true} />
                     <FormQuestion id={25} isMultiple={false} hasInfo={false} />
                     <FormQuestion id={26} isMultiple={false} hasInfo={false} />
+                </View>}
+                {renderBlock6 == 1 && <View>
                     <FormQuestion id={28} isMultiple={false} hasInfo={true} />
                 </View>}
                 <View style={styles.arrows}>
@@ -883,9 +934,13 @@ const AnimalEmergencyScreen = ({navigation}) => {
                         if(renderBlock5 == 1) {
                             setRenderBlock5(0)
                             setRenderBlock4(1)
+                        }
+                        if(renderBlock6 == 1) {
+                            setRenderBlock6(0)
+                            setRenderBlock5(1)
                             setArrowRightColor('green')
                         }
-                        setActiveBarWidth(activeBarWidth - d_width*0.85/5)
+                        setActiveBarWidth(activeBarWidth - d_width*0.85/6)
                     }}><MaterialCommunityIcons name='arrow-left' size={30} color={arrowLeftColor} /></TouchableOpacity>
                     <TouchableOpacity onPress={() => {
                         if (renderBlock1 == 1) {
@@ -904,9 +959,14 @@ const AnimalEmergencyScreen = ({navigation}) => {
                         if (renderBlock4 == 1) {
                             setRenderBlock4(0)
                             setRenderBlock5(1)
+                            setArrowRightColor('green')
+                        }
+                        if (renderBlock5 == 1) {
+                            setRenderBlock5(0)
+                            setRenderBlock6(1)
                             setArrowRightColor('rgba(0,0,0,0)')
                         }
-                        setActiveBarWidth(activeBarWidth + d_width*0.85/5)
+                        setActiveBarWidth(activeBarWidth + d_width*0.85/6)
                     }}><MaterialCommunityIcons name='arrow-right' size={30} color={arrowRightColor} /></TouchableOpacity>
                 </View>
                 <View style={[styles.progressBarActive, {width: activeBarWidth}]} />
@@ -1014,11 +1074,15 @@ const AnimalEmergencyScreen = ({navigation}) => {
                 }}><AccordionItem title="Ahogamiento" animalID={1} contentID={24} onScrollToNoPulse={() => {
                         setRenderRcp(1)
                         moveTo(4)
+                    }} onScrollToArtificialBreathing={() => {
+                        setRenderArtificialBreathing(1)
+                        moveTo(5)
                     }} /></View>}
                 {renderForeignObject == 1 && <AccordionItem title="Cuerpo extraño" animalID={1} contentID={25} onScrollToChoking={() => {
                     console.log("Scroll to choking")
                     moveTo(6)
                 }} />}
+                {renderEggs == 1 && <AccordionItem title="Problemas en la puesta de huevos" animalID={1} contentID={27} />}
             </View>}
         </ScrollView>
         </View>

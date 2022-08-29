@@ -15,6 +15,8 @@ const AnimalBasicCareScreen = () => {
     const dispatch = useDispatch()
     const navigatedToSplay = useSelector(state => state.care.navigatedToSplay)
     const splayPosition = useSelector(state => state.care.splayPosition)
+    const eggsPosition = useSelector(state => state.care.eggsPosition)
+    const navigatedToEggs = useSelector(state => state.care.navigatedToEggs)
     const animalID = useSelector(state => state.search.animalSelected_id)
     
     const [headerImg, setHeaderImg] = useState()
@@ -24,9 +26,8 @@ const AnimalBasicCareScreen = () => {
     const [careDescription, setCareDescription] = useState('')
 
     useEffect(() => {
-        console.log(navigatedToSplay)
         renderSections()
-    }, [navigatedToSplay])
+    }, [navigatedToSplay, navigatedToEggs])
 
     const refScrollView = useRef(null);
 
@@ -34,6 +35,10 @@ const AnimalBasicCareScreen = () => {
         if (section == 0) { // Splay Leg
             refScrollView.current.scrollTo({y: splayPosition+3000});
             dispatch(careActions.toggleSplayNav())
+        }
+        else if (section == 1) { // Eggs
+            refScrollView.current.scrollTo({y: eggsPosition+3000})
+            dispatch(careActions.toggleEggsNav())
         }
     }
 
@@ -82,7 +87,16 @@ const AnimalBasicCareScreen = () => {
                     if (navigatedToSplay) {
                         moveTo(0)
                     }
-                }}><AccordionItem animalID={animalID} contentID={3} title="Posibles complicaciones" open_default={navigatedToSplay ? true : false} /></View>
+                }}>
+                    <AccordionItem animalID={animalID} contentID={3} title="Posibles complicaciones" open_default={navigatedToSplay ? true : false} />
+                </View>
+                <View onLayout={event => {
+                    if(navigatedToEggs) {
+                        moveTo(1)
+                    }
+                }}>
+                    <AccordionItem animalID={animalID} contentID={28} title="Problemas con la puesta de huevos" open_default={navigatedToEggs ? true : false} />
+                </View>
                 <AccordionItem animalID={animalID} contentID={4} title="Pensando en la liberación" />
             </View>
         )

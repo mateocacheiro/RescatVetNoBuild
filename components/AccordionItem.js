@@ -197,14 +197,20 @@ const AccordionItem = (props) => {
                         <View style={styles.subdivider}/>
                         <Text style={styles.text}>Probablemente tenga heridas internas. No podremos hacer mucho más que cogerle de forma segura, envolverle en una tela para que no pierda calor, ponerle en un transportín o caja de cartón y acudir con urgencia a la clínica veterinaria. No debemos darle comida ni agua puesto que no sabemos si puede tener heridas internas o daños nerviosos.</Text>
                         </View>}
+
+                        {sub_ids.includes(7) && <View>
+                        <Text style={styles.title2}>Si tiene vísceras visibles</Text>
+                        <View style={styles.subdivider}/>
+                        <Text style={styles.text}>Jamás intentaremos volver a introducir las vísceras, sino que las mantendremos húmedas con un paño o tejido limpio y suero fisiológico o agua limpia hasta llegar a la clínica veterinaria de urgencia.</Text>
+                        </View>}
                         
                         {render_broken && <View>
                         <Text style={styles.title2}>Si lo que vemos es un ala o pata rota</Text>
                         <View style={styles.subdivider}/>
                         <Text style={styles.text}>También debemos acudir a la clínica veterinaria con urgencia. No debemos darle comida ni agua puesto que no sabemos si puede tener heridas internas o daños nerviosos. Clica aquí para acceder al protocolo de actuación en caso de <TouchableOpacity onPress={props.onScrollToBrokenWing}><Text style={styles.hypertext}>ala rota</Text></TouchableOpacity> o <TouchableOpacity onPress={props.onScrollToBrokenLeg}><Text style={styles.hypertext}>pata rota</Text></TouchableOpacity>. En caso de no poder llevarla a la clínica veterinaria inmediatamente, se debe coger con cuidado al animal, cortar la hemorragia (si la hay) presionando con una gasa o tela limpia durante al menos 15 minutos (las palomas tardan en coagular). Si la gasa o la tela se impregna de sangre, no debemos retirar las antiguas, pondremos otras limpias encima y seguiremos presionando. Transportaremos al animal en una caja o transportín hasta casa, preferentemente envuelto en una tela que mantenga el calor. Una vez en casa, podemos aplicar Betadine diluido al 50% o cristalmina para evitar que la herida se infecte. Si no disponemos de ellos, podemos aplicar miel o azúcar. Deberemos acudir a la clínica veterinaria lo antes posible.</Text>
-                        <Text style={styles.title2}>Si tiene un ala rota o dislocada</Text>
+                        <Text style={styles.title2}>Si tiene un ala o pata dislocada</Text>
                         <View style={styles.subdivider}/>
-                        <Text style={styles.text}>(no hay fractura ni herida abierta por la que salga hueso, pero la extremidad está en una posición no natural), la urgencia es menor aunque igualmente debemos ir a la clínica veterinaria ya que no sabemos la causa. Si vamos inmediatamente a la clínica, no debemos darle comida ni agua puesto que no sabemos si puede tener heridas internas o daños nerviosos. Ya esté el ala o pata rota o dislocada, la fijación la debe realizar une veterinarie, ya que un ala mal soldada puede dejar al animal sin volar el resto de su vida. Clica aquí para acceder al protocolo de actuación en caso de <TouchableOpacity onPress={props.onScrollToDislocatedWing}><Text style={styles.hypertext}>ala dislocada</Text></TouchableOpacity> o <TouchableOpacity onPress={props.onScrollToDislocatedLeg}><Text style={styles.hypertext}>pata dislocada</Text></TouchableOpacity>.</Text>
+                        <Text style={styles.text}>No hay fractura ni herida abierta por la que salga hueso, pero la extremidad está en una posición no natural. La urgencia es menor aunque igualmente debemos ir a la clínica veterinaria ya que no sabemos la causa. Si vamos inmediatamente a la clínica, no debemos darle comida ni agua puesto que no sabemos si puede tener heridas internas o daños nerviosos. Ya esté el ala o pata rota o dislocada, la fijación la debe realizar une veterinarie, ya que un ala mal soldada puede dejar al animal sin volar el resto de su vida. Clica aquí para acceder al protocolo de actuación en caso de <TouchableOpacity onPress={props.onScrollToDislocatedWing}><Text style={styles.hypertext}>ala dislocada</Text></TouchableOpacity> o <TouchableOpacity onPress={props.onScrollToDislocatedLeg}><Text style={styles.hypertext}>pata dislocada</Text></TouchableOpacity>.</Text>
                         <Text style={styles.text}>También existe la posibilidad de que se trate de un caso de “splay leg”, o patas extendidas, que no supone una urgencia en sí pero debe valorarlo une veterinarie ya que se puede confundir con una fractura (abierta o cerrada).  En caso de que se le diagnostique un caso de splay leg, haz click <Pressable onPress={() => {
                             navigation.jumpTo('BasicCare')
                             dispatch(careActions.toggleSplayNav())
@@ -324,7 +330,7 @@ const AccordionItem = (props) => {
                         <Text style={styles.text}>Un golpe de calor se deduce cuando encontramos al animal sin ningún otro tipo de heridas o contusiones, y en unas condiciones que lo propicien (temperaturas, exposición al sol). Es una urgencia veterinaria.</Text>
                         <Text style={styles.text}>Si la paloma presenta un <Text style={styles.textBold}>inicio</Text> de golpe de calor, la pondremos a la sombra e intentaremos darle agua con azúcar o algún sirope disuelto en una cuchara o con una jeringa si disponemos de ella. La podemos pedir en cualquier cafetería o bar (un vaso de agua de grifo, un azucarillo y una cuchara). Siempre debemos observar que se reduzcan los síntomas de golpe de calor, en caso de que no se reduzcan, debemos acudir a la clínica de urgencias.</Text>
                         <Text style={styles.text}>Si el animal presenta signos de golpe de calor <Text style={styles.textBold}>avanzado</Text>, debemos acudir a la clínica veterinaria lo antes posible. Mientras tanto, se puede mojar o sumergir al animal, en caso de que no tenga otro tipo de lesiones (heridas, fracturas, etc.) con cuidado de no bajar su temperatura corporal demasiado rápido, ya que podría resultar perjudicial. Usaremos agua tibia y, muy poco a poco, en el transcurso de 4-5 minutos, pasarle a agua más fresca. Si no podemos mojarla o sumergirla, empaparemos una tela con agua fresca y la colocaremos en ingles, axilas o patas. Por supuesto, también le ofreceremos agua para beber, preferentemente con un poco de azúcar disuelto.</Text>
-                        <Text style={styles.text}>Si el animal <Text style={styles.textBold}>no está consciente</Text>, examinaremos su cuerpo para ver que el corazón late y que respira. (Si no tiene pulso, clica <TouchableOpacity onPress={props.onScrollToNoPulse}><Text style={styles.hypertext}>aquí</Text></TouchableOpacity>; si hay pulso pero no respira, clica <TouchableOpacity onPress={props.onScrollToArtificialBreathing}><Text style={styles.hypertext}>aquí</Text></TouchableOpacity>). También buscaremos heridas, fracturas, etc. En caso de que tenga pulso, respire y no tenga heridas fracturas, mientras vamos a la clínica de urgencias, la colocaremos en un ambiente fresco, empaparemos una tela con agua fresca y la colocaremos en ingles, axilas o patas. También podemos envolverla en una tela mojada durante el transporte. Debemos llevar cuidado de que no se golpee o zarandee la cabeza para no provocar lesiones.</Text>
+                        <Text style={styles.text}>Si el animal <Text style={styles.textBold}>no está consciente</Text>, examinaremos su cuerpo para ver que el corazón late y que respira. (Si no tiene pulso, clica <TouchableOpacity onPress={props.onScrollToNoPulse}><Text style={styles.hypertext}>aquí</Text></TouchableOpacity>; si hay pulso pero no respira, clica <TouchableOpacity onPress={props.onScrollToArtificialBreathing}><Text style={styles.hypertext}>aquí</Text></TouchableOpacity>). También buscaremos heridas, fracturas, etc. En caso de que tenga pulso, respire y no tenga heridas o fracturas, mientras vamos a la clínica de urgencias, la colocaremos en un ambiente fresco, empaparemos una tela con agua fresca y la colocaremos en ingles, axilas o patas. También podemos envolverla en una tela mojada durante el transporte. Debemos llevar cuidado de que no se golpee o zarandee la cabeza para no provocar lesiones.</Text>
                     </View>
                 )
             }
@@ -342,7 +348,7 @@ const AccordionItem = (props) => {
                 return (
                     <View style={styles.content}>
                         <Text style={styles.text}>En el caso de una mordedura, trataremos al animal con mucho cuidado ya que, normalmente, solemos ver un orificio abierto pero suele haber más (son las incisiones de los dientes). En el caso de sufrir la mordedura de un perro, la paloma probablemente tendrá 4 orificios de los colmillos; en el caso de un gato, suelen ser 2 orificios.</Text>
-                        <Text style={styles.text}>Puesto que no sabemos si la mordedura ha dañado algún órgano interno, deberemos llevar a la paloma a la clínica veterinaria lo antes posible.</Text>
+                        <Text style={styles.text}>Puesto que no sabemos si la mordedura ha dañado algún órgano interno, deberemos llevar a la paloma a la clínica veterinaria lo antes posible. Si tiene vísceras visibles, jamás intentaremos volver a introducir las vísceras, sino que las mantendremos húmedas con un paño o tejido limpio y suero fisiológico o agua limpia hasta llegar a la clínica veterinaria de urgencia.</Text>
                         <Text style={styles.text}>Si no es posible llevarla inmediatamente, se debe coger con cuidado al animal, cortar la hemorragia (si la hay) presionando con una gasa o tela limpia durante al menos 15 minutos (las palomas tardan en coagular). Si la gasa o la tela se impregna de sangre, no debemos retirar las antiguas, pondremos otras limpias encima y seguiremos presionando. Transportaremos al animal en una caja o transportín hasta casa, preferentemente envuelto en una tela que mantenga el calor. Una vez en casa, podemos aplicar Betadine diluido al 50% o cristalmina para evitar que la herida se infecte. Si no disponemos de ellos, podemos aplicar miel o azúcar. Deberemos acudir a la clínica veterinaria lo antes posible, ya que es extremadamente doloroso para el animal y necesitará asistencia.</Text>
                     </View>
                 )
@@ -407,7 +413,7 @@ const AccordionItem = (props) => {
                 return (
                     <View style={styles.content}>
                         <Text style={styles.text}>Si <Text style={styles.textBold}>no tiene pulso</Text>, cogeremos a la paloma con las dos manos en forma de corazón, abarcando las alas en posición normal, y la pondremos boca abajo. Como no estará consciente podemos agitarla suavemente para que salga el agua por gravedad. Cuando ya no salga agua, realizaremos la <TouchableOpacity onPress={() => {props.onScrollToNoPulse}}><Text style={styles.hypertext}>reanimación cardiopulmonar (RCP)</Text></TouchableOpacity>.</Text>
-                        <Text style={styles.text}>Si la paloma no traga, jadea, boquea, estira el cuello o sus mucosas (como la lengua) se vuelven azuladas o grises debemos actuar rápido.</Text>
+                        <Text style={styles.text}>Si <Text style={styles.textBold}>no respira</Text> pero tiene pulso, deberás llevar a cabo la <TouchableOpacity onPress={props.onScrollToArtificialBreathing}><Text style={styles.hypertext}>respiración artificial</Text></TouchableOpacity></Text>
                         <Text style={styles.text}>Si <Text style={styles.textBold}>tiene pulso y está consciente</Text>, lo primero que debemos tener en cuenta es que la paloma que haya caído al agua y se esté ahogando, se pondrá nerviosa con nuestra manipulación, así que debemos evitar gritos o sonidos estridentes.</Text>
                         <Text style={styles.text}>Cogeremos al animal con las dos manos en forma de corazón, abarcando también las alas y la pondremos boca abajo para que el agua caiga por gravedad. Si está inconsciente podemos ponerla boca abajo y agitarla suavemente con la misma finalidad, sujetando su cabeza por los lados con los índices.</Text>
                         <Text style={styles.text}>Una vez la paloma recupere la consciencia y respire con relativa normalidad, la envolveremos en una tela con las alas en posición normal y la llevaremos a consulta veterinaria para que le hagan una revisión. Deberemos meterla en una caja de cartón con agujeros o en un transportín para minimizar el estrés.</Text>
@@ -434,6 +440,28 @@ const AccordionItem = (props) => {
                         <Text style={styles.text}>Si <Text style={styles.textBold}>no puedes coger al animal</Text>, lo ideal es pedir ayuda ya sea a tu/s acompañante/s (si vas acompañade), o a alguien por la calle. En caso de no poder tampoco en este caso, <TouchableOpacity onPress={() => {
                             navigation.jumpTo('ExternalResources')
                         }}><Text style={styles.hypertext}>aquí</Text></TouchableOpacity> te dejamos enlaces a grupos de Facebook donde poder pedir ayuda.</Text>
+                    </View>
+                )
+            }
+            else if (contentID == 27) {
+                return(
+                    <View style={styles.content}>
+                        <Text style={styles.text}>La puesta de huevos puede provocar que la paloma esté aletargada, respire rápida y superficialmente, tenga el abdomen hinchado y cojee o tenga una pata inmóvil. Haz click <TouchableOpacity onPress={() => {
+                            navigation.jumpTo('BasicCare')
+                            dispatch(careActions.toggleEggsNav())
+                        }}><Text style={styles.textBold}>aquí</Text></TouchableOpacity> para acceder al apartado de manejo básico donde explicamos más detalladamente qué hacer en diferentes situaciones.</Text>
+                    </View>
+                )
+            }
+            else if (contentID == 28) {
+                return(
+                    <View style={styles.content}>
+                        <Text style={styles.text}>Si la paloma tiene una alimentación equilibrada compuesta por semillas variadas y pienso enriquecido con vitaminas y calcio, la puesta de huevos suele ser un proceso sin complicaciones. Sin embargo, como en todas las aves, la puesta de huevos puede conllevar algunos problemas. Los más habituales son:</Text>
+                        <Text style={styles.text}>- <Text style={styles.textBold}>Cojera:</Text> puede producirla el paso del huevo por el oviducto hasta el exterior, que pinza el nervio ciático. Sin embargo, el paso del huevo también puede provocar una fractura de cadera, por lo que es imprescindible acudir al centro veterinario para que hagan una radiografía y hacer un diagnóstico. En el caso de pinzamiento del nervio, probablemente le recetará reposo y antiinflamatorio. En caso de fractura, le veterinarie recomendará cuál es el mejor tratamiento.</Text>
+                        <Text style={styles.text}>- <Text style={styles.textBold}>Huevos malformados:</Text> puede suceder que un huevo sea expulsado con la cáscara muy blanda o prácticamente sin cáscara. Esto suele indicar una deficiencia de calcio en el organismo de la paloma. En caso de que veamos un huevo malformado, deberíamos ir al centro veterinario para que nos aconsejen cómo evitarlo en el futuro, probablemente con suplementación alimentaria.</Text>
+                        <Text style={styles.text}>- <Text style={styles.textBold}>Protrusión:</Text> puede suceder que una parte del oviducto salga al exterior junto con el huevo. En este caso, jamás intentaremos volver a introducir las vísceras, sino que las mantendremos húmedas con un paño o tejido limpio y suero fisiológico o agua limpia hasta llegar a la clínica veterinaria de urgencia.</Text>
+                        <Text style={styles.text}>- <Text style={styles.textBold}>Retención de huevos:</Text> en caso de sufrir retención de huevos, veremos que el animal tiene el abdomen hinchado, respira rápida y superficialmente, y puede cojear o tener una pata inmóvil. Lo único que podemos hacer es intentar lubricar la zona de la cloaca para ayudar a la expulsión del huevo, pero en caso de que tarde, debemos acudir a la clínica veterinaria, probablemente realizarán una cirugía para extraer el huevo.</Text>
+                        <Text style={styles.text}>Hay veterinaries que recomiendan poner el implante hormonal que inhibe la ovulación y puesta de huevos en las aves, es el único tratamiento efectivo para evitar la puesta de huevos y todos los problemas que puede conllevar. El implante que se usa habitualmente se llama Suprelorin, y suele tener una efectividad de unos 6 meses, aunque a partir del cuarto mes debemos estar pendientes de posibles cambios en el comportamiento de la paloma por si se empieza a pasar el efecto del implante.</Text>
                     </View>
                 )
             }
@@ -476,7 +504,8 @@ const styles = StyleSheet.create({
     title: {
         fontFamily: 'montserrat-bold',
         fontSize: 18,
-        color: Colors.primary
+        color: Colors.primary,
+        maxWidth: '85%'
     },
     content: {
         justifyContent: 'flex-start',

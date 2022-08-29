@@ -153,6 +153,14 @@ const FormQuestion = (props) => {
             setQText("¿Tiene algún cuerpo extraño clavado en el cuerpo?")
             setInfoID(9)
         }
+        if (question_id == 29) {
+            setQText("¿Tiene vísceras visibles?")
+            setChevronRightBg('rgba(0,0,0,0)')
+            setChevronLeftBg('green')
+        }
+        if (question_id == 30) {
+            setQText("¿Tiene el abdomen hinchado?")
+        }
     }, [])
 
     
@@ -202,6 +210,9 @@ const FormQuestion = (props) => {
             else if (question_id == 10) {
                 dispatch(emergencyActions.changeQuestion(9))
             }
+            else if (question_id = 29) {
+                dispatch(emergencyActions.changeQuestion(10))
+            }
             else if (question_id == 20) {
                 dispatch(emergencyActions.changeQuestion(19))
             }
@@ -231,6 +242,9 @@ const FormQuestion = (props) => {
             }
             else if (question_id == 9) {
                 dispatch(emergencyActions.changeQuestion(10))
+            }
+            else if (question_id == 10) {
+                dispatch(emergencyActions.changeQuestion(29))
             }
             else if (question_id == 19) {
                 dispatch(emergencyActions.changeQuestion(20))
