@@ -82,6 +82,7 @@ const FormQuestion = (props) => {
             setQText("¿Tiene heridas abiertas?")
             setChevronRightBg('rgba(0,0,0,0)')
             setChevronLeftBg('green')
+            setChevronRightBg('green')
         }
         if (question_id == 11) {
             setQText("¿Tiene la temperatura baja?")

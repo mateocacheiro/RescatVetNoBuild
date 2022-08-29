@@ -345,6 +345,9 @@ const AnimalEmergencyScreen = ({navigation}) => {
                     setRenderHeat(1)
                     setRenderBite(1)
                     setRenderEggs(1)
+                    const sub_ids = cont_sub_ids
+                    sub_ids.push(7)
+                    setCont_sub_ids(sub_ids)
                 } else {
                     console.log("Pigeon doesn't have fast breathing")
                     setHasFastBreathing(0)
@@ -480,7 +483,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
                 if(last_answer_value == 'yes') {
                     console.log('Pigeon has visible guts')
                     const sub_ids = cont_sub_ids
-                    sub_ids.push(8)
+                    sub_ids.push(7)
                     setCont_sub_ids(sub_ids)
                     setHasVisibleGuts(1)
                     setRenderBite(1)
@@ -549,6 +552,9 @@ const AnimalEmergencyScreen = ({navigation}) => {
                     setRenderContusion(1)
                     setRenderDislocatedLeg(1)
                     setRenderEggs(1)
+                    const sub_ids = cont_sub_ids
+                    sub_ids.push(7)
+                    setCont_sub_ids(sub_ids)
                 } else {
                     console.log("Pigeon's leg is in an unnatural position")
                     setNaturalLeg(0)
