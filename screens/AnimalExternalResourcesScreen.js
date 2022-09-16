@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, ImageBackground, ScrollView, Dimensions, TouchableWithoutFeedback, Linking } from 'react-native'
+import { StyleSheet, Text, View, ImageBackground, ScrollView, Dimensions, TouchableWithoutFeedback, Linking, FlatList } from 'react-native'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import Colors from '../constants/Colors'
 import { useSelector } from 'react-redux'
+import ExternalResources from '../assets/database/ExternalResources.json'
+import ResourceItem from '../components/ResourceItem'
 
 const AnimalExternalResourcesScreen = () => {
 
@@ -40,8 +42,23 @@ const AnimalExternalResourcesScreen = () => {
         }
     }, [animalID])
 
+    const VirtualizedList = ({children}) => {
+        return (
+            <FlatList
+                data={[]}
+                keyExtractor={() => "key"}
+                renderItem={null}
+                ListHeaderComponent={
+                    <>{children}</>
+                }
+                style={{backgroundColor: Colors.lightBG}}
+            />
+        )
+    }
+
     return (
         <View style={styles.container}>
+            <VirtualizedList>
             <ScrollView>
                 <ImageBackground source={headerImg} resizeMode="cover" style={styles.headerBlock}>
                     <View style={styles.breadCrumbs}>
@@ -63,181 +80,54 @@ const AnimalExternalResourcesScreen = () => {
                     </View> 
                 </ImageBackground>
                 {!noResourcesInfo && <View style={styles.contentBlock}>
-                    <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginBottom: 10}}>
-                        <MaterialCommunityIcons name="facebook" size={40} color={Colors.primary} />
-                        <Text style={styles.mediaTitle}>Facebook</Text>
+                    <View>
+                        <View style={styles.filterTitle}>
+                            <MaterialCommunityIcons name="filter" size={30} color={Colors.primary} />
+                            <Text style={[styles.title, {marginBottom: 0}]}>Filter</Text>
+                        </View>
+                        <View style={styles.divider2} />
                     </View>
-                    <View style={styles.divider2} />
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="flag" size={30} color='white' />
-                        <TouchableWithoutFeedback onPress={() => {
-                            Linking.openURL('https://www.facebook.com/PalomasEnMiCorazon')
-                        }}>
-                            <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Corazón de paloma</Text>
-                        </TouchableWithoutFeedback>
+                    <View style={styles.filter_row1}>
+                        <View style={[styles.filterItem_row1, {backgroundColor: Colors.primary}]}>
+                            <MaterialCommunityIcons name="facebook" color="white" size={25} style={{marginHorizontal: 5}}/>
+                            <Text style={styles.text}>Facebook</Text>
+                        </View>
+                        <View style={styles.filterItem_row1}>
+                            <MaterialCommunityIcons name="twitter" color="white" size={25} style={{marginHorizontal: 5}}/>
+                            <Text style={styles.text}>Twitter</Text>
+                        </View>
+                        <View style={styles.filterItem_row1}>
+                            <MaterialCommunityIcons name="instagram" color="white" size={25} style={{marginHorizontal: 5}}/>
+                            <Text style={styles.text}>Instagram</Text>
+                        </View>
                     </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="flag" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Arrullo de paloma</Text>
+                    <View style={styles.filter_row2}>
+                        <View style={styles.filterItem_row2}>
+                            <MaterialCommunityIcons name="youtube" color="white" size={25} style={{marginHorizontal: 5}}/>
+                            <Text style={styles.text}>Youtube</Text>
+                        </View>
+                        <View style={styles.filterItem_row2}>
+                            <MaterialCommunityIcons name="web" color="white" size={25} style={{marginHorizontal: 5}}/>
+                            <Text style={styles.text}>Webs y Blogs</Text>
+                        </View>
                     </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="flag" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Santuario La paloma triste</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="flag" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Asociación Birds Friends</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="flag" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Mis amigas las palomas</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="flag" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Palomas y compañía</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="account-group" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Mis amigas emplumadas</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="account-group" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Palomas y compañía (grupo de defensa y protección)</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="account-group" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Palomas y compañía (grupo público)</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="account-group" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Ayudando a volar</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="account-group" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Aves perdidas, encontradas y rescatadas</Text>
-                    </View>
-
-
-                    <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginBottom: 10}}>
-                        <MaterialCommunityIcons name="instagram" size={40} color={Colors.primary} />
-                        <Text style={styles.mediaTitle}>Instagram</Text>
-                    </View>
-                    <View style={styles.divider2} />
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="account" size={30} color='white' />
-                        <TouchableWithoutFeedback onPress={() => {
-                            Linking.openURL('https://www.instagram.com/al_rescate_deaves/')
-                        }}>
-                            <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Al rescate de aves</Text>
-                        </TouchableWithoutFeedback>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="account" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Rescate de aves</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="account" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Mis amigas las palomas</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="account" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Corazón de paloma</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="account" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Necesitan volar</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="account" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Palomas de Madrid (también para información)</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="account" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>La paloma triste</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="account" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Asociación Birds friends</Text>
-                    </View>
-
-                    
-                    <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginBottom: 10}}>
-                        <MaterialCommunityIcons name="twitter" size={40} color={Colors.primary} />
-                        <Text style={styles.mediaTitle}>Twitter</Text>
-                    </View>
-                    <View style={styles.divider2} />
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="at" size={30} color='white' />
-                        <TouchableWithoutFeedback onPress={() => {
-                            Linking.openURL('https://twitter.com/Birds_Friends_')
-                        }}>
-                            <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Asociación Birds friends</Text>
-                        </TouchableWithoutFeedback>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="at" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Mis amigas las palomas</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="at" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Corazón de paloma</Text>
-                    </View>
-
-
-                    <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginBottom: 10}}>
-                        <MaterialCommunityIcons name="youtube" size={40} color={Colors.primary} />
-                        <Text style={styles.mediaTitle}>Youtube</Text>
-                    </View>
-                    <View style={styles.divider2} />
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="video-account" size={30} color='white' />
-                        <TouchableWithoutFeedback onPress={() => {
-                            Linking.openURL('https://www.youtube.com/c/MisAmigasLasPalomasMALP')
-                        }}>
-                            <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Mis amigas las palomas</Text>
-                        </TouchableWithoutFeedback>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialCommunityIcons name="video-account" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Refugio La paloma</Text>
-                    </View>
-
-
-                    <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginBottom: 10}}>
-                        <MaterialCommunityIcons name="web" size={40} color={Colors.primary} />
-                        <Text style={styles.mediaTitle}>Webs y blogs</Text>
-                    </View>
-                    <View style={styles.divider2} />
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialIcons name="web" size={30} color='white' />
-                        <TouchableWithoutFeedback onPress={() => {
-                            Linking.openURL('https://birdsfriends.wixsite.com/asociacion?fbclid=IwAR0aVHJvZ4BKlDRHu2dw6PyEq5PpZAWn8VfUwnK9EHe6GHncXublH6m-32E')
-                        }}>
-                            <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Asociación Birds friends</Text>
-                        </TouchableWithoutFeedback>
-                    </View>
-                    <View style={{flexDirection: 'row', paddingLeft: 11, marginBottom: 10, justifyContent: 'center', alignItems: 'flex-start'}}>
-                        <MaterialIcons name="web" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Mis amigas las palomas (no recomendamos seguir pautas de medicación)</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialIcons name="web" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Santuario La paloma triste</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialIcons name="web" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Corazón de paloma</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-                        <MaterialIcons name="web" size={30} color='white' />
-                        <Text style={[styles.text, {textDecorationLine: 'underline', marginLeft: 10}]}>Henfluencers</Text>
-                    </View>
+                    <FlatList data={ExternalResources}
+                            style={{marginVertical: 10}}
+                            scrollEnabled={true} 
+                            keyExtractor={resource => resource.ID} 
+                            renderItem={itemData => {
+                                if (itemData.item.AnimalID == animalID) {
+                                    return <ResourceItem title={itemData.item.Title} name={itemData.item.GroupName} onLink={() => {Linking.openURL(itemData.item.URL)}}/>
+                                }
+                            }}/>
                 </View>
+                       
             }
             {noResourcesInfo && <View style={styles.contentBlock}>
                 <Text style={[styles.text, {alignSelf: 'center'}]}>No hay recursos externos para {animalName}</Text>
             </View>}
             </ScrollView>
+            </VirtualizedList>
         </View>
     )
 }
@@ -310,13 +200,48 @@ const styles = StyleSheet.create({
         paddingVertical: 30,
         marginBottom: 10,
         justifyContent: 'center',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         padding: 15
     },
     mediaTitle: {
         fontFamily: 'montserrat-bold',
         color: Colors.primary,
         fontSize: 18,
-        marginLeft: 10
+        marginBottom: 5
+    },
+    filter_row1: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        padding: 5,
+        maxWidth: Dimensions.get('window').width*0.9,
+    },
+    filter_row2: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        maxWidth: Dimensions.get('window').width*0.9,
+    },
+    filterItem_row1: {
+        backgroundColor: '#aaa',
+        padding: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 5,
+        marginHorizontal: 10
+    },
+    filterItem_row2: {
+        backgroundColor: '#aaa',
+        padding: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 5,
+        marginHorizontal: 3
+    },
+    filterTitle: {
+        width: Dimensions.get('window').width*0.9,
+        flexDirection: 'row', 
+        justifyContent: 'flex-start', 
+        alignItems: 'center',
+        marginBottom: 10
     }
 })

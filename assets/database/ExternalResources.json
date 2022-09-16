@@ -1,0 +1,205 @@
+[
+    {
+        "AnimalID": 1,
+        "GroupName": "Facebook",
+        "ID": 1,
+        "Title": "Corazón de paloma",
+        "URL": "https://www.facebook.com/PalomasEnMiCorazon"
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Facebook",
+        "ID": 2,
+        "Title": "Arrullo de paloma",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Facebook",
+        "ID": 3,
+        "Title": "Santuario La paloma triste",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Facebook",
+        "ID": 4,
+        "Title": "Asociación Birds Friends",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Facebook",
+        "ID": 5,
+        "Title": "Mis amigas las palomas",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Facebook",
+        "ID": 6,
+        "Title": "Palomas y compañía",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Facebook",
+        "ID": 7,
+        "Title": "Mis amigas emplumadas",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Facebook",
+        "ID": 8,
+        "Title": "Palomas y compañía (grupo de defensa y protección)",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Facebook",
+        "ID": 9,
+        "Title": "Palomas y compañía (grupo público)",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Facebook",
+        "ID": 10,
+        "Title": "Ayudando a volar",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Facebook",
+        "ID": 11,
+        "Title": "Aves perdidas, encontradas y rescatadas",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Instagram",
+        "ID": 12,
+        "Title": "Al rescate de aves",
+        "URL": "https://www.instagram.com/al_rescate_deaves/"
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Instagram",
+        "ID": 13,
+        "Title": "Rescate de aves",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Instagram",
+        "ID": 14,
+        "Title": "Mis amigas las palomas",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Instagram",
+        "ID": 15,
+        "Title": "Corazón de paloma",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Instagram",
+        "ID": 16,
+        "Title": "Necesitan volar",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Instagram",
+        "ID": 17,
+        "Title": "Palomas de Madrid (también para información)",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Instagram",
+        "ID": 18,
+        "Title": "La paloma triste",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Instagram",
+        "ID": 19,
+        "Title": "Asociación Birds friends",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Twitter",
+        "ID": 20,
+        "Title": "Asociación Birds friends",
+        "URL": ".https://twitter.com/Birds_Friends_"
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Twitter",
+        "ID": 21,
+        "Title": "Mis amigas las palomas",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Twitter",
+        "ID": 22,
+        "Title": "Corazón de paloma",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Youtube",
+        "ID": 23,
+        "Title": "Mis amigas las palomas",
+        "URL": "https://www.youtube.com/c/MisAmigasLasPalomasMALP"
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Youtube",
+        "ID": 24,
+        "Title": "Refugio La paloma",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Web",
+        "ID": 25,
+        "Title": "Asociación Birds friends",
+        "URL": "https://birdsfriends.wixsite.com/asociacion?fbclid=IwAR0aVHJvZ4BKlDRHu2dw6PyEq5PpZAWn8VfUwnK9EHe6GHncXublH6m-32E"
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Web",
+        "ID": 26,
+        "Title": "Mis amigas las palomas (no recomendamos seguir pautas de medicación)",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Web",
+        "ID": 27,
+        "Title": "Santuario La paloma triste",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Web",
+        "ID": 28,
+        "Title": "Corazón de paloma",
+        "URL": "."
+    },
+    {
+        "AnimalID": 1,
+        "GroupName": "Web",
+        "ID": 29,
+        "Title": "Henfluencers",
+        "URL": "."
+    }
+]

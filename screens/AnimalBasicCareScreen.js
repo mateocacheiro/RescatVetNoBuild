@@ -118,7 +118,7 @@ const AnimalBasicCareScreen = () => {
                     <View style={{justifyContent: 'center', alignItems: 'center', marginBottom: 10}}>
                         <MaterialCommunityIcons name='paw' size={70} color={Colors.primary} />
                     </View>
-                    <Text style={styles.title}> ¿Cuales son los cuidados básicos?</Text>
+                    <Text style={styles.title}> ¿Cuáles son los cuidados básicos?</Text>
                     <View style={{justifyContent: 'center', alignItems: 'center', marginBottom: 10}}><View style={styles.divider}/></View>
                     <View style={styles.descriptionBlock}>
                         <Text style={[styles.text, {textAlign: 'center'}]}>A continuación podrás ver toda la información necesaria para darle el mejor cuidado a {careDescription}, separada por categorías.</Text>

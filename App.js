@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { useFonts } from 'expo-font';
 import LoadingScreen from './screens/LoadingScreen';
 import store from './store/App';
+import Colors from './constants/Colors';
 
 export default function App() {
 
@@ -28,7 +29,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.darkBG,
     alignItems: 'center',
     justifyContent: 'center',
   },
