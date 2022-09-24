@@ -1,10 +1,30 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, ImageBackground, ScrollView, Dimensions, TouchableWithoutFeedback, Linking, FlatList } from 'react-native'
+import { StyleSheet, Text, View, ImageBackground, ScrollView, Dimensions, TouchableWithoutFeedback, Linking, FlatList, TouchableOpacity } from 'react-native'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import Colors from '../constants/Colors'
 import { useSelector } from 'react-redux'
 import ExternalResources from '../assets/database/ExternalResources.json'
 import ResourceItem from '../components/ResourceItem'
+
+
+/*
+
+Filter logic:
+
+Create a state reducer:
+    - Facebook_filter
+    - Instagram_filter
+    - Twitter_filter
+    - Web_filter
+
+If there are no filters applied, pass the entire JSON data to FlatList
+
+If at least one of the filters has a state of true:
+
+    - Map through the data and add the rows which GroupName matches the active filters, to a new Object array
+    - Send the object array to the Flatlist as data
+
+*/
 
 const AnimalExternalResourcesScreen = () => {
 
@@ -13,6 +33,13 @@ const AnimalExternalResourcesScreen = () => {
     const [headerImg, setHeaderImg] = useState()
     const [animalName, setAnimalName] = useState()
     const [noResourcesInfo, setNoResourcesInfo] = useState(true)
+    const [resourcesFilter, setResourcesFilter] = useState([])
+    const [filteredArray, setFilteredArray] = useState()
+    const [facebookFilterActive, setFacebookFilterActive] = useState(false)
+    const [twitterFilterActive, setTwitterFilterActive] = useState(false)
+    const [instagramFilterActive, setInstagramFilterActive] = useState(false)
+    const [youtubeFilterActive, setYoutubeFilterActive] = useState(false)
+    const [webFilterActive, setWebFilterActive] = useState(false)
 
     useEffect(() => {
         if(animalID == 1) {
@@ -42,6 +69,107 @@ const AnimalExternalResourcesScreen = () => {
         }
     }, [animalID])
 
+    useEffect(() => {
+        console.log(resourcesFilter)
+        let filteredData = []
+        if (resourcesFilter.includes('Facebook')) {
+            filteredData = filteredData.concat(ExternalResources.filter(function(element){
+                if (element.GroupName != 'Facebook') {
+                    return null 
+                } else {
+                    return element
+                }
+            }).map(function(element){
+                return element 
+            }))
+        }
+        if (resourcesFilter.includes('Twitter')) {
+            filteredData = filteredData.concat(ExternalResources.filter(function(element){
+                if (element.GroupName != 'Twitter') {
+                    return null
+                } else {
+                    return element
+                }
+            }).map(function(element){
+                return element
+            }))
+        }
+        if (resourcesFilter.includes('Instagram')) {
+            filteredData = filteredData.concat(ExternalResources.filter(function(element){
+                if (element.GroupName != 'Instagram') {
+                    return null
+                } else {
+                    return element
+                }
+            }).map(function(element){
+                return element
+            }))
+        }
+        if (resourcesFilter.includes('Youtube')) {
+            filteredData = filteredData.concat(ExternalResources.filter(function(element){
+                if (element.GroupName != 'Youtube') {
+                    return null
+                } else {
+                    return element
+                }
+            }).map(function(element){
+                return element
+            }))
+        }
+        if (resourcesFilter.includes('Web')) {
+            filteredData = filteredData.concat(ExternalResources.filter(function(element){
+                if (element.GroupName != 'Web') {
+                    return null
+                } else {
+                    return element
+                }
+            }).map(function(element){
+                return element
+            }))
+        }
+
+        if(filteredData.length > 0) {
+            setFilteredArray(filteredData)
+        } else {
+            setFilteredArray(ExternalResources)
+        }
+        
+    }, [resourcesFilter])
+
+    useEffect(() => {
+        renderResources()
+    }, [filteredArray])
+    
+    const updateFilter = (mediaName) => {
+        if (mediaName == 'Facebook') {
+            setFacebookFilterActive(!facebookFilterActive)
+        } else if (mediaName == 'Twitter') {
+            setTwitterFilterActive(!twitterFilterActive)
+        } else if (mediaName == 'Instagram') {
+            setInstagramFilterActive(!instagramFilterActive)
+        } else if (mediaName == 'Youtube') {
+            setYoutubeFilterActive(!youtubeFilterActive)
+        } else if (mediaName == 'Web') {
+            setWebFilterActive(!webFilterActive)
+        }
+
+        let r_Array
+
+        if(!resourcesFilter.includes(mediaName)) {
+            r_Array = resourcesFilter.concat(mediaName)
+            setResourcesFilter(r_Array)
+        } else {
+            r_Array = resourcesFilter.filter(function(element){
+                if (element == mediaName) {
+                    return null
+                } else {
+                    return element
+                }
+            })
+            setResourcesFilter(r_Array)
+        }
+    }
+
     const VirtualizedList = ({children}) => {
         return (
             <FlatList
@@ -53,6 +181,20 @@ const AnimalExternalResourcesScreen = () => {
                 }
                 style={{backgroundColor: Colors.lightBG}}
             />
+        )
+    }
+
+    const renderResources = () => {
+        return(
+            <FlatList data={filteredArray}
+                style={{marginVertical: 10}}
+                scrollEnabled={true} 
+                keyExtractor={resource => resource.ID} 
+                renderItem={itemData => {
+                    if (itemData.item.AnimalID == animalID) {
+                        return <ResourceItem title={itemData.item.Title} name={itemData.item.GroupName} onLink={() => {Linking.openURL(itemData.item.URL)}}/>
+                    }
+                }}/>
         )
     }
 
@@ -88,38 +230,40 @@ const AnimalExternalResourcesScreen = () => {
                         <View style={styles.divider2} />
                     </View>
                     <View style={styles.filter_row1}>
-                        <View style={[styles.filterItem_row1, {backgroundColor: Colors.primary}]}>
-                            <MaterialCommunityIcons name="facebook" color="white" size={25} style={{marginHorizontal: 5}}/>
-                            <Text style={styles.text}>Facebook</Text>
-                        </View>
-                        <View style={styles.filterItem_row1}>
-                            <MaterialCommunityIcons name="twitter" color="white" size={25} style={{marginHorizontal: 5}}/>
-                            <Text style={styles.text}>Twitter</Text>
-                        </View>
-                        <View style={styles.filterItem_row1}>
-                            <MaterialCommunityIcons name="instagram" color="white" size={25} style={{marginHorizontal: 5}}/>
-                            <Text style={styles.text}>Instagram</Text>
-                        </View>
+                        <TouchableOpacity activeOpacity={0.8} onPress={() => {updateFilter('Facebook')}}>
+                            <View style={[styles.filterItem_row1, {backgroundColor: facebookFilterActive ? Colors.primary : '#aaa'}]}>
+                                <MaterialCommunityIcons name="facebook" color="white" size={25} style={{marginHorizontal: 5}}/>
+                                <Text style={styles.text}>Facebook</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity activeOpacity={0.8} onPress={() => {updateFilter('Twitter')}}>
+                            <View style={[styles.filterItem_row1, {backgroundColor: twitterFilterActive ? Colors.primary : '#aaa'}]}>
+                                <MaterialCommunityIcons name="twitter" color="white" size={25} style={{marginHorizontal: 5}}/>
+                                <Text style={styles.text}>Twitter</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity activeOpacity={0.8} onPress={() => {updateFilter('Instagram')}}>
+                            <View style={[styles.filterItem_row1, {backgroundColor: instagramFilterActive ? Colors.primary : '#aaa'}]}>
+                                <MaterialCommunityIcons name="instagram" color="white" size={25} style={{marginHorizontal: 5}}/>
+                                <Text style={styles.text}>Instagram</Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.filter_row2}>
-                        <View style={styles.filterItem_row2}>
-                            <MaterialCommunityIcons name="youtube" color="white" size={25} style={{marginHorizontal: 5}}/>
-                            <Text style={styles.text}>Youtube</Text>
-                        </View>
-                        <View style={styles.filterItem_row2}>
-                            <MaterialCommunityIcons name="web" color="white" size={25} style={{marginHorizontal: 5}}/>
-                            <Text style={styles.text}>Webs y Blogs</Text>
-                        </View>
+                        <TouchableOpacity activeOpacity={0.8} onPress={() => {updateFilter('Youtube')}}>
+                            <View style={[styles.filterItem_row2, {backgroundColor: youtubeFilterActive ? Colors.primary : '#aaa'}]}>
+                                <MaterialCommunityIcons name="youtube" color="white" size={25} style={{marginHorizontal: 5}}/>
+                                <Text style={styles.text}>Youtube</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity activeOpacity={0.8} onPress={() => {updateFilter('Web')}}>
+                            <View style={[styles.filterItem_row2, {backgroundColor: webFilterActive ? Colors.primary : '#aaa'}]}>
+                                <MaterialCommunityIcons name="web" color="white" size={25} style={{marginHorizontal: 5}}/>
+                                <Text style={styles.text}>Webs y Blogs</Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
-                    <FlatList data={ExternalResources}
-                            style={{marginVertical: 10}}
-                            scrollEnabled={true} 
-                            keyExtractor={resource => resource.ID} 
-                            renderItem={itemData => {
-                                if (itemData.item.AnimalID == animalID) {
-                                    return <ResourceItem title={itemData.item.Title} name={itemData.item.GroupName} onLink={() => {Linking.openURL(itemData.item.URL)}}/>
-                                }
-                            }}/>
+                    {renderResources()}
                 </View>
                        
             }
