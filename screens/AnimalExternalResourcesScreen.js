@@ -32,7 +32,7 @@ const AnimalExternalResourcesScreen = () => {
     
     const [headerImg, setHeaderImg] = useState()
     const [animalName, setAnimalName] = useState()
-    const [noResourcesInfo, setNoResourcesInfo] = useState(true)
+    const [noResourcesInfo, setNoResourcesInfo] = useState(false)
     const [resourcesFilter, setResourcesFilter] = useState([])
     const [filteredArray, setFilteredArray] = useState()
     const [facebookFilterActive, setFacebookFilterActive] = useState(false)
@@ -45,7 +45,6 @@ const AnimalExternalResourcesScreen = () => {
         if(animalID == 1) {
             setHeaderImg(require('../assets/img/pigeon_screen.jpg'))
             setAnimalName('Paloma')
-            setNoResourcesInfo(false)
         }
         else if(animalID == 2) {
             setHeaderImg(require('../assets/img/2.jpg'))
@@ -67,14 +66,31 @@ const AnimalExternalResourcesScreen = () => {
             setHeaderImg(require('../assets/img/6.jpg'))
             setAnimalName('Aye-aye')
         }
+        console.log("Animal ID: ", animalID)
     }, [animalID])
 
     useEffect(() => {
-        console.log(resourcesFilter)
+
         let filteredData = []
+        let initializedData = []
+
+        initializedData = ExternalResources.filter(function(element){
+            if(element.AnimalID != animalID){
+                return null
+            } else {
+                return element
+            }
+        }).map(function(element){
+            return element
+        })
+
+        if (initializedData.length == 0) {
+            setNoResourcesInfo(true)
+        }
+
         if (resourcesFilter.includes('Facebook')) {
             filteredData = filteredData.concat(ExternalResources.filter(function(element){
-                if (element.GroupName != 'Facebook') {
+                if (element.GroupName != 'Facebook' && element.AnimalID == animalID) {
                     return null 
                 } else {
                     return element
@@ -85,7 +101,7 @@ const AnimalExternalResourcesScreen = () => {
         }
         if (resourcesFilter.includes('Twitter')) {
             filteredData = filteredData.concat(ExternalResources.filter(function(element){
-                if (element.GroupName != 'Twitter') {
+                if (element.GroupName != 'Twitter' && element.AnimalID == animalID) {
                     return null
                 } else {
                     return element
@@ -96,7 +112,7 @@ const AnimalExternalResourcesScreen = () => {
         }
         if (resourcesFilter.includes('Instagram')) {
             filteredData = filteredData.concat(ExternalResources.filter(function(element){
-                if (element.GroupName != 'Instagram') {
+                if (element.GroupName != 'Instagram' && element.AnimalID == animalID) {
                     return null
                 } else {
                     return element
@@ -107,7 +123,7 @@ const AnimalExternalResourcesScreen = () => {
         }
         if (resourcesFilter.includes('Youtube')) {
             filteredData = filteredData.concat(ExternalResources.filter(function(element){
-                if (element.GroupName != 'Youtube') {
+                if (element.GroupName != 'Youtube' && element.AnimalID == animalID) {
                     return null
                 } else {
                     return element
@@ -118,7 +134,7 @@ const AnimalExternalResourcesScreen = () => {
         }
         if (resourcesFilter.includes('Web')) {
             filteredData = filteredData.concat(ExternalResources.filter(function(element){
-                if (element.GroupName != 'Web') {
+                if (element.GroupName != 'Web' && element.AnimalID == animalID) {
                     return null
                 } else {
                     return element
@@ -128,10 +144,10 @@ const AnimalExternalResourcesScreen = () => {
             }))
         }
 
-        if(filteredData.length > 0) {
+        if(resourcesFilter.length > 0) {
             setFilteredArray(filteredData)
         } else {
-            setFilteredArray(ExternalResources)
+            setFilteredArray(initializedData)
         }
         
     }, [resourcesFilter])
