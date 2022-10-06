@@ -15,7 +15,6 @@ const FormQuestion = (props) => {
     const hasFeces = useSelector(state => state.emergency.chevron_state.hasFeces)
     const bloodOrifice = useSelector(state => state.emergency.chevron_state.hasSlowBreathing)
     const hasOpenWounds = useSelector(state => state.emergency.chevron_state.hasSlowBreathing)
-    //const hasFastBreathing = useSelector(state => state.emergency.chevron_state.hasFastBreathing)
     const [bg_yes, setBg_yes] = useState('')
     const [bg_no, setBg_no] = useState('')
     const [chevronLeftBg, setChevronLeftBg] = useState('#aaa')
