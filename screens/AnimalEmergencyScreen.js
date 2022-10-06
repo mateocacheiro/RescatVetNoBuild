@@ -13,15 +13,6 @@ import { useNavigation } from '@react-navigation/native';
 import SituationModal from '../components/SituationModal'
 import EmergencyQuestions from '../assets/database/EmergencyQuestions.json'
 
-/*
-
-Question Block Logic:
-
-- If children > 0, set the lastParentID to the question ID and lastParentChildren to children
-- If the following questions have a parent ID equal to lastParentID and their ID is less or equal to 
-    lastParentID+lastParentChildren, render in the same block
-*/
-
 const AnimalEmergencyScreen = ({navigation}) => {
 
     const animalID = useSelector(state => state.search.animalSelected_id)
@@ -76,29 +67,9 @@ const AnimalEmergencyScreen = ({navigation}) => {
     const renderQuestions = () => {
         return(
             EmergencyFormQuestions.map(function(element){
-                let length = Object.keys(element).length
-                if(length == 1) {
-                    return(
-                        <View style={{marginVertical: 10, backgroundColor: "#ccc"}}>
-                            <Text style={styles.text}>{element[0]['QuestionTitleES']}</Text>
-                        </View>
-                    )
-                } else {
-                    let questions = Object.values(element)
-                    let questionsList = []
-                    questions.map(function(element){
-                        questionsList = questionsList.concat(element['QuestionTitleES'])
-                    })
-                    return(
-                        <View style={{marginVertical: 10, backgroundColor: "#ccc"}}>
-                            {questionsList.map(function(element){
-                                return (
-                                    <Text style={styles.text}>{element}</Text>
-                                )
-                            })}
-                        </View>
-                    )
-                }
+                return(
+                    <FormQuestion question={element} />
+                )
             })
         )
     }

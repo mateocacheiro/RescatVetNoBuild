@@ -1,276 +1,65 @@
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
-import C_Button from './C_Button'
+import Colors from '../constants/Colors'
 import { useDispatch, useSelector } from 'react-redux'
 import { emergencyActions } from '../store/emergency-slice'
 
 
 const FormQuestion = (props) => {
     const dispatch = useDispatch()
-    const isBreathing = useSelector(state => state.emergency.chevron_state.isBreathing)
-    const hasHeavyBreathing = useSelector(state => state.emergency.chevron_state.hasHeavyBreathing)
-    const hasSlowBreathing = useSelector(state => state.emergency.chevron_state.hasSlowBreathing)
-    const hasBlood = useSelector(state => state.emergency.chevron_state.hasSlowBreathing)
-    const hasFeces = useSelector(state => state.emergency.chevron_state.hasFeces)
-    const bloodOrifice = useSelector(state => state.emergency.chevron_state.hasSlowBreathing)
-    const hasOpenWounds = useSelector(state => state.emergency.chevron_state.hasSlowBreathing)
+    
     const [bg_yes, setBg_yes] = useState('')
     const [bg_no, setBg_no] = useState('')
     const [chevronLeftBg, setChevronLeftBg] = useState('#aaa')
     const [chevronRightBg, setChevronRightBg] = useState('#aaa')
-    const [qText, setQText] = useState('')
+    const [activeQuestionIndex, setActiveQuestionIndex] = useState(0)
     const [infoID, setInfoID] = useState('')
-    const question_id = props.id
-    const isMultiple = props.isMultiple
-    const hasInfo = props.hasInfo
+
+    const questionTitleES = props.question[activeQuestionIndex]['QuestionTitleES']
+
+    const questionInfo = props.question[activeQuestionIndex]['InfoES']
+
+    const question_length = Object.keys(props.question).length
 
     useEffect(() => {
-        if (question_id == 0) {
-            setQText("¿Respira?")
-            setChevronLeftBg('rgba(0,0,0,0)')
-            setInfoID(0)
-        }
+        if(question_length > 1) {
+            if (activeQuestionIndex == 0) {
+                setChevronLeftBg("#aaa")
+            } else {
+                setChevronLeftBg(Colors.primary)
+            }
 
-        if (question_id == 1) {
-            setQText("¿Está consciente?")
+            if (activeQuestionIndex == question_length-1) {
+                setChevronRightBg("#aaa")
+            } else {
+                setChevronRightBg(Colors.primary)
+            }
         }
+    }, [activeQuestionIndex])
 
-        if (question_id == 2) {
-            setQText("¿Tiene pulso?")
-            setInfoID(1)
-        }
-
-        if (question_id == 3) {
-            setQText("¿Las pupilas reaccionan a la luz?")
-            setInfoID(2)
-        }
-
-        if (question_id == 4) {
-            setQText("¿Respira con dificultad, como si tuviese una obstrucción?")
-            setChevronLeftBg('green')
-            setChevronRightBg('green')
-        }
-
-        if (question_id == 5) {
-            setQText("¿La respiración es lenta y profunda?")
-            setChevronLeftBg('green')
-            setChevronRightBg('#aaa')
-        }
-
-        if (question_id == 6) {
-            setQText("¿La respiración es rápida y superficial?")
-            setChevronLeftBg('green')
-            setChevronRightBg('rgba(0,0,0,0)')
-        }
-
-        if (question_id == 7) {
-            setQText("¿Se tambalea o se cae?")
-        }
-        if (question_id == 8) {
-            setQText("¿Tiene sangre en el plumaje?")
-            setChevronLeftBg('rgba(0,0,0,0)')
-            setChevronRightBg('#aaa')
-        }
-        if (question_id == 9) {
-            setQText("¿Sangra por algún orificio corporal?")
-            setChevronLeftBg('green')
-            setChevronRightBg('green')
-        }
-        if (question_id == 10) {
-            setQText("¿Tiene heridas abiertas?")
-            setChevronRightBg('rgba(0,0,0,0)')
-            setChevronLeftBg('green')
-            setChevronRightBg('green')
-        }
-        if (question_id == 11) {
-            setQText("¿Tiene la temperatura baja?")
-            setInfoID(3)
-        }
-        if (question_id == 12) {
-            setQText("¿Está aletargada o cansada?")
-            setInfoID(4)
-        }
-        if (question_id == 13) {
-            setQText("¿Tiene la cabeza en una posición no natural?")
-            setInfoID(5)
-        }
-        if (question_id == 14) {
-            setQText("¿Tiene algún ala en una posición no natural?")
-            setInfoID(6)
-        }
-        if (question_id == 15) {
-            setQText("¿Tiene alguna pata en posición no natural?")
-        }
-        if (question_id == 16) {
-            setQText("¿Tiene la cloaca sucia?")
-            setInfoID(7)
-        }
-        if (question_id == 17) {
-            setQText("¿Le sale líquido por el pico?")
-        }
-        if (question_id == 18) {
-            setQText("¿Tiene el buche hinchado?")
-        }
-        if (question_id == 19) {
-            setQText("¿Ha defecado?")
-            setChevronLeftBg('rgba(0,0,0,0)')
-        }
-        if (question_id == 20) {
-            setQText("¿Las heces son muy líquidas?")
-            setChevronLeftBg('green')
-            setChevronRightBg('green')
-        }
-        if (question_id == 21) {
-            setQText("¿Las heces son verdosas?")
-            setChevronLeftBg('green')
-            setChevronRightBg('green')
-        }
-        if (question_id == 22) {
-            setQText("¿Las heces tienen sangre?")
-            setChevronLeftBg('green')
-            setChevronRightBg('green')
-        }
-        if (question_id == 23) {
-            setQText("¿Las heces son pastosas?")
-            setChevronLeftBg('green')
-            setChevronRightBg('rgba(0,0,0,0)')
-        }
-        if (question_id == 24) {
-            setQText("¿Tiene pápulas por el cuerpo?")
-            setInfoID(8)
-        }
-        if (question_id == 25) {
-            setQText("¿Tiene placas blancas o amarillentas dentro del pico o por fuera?")
-        }
-        if (question_id == 26) {
-            setQText("¿Tiene pelos o hilos enredados en los dedos o patas?")
-        }
-        if (question_id == 27) {
-            setQText("¿Vomita / regurgita?")
-        }
-        if (question_id == 28) {
-            setQText("¿Tiene algún cuerpo extraño clavado en el cuerpo?")
-            setInfoID(9)
-        }
-        if (question_id == 29) {
-            setQText("¿Tiene vísceras visibles?")
-            setChevronRightBg('rgba(0,0,0,0)')
-            setChevronLeftBg('green')
-        }
-        if (question_id == 30) {
-            setQText("¿Tiene el abdomen hinchado?")
-        }
-    }, [])
-
-    
-
-    useEffect(() => {
-        if (question_id == 0) {
-            if (isBreathing == 0) {
-                setChevronLeftBg('rgba(0,0,0,0)')
-                setChevronRightBg('#aaa')
+    const questionChangeHandler = (direction) => {
+        if (direction == 'right') {
+            if (activeQuestionIndex < question_length-1) {
+                setActiveQuestionIndex((prevActiveQuestionIndex) => prevActiveQuestionIndex+1)
             }
-            if (isBreathing == 1) {
-                setChevronLeftBg('rgba(0,0,0,0)')
-                setChevronRightBg('green')
-            }
-        }
-        if (question_id == 5) {
-            if (hasSlowBreathing == 0) {
-                setChevronRightBg('green')
-            } else if (hasSlowBreathing == 1) {
-                setChevronRightBg('#aaa')
-            }
-        }
-        if (question_id == 19) {
-            if (hasFeces == 0) {
-                setChevronRightBg('#aaa')
-            } else if (hasFeces == 1) {
-                setChevronRightBg('green')
-            }
-        }
-    }, [isBreathing, hasSlowBreathing, hasHeavyBreathing, hasBlood, hasFeces])
-
-    const chevronHandler = (direction) => {
-        if (direction == 0) {
-            // Go back
-            if (question_id == 4) {
-                dispatch(emergencyActions.changeQuestion(0))
-            }
-            else if (question_id == 5) {
-                dispatch(emergencyActions.changeQuestion(4))
-            }
-            else if (question_id == 6) {
-                dispatch(emergencyActions.changeQuestion(5))
-            }
-            else if (question_id == 9) {
-                dispatch(emergencyActions.changeQuestion(8))
-            }
-            else if (question_id == 10) {
-                dispatch(emergencyActions.changeQuestion(9))
-            }
-            else if (question_id = 29) {
-                dispatch(emergencyActions.changeQuestion(10))
-            }
-            else if (question_id == 20) {
-                dispatch(emergencyActions.changeQuestion(19))
-            }
-            else if (question_id == 21) {
-                dispatch(emergencyActions.changeQuestion(20))
-            }
-            else if (question_id == 22) {
-                dispatch(emergencyActions.changeQuestion(21))
-            }
-            else if (question_id == 23) {
-                dispatch(emergencyActions.changeQuestion(22))
-            }
-        }
-        if (direction == 1) {
-            // Go forward
-            if (question_id == 0) {
-                dispatch(emergencyActions.changeQuestion(4))
-            }
-            else if (question_id == 4) {
-                dispatch(emergencyActions.changeQuestion(5))
-            }
-            else if (question_id == 5) {
-                dispatch(emergencyActions.changeQuestion(6))
-            }
-            else if (question_id == 8) {
-                dispatch(emergencyActions.changeQuestion(9))
-            }
-            else if (question_id == 9) {
-                dispatch(emergencyActions.changeQuestion(10))
-            }
-            else if (question_id == 10) {
-                dispatch(emergencyActions.changeQuestion(29))
-            }
-            else if (question_id == 19) {
-                dispatch(emergencyActions.changeQuestion(20))
-            }
-            else if (question_id == 20) {
-                dispatch(emergencyActions.changeQuestion(21))
-            }
-            else if (question_id == 21) {
-                dispatch(emergencyActions.changeQuestion(22))
-            }
-            else if (question_id == 22) {
-                dispatch(emergencyActions.changeQuestion(23))
+        } else if (direction == 'left') {
+            if (activeQuestionIndex > 0) {
+                setActiveQuestionIndex((prevActiveQuestionIndex) => prevActiveQuestionIndex-1)
             }
         }
     }
 
   return (
     <View style={styles.container}>
-        {isMultiple && <TouchableOpacity style={styles.chevron} onPress={()=>{chevronHandler(0)}}>
-            <MaterialCommunityIcons name="chevron-left" size={40} color={chevronLeftBg} />
-        </TouchableOpacity>}
-        {!isMultiple && <MaterialCommunityIcons name="chevron-left" size={40} color="rgba(0,0,0,0)" />}
+        {question_length > 1 && <TouchableOpacity style={styles.chevron} activeOpacity={0.8} onPress={() => {questionChangeHandler('left')}}> 
+            <MaterialCommunityIcons name='chevron-left' size={30} color={chevronLeftBg} />
+        </TouchableOpacity>
+        }
         <View style={styles.middle}>
             <View style={styles.question}>
-                <Text style={styles.text}>{qText}</Text>
-                {hasInfo && <TouchableOpacity style={styles.info} onPress={() => {
+                <Text style={styles.text}>{questionTitleES}</Text>
+                {questionInfo && <TouchableOpacity style={styles.info} onPress={() => {
                     dispatch(emergencyActions.updateInfoID(infoID))
                     dispatch(emergencyActions.toggleModal())
                 }}>
@@ -295,10 +84,10 @@ const FormQuestion = (props) => {
                 </TouchableOpacity>
             </View>
         </View>
-        {isMultiple && <TouchableOpacity onPress={()=>{chevronHandler(1)}}>
-            <MaterialCommunityIcons name="chevron-right" size={40} color={chevronRightBg} />
-        </TouchableOpacity>}
-        {!isMultiple && <MaterialCommunityIcons name="chevron-left" size={40} color="rgba(0,0,0,0)" />}
+        {question_length > 1 && <TouchableOpacity style={styles.chevron} activeOpacity={0.8} onPress={() => {questionChangeHandler('right')}}> 
+            <MaterialCommunityIcons name='chevron-right' size={30} color={chevronRightBg} />
+        </TouchableOpacity>
+        }
     </View>
   )
 }
@@ -311,13 +100,13 @@ d_width = Dimensions.get('window').width
 const styles = StyleSheet.create({
     container: {
         backgroundColor: 'rgba(0,0,0,0)',
-        justifyContent: 'space-between',
         alignItems: 'center',
         alignSelf: 'center',
         alignContent: 'center',
+        width: '100%',
+        marginVertical: 15,
         flexDirection: 'row',
-        width: d_width*0.9,
-        marginVertical: 15
+        justifyContent: 'space-evenly'
     },
     text: {
         fontFamily: 'montserrat',
@@ -325,7 +114,6 @@ const styles = StyleSheet.create({
         fontSize: 13,
         marginHorizontal: 5,
         textAlign: 'center',
-        maxWidth: '78%',
         color: 'white'  
     },
     question: {
@@ -356,5 +144,10 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 14 
     },
-    
+    chevron: {
+        width: '10%'
+    },
+    middle: {
+        width: '70%'
+    }
 })
