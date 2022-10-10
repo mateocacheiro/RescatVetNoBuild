@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { StyleSheet, FlatList, View, Dimensions, ImageBackground, TouchableWithoutFeedback, Text, ScrollView } from 'react-native'
+import { StyleSheet, FlatList, View, Dimensions, ImageBackground, TouchableWithoutFeedback, TouchableOpacity, Text, ScrollView } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import AnimalsData from '../assets/database/Animals.json'
 import FormQuestion from '../components/FormQuestion'
@@ -14,12 +14,23 @@ import SituationModal from '../components/SituationModal'
 import EmergencyQuestions from '../assets/database/EmergencyQuestions.json'
 
 const AnimalEmergencyScreen = ({navigation}) => {
-
+    const dispatch = useDispatch()
     const animalID = useSelector(state => state.search.animalSelected_id)
+    const answeredList = useSelector(state => state.emergency.answeredList)
+    
     const [SituationModalVisible, setSituationModalVisible] = useState(false)
     const [EmergencyHelpShown, setEmergencyHelpShown] = useState(false)
     const [EmergencyFormQuestions, setEmergencyFormQuestions] = useState()
     const [questionsReady, setQuestionsReady] = useState(false)
+    const [formPageActive, setFormPageActive] = useState(1)
+    const [formPages, setFormPages] = useState(1)
+    const [pagStartIndex, setPagStartIndex] = useState(0)
+    const [pagEndIndex, setPagEndIndex] = useState(4)
+    const [arrowLeftBg, setArrowLeftBg] = useState("#aaa")
+    const [arrowRightBg, setArrowRightBg] = useState(Colors.primary)
+    //const [answeredList, setAnsweredList] = useState([])
+    
+
 
     useEffect(() => {
         preProcessData()
@@ -28,6 +39,40 @@ const AnimalEmergencyScreen = ({navigation}) => {
     useEffect(() => {
         setQuestionsReady(true)
     }, [EmergencyFormQuestions])
+
+    useEffect(() => {
+        renderAnswers()
+    }, [answeredList])
+
+    const renderAnswers = () => {
+        return(
+            <View>
+                {answeredList.map(function(element, idx){
+                    return(
+                        <View key={idx} style={{marginVertical: 10}}>
+                            <Text>Question ID: {element.id}</Text>
+                            <Text>Question Answer: {element.answer}</Text>
+                        </View>
+                    )
+                })}
+            </View>
+        )
+    }
+
+    useEffect(() => {
+        if (formPageActive == 1) {
+            setArrowLeftBg("#aaa")
+        }
+        if (formPageActive == formPages) {
+            setArrowRightBg("#aaa")
+        }
+        if (formPageActive > 1) {
+            setArrowLeftBg(Colors.primary)
+        }
+        if (formPageActive < formPages) {
+            setArrowRightBg(Colors.primary)
+        }
+    }, [formPageActive])
 
     const renderHelp = () => {
         return(
@@ -62,16 +107,39 @@ const AnimalEmergencyScreen = ({navigation}) => {
             }
         })
         setEmergencyFormQuestions(formQuestions)
+        const length = Object.keys(formQuestions).length
+        const pages = Math.ceil(length/4)
+        setFormPages(pages)
     }
 
     const renderQuestions = () => {
+        // Slice the array
+        let sliced_questions = EmergencyFormQuestions.slice(pagStartIndex, pagEndIndex)
         return(
-            EmergencyFormQuestions.map(function(element){
+            sliced_questions.map(function(element, idx){
                 return(
-                    <FormQuestion question={element} />
+                    <FormQuestion question={element} key={idx} />
                 )
             })
         )
+    }
+
+    const formPageHandler = (direction) => {
+        if (direction == 'right') {
+            if(formPageActive < formPages) {
+                setFormPageActive((prevFormPageActive) => prevFormPageActive + 1)
+                setPagStartIndex((prevPagStartIndex) => prevPagStartIndex + 4)
+                setPagEndIndex((prevPagEndIndex) => prevPagEndIndex + 4)
+            }
+        } else if (direction == 'left') {
+            if (formPageActive > 1) {
+                setFormPageActive((prevFormPageActive) => prevFormPageActive -1)
+                setPagStartIndex((prevPagStartIndex) => prevPagStartIndex - 4)
+                setPagEndIndex((prevPagEndIndex) => prevPagEndIndex -4)
+            }
+        }
+        dispatch(emergencyActions.updateFormPage())
+        renderQuestions()
     }
 
     return (
@@ -97,7 +165,13 @@ const AnimalEmergencyScreen = ({navigation}) => {
             </View>
             <View style={styles.formContainer}>
                 {questionsReady && renderQuestions()}
+                <View style={styles.arrows}>
+                    <TouchableOpacity onPress={() => {formPageHandler('left')}}><MaterialCommunityIcons name={'arrow-left'} size={30} color={formPageActive == 1 ? "#aaa" : Colors.primary} /></TouchableOpacity>
+                    <Text style={styles.text}>{formPageActive}/{formPages}</Text>
+                    <TouchableOpacity onPress={() => {formPageHandler('right')}}><MaterialCommunityIcons name={'arrow-right'} size={30} color={formPageActive == formPages ? "#aaa" : Colors.primary} /></TouchableOpacity>
+                </View>
             </View>
+            {renderAnswers()}
         </ScrollView>
         </View>
     )
@@ -142,8 +216,8 @@ const styles = StyleSheet.create({
     arrows: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginHorizontal: 15,
-        width: d_width*0.85
+        width: '100%',
+        marginVertical: 10
     },
     progressBarBG: {
         width: d_width*0.85,

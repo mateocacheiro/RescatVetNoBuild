@@ -14,13 +14,50 @@ const FormQuestion = (props) => {
     const [chevronLeftBg, setChevronLeftBg] = useState('#aaa')
     const [chevronRightBg, setChevronRightBg] = useState('#aaa')
     const [activeQuestionIndex, setActiveQuestionIndex] = useState(0)
+    const answeredList = useSelector(state => state.emergency.answeredList)
+    const newFormPage = useSelector(state => state.emergency.newFormPage)
     const [infoID, setInfoID] = useState('')
+    const [newQuestionLoaded, setNewQuestionLoaded] = useState(false)
 
     const questionTitleES = props.question[activeQuestionIndex]['QuestionTitleES']
 
     const questionInfo = props.question[activeQuestionIndex]['InfoES']
 
     const question_length = Object.keys(props.question).length
+
+    const question_id = props.question[activeQuestionIndex]['ID']
+
+    useEffect(() => {
+        updateBtnBg()
+        renderQuestion()
+    }, [newFormPage])
+
+    useEffect(() => {
+        updateBtnBg()
+        renderQuestion()
+    }, [newQuestionLoaded])
+
+    useEffect(() => {
+        updateBtnBg()
+        renderQuestion()
+    }, [answeredList])
+
+    const updateBtnBg = () => {
+        const indexOfItem = answeredList.findIndex(q => q.id == question_id)
+
+        if (indexOfItem > -1) {
+            if (answeredList[indexOfItem].answer == 'yes') {
+                setBg_yes(Colors.primary)
+                setBg_no('rgba(0,0,0,0)')
+            } else if (answeredList[indexOfItem].answer == 'no') {
+                setBg_yes('rgba(0,0,0,0)')
+                setBg_no(Colors.primary)
+            }
+        } else {
+            setBg_no('rgba(0,0,0,0)')
+            setBg_yes('rgba(0,0,0,0)')
+        }
+    }
 
     useEffect(() => {
         if(question_length > 1) {
@@ -48,6 +85,43 @@ const FormQuestion = (props) => {
                 setActiveQuestionIndex((prevActiveQuestionIndex) => prevActiveQuestionIndex-1)
             }
         }
+        renderQuestion()
+        setNewQuestionLoaded((prevNewQuestionLoaded) => !prevNewQuestionLoaded)
+    }
+
+    const questionAnswerHandler = (ans) => {
+        dispatch(emergencyActions.updateAnswer({
+            id: question_id,
+            answer: ans
+        }))
+    }
+
+    const renderQuestion = () => {
+        console.log(question_id)
+        return(
+            <View style={styles.middle}>
+                <View style={styles.question}>
+                    <Text style={styles.text}>{questionTitleES}</Text>
+                    {questionInfo && <TouchableOpacity style={styles.info} onPress={() => {
+                        console.log('Question info pressed')
+                    }}>
+                        <MaterialCommunityIcons name="information" size={20} color="white" />
+                    </TouchableOpacity>}
+                </View>
+                <View style={styles.buttons}>
+                    <TouchableOpacity style={[styles.button, {backgroundColor: bg_yes}]} onPress={() => {
+                        questionAnswerHandler('yes')
+                    }}>
+                        <Text style={styles.btnText}>Si</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.button, {backgroundColor: bg_no}]} onPress={() => {
+                        questionAnswerHandler('no')
+                    }}>
+                        <Text style={styles.btnText}>No</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        )
     }
 
   return (
@@ -56,34 +130,7 @@ const FormQuestion = (props) => {
             <MaterialCommunityIcons name='chevron-left' size={30} color={chevronLeftBg} />
         </TouchableOpacity>
         }
-        <View style={styles.middle}>
-            <View style={styles.question}>
-                <Text style={styles.text}>{questionTitleES}</Text>
-                {questionInfo && <TouchableOpacity style={styles.info} onPress={() => {
-                    dispatch(emergencyActions.updateInfoID(infoID))
-                    dispatch(emergencyActions.toggleModal())
-                }}>
-                    <MaterialCommunityIcons name="information" size={20} color="white" />
-                </TouchableOpacity>}
-            </View>
-            <View style={styles.buttons}>
-                <TouchableOpacity style={[styles.button, {backgroundColor: bg_yes}]} onPress={() => {
-                    setBg_yes('green')
-                    setBg_no('rgba(0,0,0,0)')
-                    dispatch(emergencyActions.updateAnswer({id: question_id, value: 'yes'}))
-                }}>
-                    <Text style={styles.btnText}>Si</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, {backgroundColor: bg_no}]} onPress={() => {
-                    props.onAnswerPress
-                    setBg_no('green')
-                    setBg_yes('rgba(0,0,0,0)')
-                    dispatch(emergencyActions.updateAnswer({id: question_id, value: 'no'}))
-                }}>
-                    <Text style={styles.btnText}>No</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+        {renderQuestion()}
         {question_length > 1 && <TouchableOpacity style={styles.chevron} activeOpacity={0.8} onPress={() => {questionChangeHandler('right')}}> 
             <MaterialCommunityIcons name='chevron-right' size={30} color={chevronRightBg} />
         </TouchableOpacity>
