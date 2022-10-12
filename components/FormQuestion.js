@@ -18,19 +18,38 @@ const FormQuestion = (props) => {
     const newFormPage = useSelector(state => state.emergency.newFormPage)
     const [infoID, setInfoID] = useState('')
     const [newQuestionLoaded, setNewQuestionLoaded] = useState(false)
+    const currentLanguage = useSelector(state => state.language.selectedLenguage)
+    const [indexUpdated, setIndexUpdated] = useState(false)
 
-    const questionTitleES = props.question[activeQuestionIndex]['QuestionTitleES']
-
-    const questionInfo = props.question[activeQuestionIndex]['InfoES']
+    let questionTitle
 
     const question_length = Object.keys(props.question).length
+    
+    const questionInfo = props.question[activeQuestionIndex]['InfoES']
 
     const question_id = props.question[activeQuestionIndex]['ID']
 
+    const parent_id = props.question[activeQuestionIndex]['ParentID']
+
     useEffect(() => {
+        if (parent_id) {
+            const indexOfItem = answeredList.findIndex(q => q.id == question_id)
+            if (indexOfItem > -1) {
+                setActiveQuestionIndex(question_id-parent_id)
+            } else {
+                setActiveQuestionIndex(0)
+            }
+        }
+        setIndexUpdated(true)
         updateBtnBg()
         renderQuestion()
     }, [newFormPage])
+
+    if (currentLanguage == 'ES') {
+        questionTitle = props.question[activeQuestionIndex]['QuestionTitleES']
+    } else {
+        questionTitle = props.question[activeQuestionIndex]['QuestionTitleEN']
+    }
 
     useEffect(() => {
         updateBtnBg()
@@ -97,11 +116,11 @@ const FormQuestion = (props) => {
     }
 
     const renderQuestion = () => {
-        console.log(question_id)
+        
         return(
             <View style={styles.middle}>
                 <View style={styles.question}>
-                    <Text style={styles.text}>{questionTitleES}</Text>
+                    <Text style={styles.text}>{questionTitle}</Text>
                     {questionInfo && <TouchableOpacity style={styles.info} onPress={() => {
                         console.log('Question info pressed')
                     }}>
@@ -130,7 +149,7 @@ const FormQuestion = (props) => {
             <MaterialCommunityIcons name='chevron-left' size={30} color={chevronLeftBg} />
         </TouchableOpacity>
         }
-        {renderQuestion()}
+        {indexUpdated && renderQuestion()}
         {question_length > 1 && <TouchableOpacity style={styles.chevron} activeOpacity={0.8} onPress={() => {questionChangeHandler('right')}}> 
             <MaterialCommunityIcons name='chevron-right' size={30} color={chevronRightBg} />
         </TouchableOpacity>

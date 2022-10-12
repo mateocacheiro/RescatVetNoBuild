@@ -17,6 +17,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
     const dispatch = useDispatch()
     const animalID = useSelector(state => state.search.animalSelected_id)
     const answeredList = useSelector(state => state.emergency.answeredList)
+    const currentLanguage = useSelector(state => state.language.selectedLenguage)
     
     const [SituationModalVisible, setSituationModalVisible] = useState(false)
     const [EmergencyHelpShown, setEmergencyHelpShown] = useState(false)
@@ -28,8 +29,8 @@ const AnimalEmergencyScreen = ({navigation}) => {
     const [pagEndIndex, setPagEndIndex] = useState(4)
     const [arrowLeftBg, setArrowLeftBg] = useState("#aaa")
     const [arrowRightBg, setArrowRightBg] = useState(Colors.primary)
-    //const [answeredList, setAnsweredList] = useState([])
-    
+    const [formCompleted, setFormCompleted] = useState(false)
+    const [questionNum, setQuestionNum] = useState()
 
 
     useEffect(() => {
@@ -41,20 +42,31 @@ const AnimalEmergencyScreen = ({navigation}) => {
     }, [EmergencyFormQuestions])
 
     useEffect(() => {
-        renderAnswers()
+        console.log('New answeredList length: ' + answeredList.length + ' for ' + questionNum + ' questions.')
+        if (answeredList && answeredList.length == questionNum) {
+            setFormCompleted(true)
+            renderAnswers()
+        }
     }, [answeredList])
+
+    useEffect(() => {
+        if (questionsReady) {renderQuestions()}
+    }, [currentLanguage])
 
     const renderAnswers = () => {
         return(
-            <View>
-                {answeredList.map(function(element, idx){
-                    return(
-                        <View key={idx} style={{marginVertical: 10}}>
-                            <Text>Question ID: {element.id}</Text>
-                            <Text>Question Answer: {element.answer}</Text>
-                        </View>
-                    )
-                })}
+            <View style={styles.formContainer}>
+                {formCompleted && <View>
+                    <Text style={styles.text}>FORM COMPLETED</Text>
+                    {answeredList.map(function(element, idx){
+                        return(
+                            <View key={idx} style={{marginVertical: 10}}>
+                                <Text style={styles.text}>Question ID: {element.id}</Text>
+                                <Text style={styles.text}>Question Answer: {element.answer}</Text>
+                            </View>
+                        )
+                    })}
+                </View>}
             </View>
         )
     }
@@ -87,29 +99,36 @@ const AnimalEmergencyScreen = ({navigation}) => {
         let lastParentChildren
         let blockObj
         let questionObj
+        let questionCount = 0
         EmergencyQuestions.map(function(element){
-            if (element.Children > 0) {
-                lastParentID = element.ID
-                lastParentChildren = element.Children
-                questionBlock = questionBlock.concat(element)
-            }
-            if (element.ParentID && element.ID <= (lastParentID + lastParentChildren)) {
-                questionBlock = questionBlock.concat(element)
-                if (element.ID == lastParentID+lastParentChildren) {
-                    blockObj = Object.assign({}, questionBlock)
-                    formQuestions = formQuestions.concat(blockObj)
-                    questionBlock = []
+            if (element.AnimalID == 0 || element.AnimalID == animalID) {
+                if (element.Children > 0) {
+                    lastParentID = element.ID
+                    lastParentChildren = element.Children
+                    questionBlock = questionBlock.concat(element)
+                    questionCount += 1
                 }
-            }
-            if (element.Children == 0 && !element.ParentID) {
-                questionObj = Object.assign({}, [element])
-                formQuestions = formQuestions.concat(questionObj)
+                if (element.ParentID && element.ID <= (lastParentID + lastParentChildren)) {
+                    questionBlock = questionBlock.concat(element)
+                    if (element.ID == lastParentID+lastParentChildren) {
+                        blockObj = Object.assign({}, questionBlock)
+                        formQuestions = formQuestions.concat(blockObj)
+                        questionBlock = []
+                    }
+                    questionCount += 1
+                }
+                if (element.Children == 0 && !element.ParentID) {
+                    questionObj = Object.assign({}, [element])
+                    formQuestions = formQuestions.concat(questionObj)
+                    questionCount += 1
+                }
             }
         })
         setEmergencyFormQuestions(formQuestions)
         const length = Object.keys(formQuestions).length
         const pages = Math.ceil(length/4)
         setFormPages(pages)
+        setQuestionNum(questionCount)
     }
 
     const renderQuestions = () => {
@@ -160,9 +179,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
                     <MaterialIcons name='local-hospital' size={70} color={Colors.primary} />
                 </View>
                 <Text style={styles.title}>Formulario de emergencias</Text>
-            <View style={styles.animalPicking}>
-                <AccordionItem title="Cómo coger al animal" animalID={animalID} contentID={26} />
-            </View>
+            
             <View style={styles.formContainer}>
                 {questionsReady && renderQuestions()}
                 <View style={styles.arrows}>
@@ -171,7 +188,9 @@ const AnimalEmergencyScreen = ({navigation}) => {
                     <TouchableOpacity onPress={() => {formPageHandler('right')}}><MaterialCommunityIcons name={'arrow-right'} size={30} color={formPageActive == formPages ? "#aaa" : Colors.primary} /></TouchableOpacity>
                 </View>
             </View>
-            {renderAnswers()}
+            <View style={styles.formContainer}>
+                <AccordionItem id={1} />
+            </View>
         </ScrollView>
         </View>
     )
@@ -291,3 +310,9 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     }
 })
+
+/*
+            <View style={styles.animalPicking}>
+                <AccordionItem title="Cómo coger al animal" animalID={animalID} contentID={26} />
+            </View>
+*/

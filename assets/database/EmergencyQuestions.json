@@ -74,8 +74,8 @@
         "Children": 4,
         "ID": 8,
         "InfoEN": null,
-        "InfoES": "",
-        "ParentID": "",
+        "InfoES": null,
+        "ParentID": null,
         "QuestionTitleEN": "Is there blood on the feathersuit?",
         "QuestionTitleES": "¿Tiene sangre en el plumaje?"
     },
