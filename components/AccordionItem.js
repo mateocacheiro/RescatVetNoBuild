@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, Pressable } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions, Pressable, Touchable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons'
 import Colors from '../constants/Colors'
@@ -6,19 +6,23 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { careActions } from '../store/care-slice';
 import EmergencyInfo from '../assets/database/EmergencyInfo.json'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 
 const AccordionItem = (props) => {
     const dispatch = useDispatch()
     const navigation = useNavigation()
-
     const [isContentHidden, setIsContentHidden] = useState(true)
     const [iconName, setIconName] = useState('down')
-
+    const type = props.type
     const info_id = props.id
-    
-    const title = EmergencyInfo[info_id-1]['TitleES']
-    const description = EmergencyInfo[info_id-1]['DescriptionES']
+    let title
+    let description
+    if (type == "emergency") {
+        title = EmergencyInfo[info_id-1]['TitleES']
+        description = EmergencyInfo[info_id-1]['DescriptionES']
+    }
+
 
     const renderContent = () => {
 
@@ -35,44 +39,27 @@ const AccordionItem = (props) => {
             splitData.shift()
         }
 
-        /*
-
-        Splitting data
-
-        Haz click <link><src>BasicCare<src>aquí<link> para ir a cuidados básicos
-
-        if splitData[e_index].includes('<link>') =>
-            splitDescription = ['Haz click','<src>BasicCare<src>aquí', 'para ir a cuidados básicos']
-            if splitDescription[0] == "" =>
-                splitDescription.shift()
-            splitDescription.map(function(element){
-                const d_index = splitDescription.indexOf(element)
-                if (d_index%2 != 0) {
-                    splitLink = ['BasicCare', 'aquí']
-                    evalString = '<TouchableOpacity activeOpacity={0.8} onPress={navigation.navigate(splitLink[0])}><Text style={[styles.bold, {textDecoration: 'underline'}]}>{splitLink[1]}</Text></TouchableOpacity>
-                }
-            })
-        if splitDescription%2 != 0 =>
-            splitLink = ['BasicCare', 'aquí']        
-        */
-
-        const getEval = (splitDescription) => {
-            //console.log(splitDescription)
-            let evalString = '<Text>'
-            splitDescription.map(function(element){
-                //console.log(element)
-                if (!element.includes('<src>')){
-                    evalString += element
-                } else {
-                    const splitLink = element.split('<src>')
+        const getStr = (splitDescription) => {
+            console.log(splitDescription)
+            let link_value = []
+            {splitDescription.map(function(element){
+                if(!element.includes("<src>")) {
+                    link_value.push(<Text style={styles.text}>{element}</Text>)
+                    console.log("Link value not containing src: ", link_value)
+                } else if (element.includes("<src>")) {
+                    const splitLink = element.split("<src>")
                     splitLink.shift()
-                    const linkStr = "<TouchableOpacity activeOpacity={0.8} onPress={navigation.navigate('"+splitLink[0].toString()+"')}><Text style={[styles.bold, {textDecoration: 'underline'}]}>"+splitLink[1]+"</Text></TouchableOpacity> "
-                    evalString += linkStr
-                    //console.log(linkStr)
+                    const src_link = splitLink[0]
+                    link_value.push(<View><TouchableOpacity onPress={() => {navigation.jumpTo(src_link)}}><Text style={[styles.textBold, {marginHorizontal: 5}]}>{splitLink[1]}</Text></TouchableOpacity></View>)
                 }
-            })
-            evalString += '</Text>'
-            return(evalString)
+            })}
+            return(
+                <Text>
+                    {link_value.map(function(element){
+                        return element
+                    })}
+                </Text>
+            )
         }
 
         return(
@@ -88,18 +75,15 @@ const AccordionItem = (props) => {
                         )
                     } else if (element.includes('<link>')) {
                         const splitDescription = element.split('<link>')
-                        const formattedStr = getEval(splitDescription)
+                        const jsx_return = getStr(splitDescription)
                         return(
-                            <Text>{formattedStr}</Text>
+                            getStr(splitDescription)
                         )
-                        console.log(formattedStr)
                     }
                 })}
             </View>
         )
     }
-
-    // <TouchableOpacity onPress={() => {props.onScrollToNoPulse}}>Section name<Text style={{}}></Text></TouchableOpacity></Text>
 
     const toggleContent = () => {
         setIsContentHidden(!isContentHidden)

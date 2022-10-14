@@ -80,24 +80,7 @@ const AnimalBasicCareScreen = () => {
     const renderSections = () => {
         return(
             <View style={styles.contentBlock}>
-                <AccordionItem animalID={0} contentID={19} title="Botiquín" />
-                <AccordionItem animalID={animalID} contentID={1} title="Alimentación" />
-                <AccordionItem animalID={animalID} contentID={2} title={spaceTitle} />
-                <View onLayout={event => {
-                    if (navigatedToSplay) {
-                        moveTo(0)
-                    }
-                }}>
-                    <AccordionItem animalID={animalID} contentID={3} title="Posibles complicaciones" open_default={navigatedToSplay ? true : false} />
-                </View>
-                <View onLayout={event => {
-                    if(navigatedToEggs) {
-                        moveTo(1)
-                    }
-                }}>
-                    <AccordionItem animalID={animalID} contentID={28} title="Problemas con la puesta de huevos" open_default={navigatedToEggs ? true : false} />
-                </View>
-                <AccordionItem animalID={animalID} contentID={4} title="Pensando en la liberación" />
+                <Text>Basic Care Sections Go Here</Text>
             </View>
         )
     }

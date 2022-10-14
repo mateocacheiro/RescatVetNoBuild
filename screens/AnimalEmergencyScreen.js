@@ -189,7 +189,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
                 </View>
             </View>
             <View style={styles.formContainer}>
-                <AccordionItem id={1} />
+                <AccordionItem id={1} type="emergency" />
             </View>
         </ScrollView>
         </View>
