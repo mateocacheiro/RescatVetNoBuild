@@ -30,7 +30,6 @@ const AccordionItem = (props) => {
     const renderContent = () => {
 
         let splitData = []
-        let dataObj = []
 
         if (description.includes("<sub>")) {
             splitData = description.split('<sub>')
@@ -42,25 +41,38 @@ const AccordionItem = (props) => {
         const getStr = (splitDescription, type) => {
             let out_value = []
             {splitDescription.map(function(element){
-                if(!element.includes("<src>")) {
+                if(!element.includes("<src1>") && !element.includes("<src2") && !element.includes("<bold>")) {
                     out_value.push(<Text style={styles.text}>{element}</Text>)
-                } else if (element.includes("<src>") && type == "link") {
-                    const splitLink = element.split("<src>")
+                } else if (element.includes("<src1>")) {
+                    const splitLink = element.split("<src1>")
                     splitLink.shift()
                     const src_link = splitLink[0]
                     const text_link = splitLink[1]
-                    out_value.push(<View><TouchableOpacity onPress={() => {navigation.jumpTo(src_link)}}><Text style={[styles.textBold, {marginHorizontal: 5}]}>{text_link}</Text></TouchableOpacity></View>)
-                } else if (element.includes("<src>") && type == "scroll") {
-                    const splitScroll = element.split("<src>")
+                    out_value.push(<View><TouchableOpacity onPress={() => {navigation.jumpTo(src_link)}}><Text style={[styles.hypertext, {marginHorizontal: 5}]}>{text_link}</Text></TouchableOpacity></View>)
+                } else if (element.includes("<src2>")) {
+                    const splitScroll = element.split("<src2>")
                     splitScroll.shift()
                     const src_scroll = splitScroll[0]
                     const text_scroll = splitScroll[1]
-                    out_value.push(<View><TouchableOpacity onPress={() => {console.log("Scroll to"+src_scroll)}}><Text style={styles.textBold}>{text_scroll}</Text></TouchableOpacity></View>)
+                    out_value.push(<View><TouchableOpacity onPress={() => {console.log("Scroll to"+src_scroll)}}><Text style={styles.hypertext}>{text_scroll}</Text></TouchableOpacity></View>)
+                } else if (element.includes("<bold>")) {
+                    const splitBold = element.split(/(<bold>)/)
+                    splitBold.map(function(element){
+                        if (element.startsWith('<s>') && element.endsWith('<f>')){
+                            const bold_text = element.split('<s>').join(',').split('<f>').join(',').split(',')[1]
+                            console.log(bold_text)
+                            out_value.push(<Text style={styles.textBold}>{bold_text}</Text>)
+                        } else if (element == "<bold>") {
+                            return
+                        } else {
+                            out_value.push(<Text style={styles.text}>{element}</Text>)
+                        }
+                    })
                 }
             })}
             return(
                 <Text>
-                    {out_value.map(function(element){
+                    {out_value.map(element => {
                         return element
                     })}
                 </Text>
@@ -72,24 +84,41 @@ const AccordionItem = (props) => {
                 {splitData.map(function(element, idx) {
                     const e_index = splitData.indexOf(element)
                     if (!element.includes('<link>') && !element.includes('<scroll>')) {
-                        return(
-                            <View key={idx}>
-                                <Text style={e_index%2 == 0 ? styles.title2 : styles.text}>{element}</Text>
-                                {e_index%2 == 0 && <View style={styles.subdivider} />}
-                            </View>
-                        )
+                        if (e_index % 2 == 0) {
+                            return (
+                                <View>
+                                    <Text style={styles.title}>{element}</Text>
+                                    <View style={styles.subdivider} />
+                                </View>
+                            )
+                        } else if (e_index % 2 != 0 && !element.includes("<bold>")) {
+                            return(
+                                <View>
+                                    <Text style={styles.text}>{element}</Text>
+                                </View>
+                            )
+                        } else if (e_index % 2 != 0 && element.includes("<bold>")) {
+                            const element_a = [element]
+                            return(
+                                getStr(element_a)
+                            )
+                        }
+
                     } else if (element.includes('<link>') && !element.includes('<scroll>')) {
                         const splitDescription = element.split('<link>')
                         return(
-                            getStr(splitDescription, type="link")
+                            getStr(splitDescription)
                         )
                     } else if (element.includes('<scroll>') && !element.includes('<link>')) {
-                        const splitDescription = element.split('<scroll')
+                        const splitDescription = element.split('<scroll>')
                         return(
-                            getStr(splitDescription, type="scroll")
+                            getStr(splitDescription)
                         )
                     } else if (element.includes('<link>') && element.includes('<scroll>')) {
-                        // Brainfuck level 1000
+                        const splitDescription = element.split('<link>').join(',').split('<scroll>').join(',').split(',')
+                        return(
+                            getStr(splitDescription)
+                        )
                     }
                 })}
             </View>
