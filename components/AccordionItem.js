@@ -58,8 +58,8 @@ const AccordionItem = (props) => {
                 } else if (element.includes("<bold>")) {
                     const splitBold = element.split(/(<bold>)/)
                     splitBold.map(function(element){
-                        if (element.startsWith('<s>') && element.endsWith('<f>')){
-                            const bold_text = element.split('<s>').join(',').split('<f>').join(',').split(',')[1]
+                        if (element.startsWith('<s>') && element.endsWith('<s>')){
+                            const bold_text = element.split('<s>')[1]
                             console.log(bold_text)
                             out_value.push(<Text style={styles.textBold}>{bold_text}</Text>)
                         } else if (element == "<bold>") {
