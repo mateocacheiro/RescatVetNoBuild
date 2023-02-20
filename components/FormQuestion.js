@@ -115,15 +115,18 @@ const FormQuestion = (props) => {
         }))
     }
 
+    const infoHandler = () => {
+        dispatch(emergencyActions.toggleInfoModal(question_id))
+        console.log("Info toggled for question with id ", question_id)
+    }
+
     const renderQuestion = () => {
         
         return(
             <View style={styles.middle}>
                 <View style={styles.question}>
                     <Text style={styles.text}>{questionTitle}</Text>
-                    {questionInfo && <TouchableOpacity style={styles.info} onPress={() => {
-                        console.log('Question info pressed')
-                    }}>
+                    {questionInfo && <TouchableOpacity style={styles.info} onPress={infoHandler}>
                         <MaterialCommunityIcons name="information" size={20} color="white" />
                     </TouchableOpacity>}
                 </View>
@@ -131,7 +134,7 @@ const FormQuestion = (props) => {
                     <TouchableOpacity style={[styles.button, {backgroundColor: bg_yes}]} onPress={() => {
                         questionAnswerHandler('yes')
                     }}>
-                        <Text style={styles.btnText}>Si</Text>
+                        <Text style={styles.btnText}>{currentLanguage == "ES" ? "Si" : "Yes"}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.button, {backgroundColor: bg_no}]} onPress={() => {
                         questionAnswerHandler('no')

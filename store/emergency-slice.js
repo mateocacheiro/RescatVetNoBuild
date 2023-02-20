@@ -11,7 +11,9 @@ const emergencySlice = createSlice({
             answer: null
         },
         answeredList: [],
-        newFormPage: false
+        newFormPage: false,
+        accordionList: [],
+        info_id: null
     },
     reducers: {
         updateAnswer(state, action) {
@@ -27,8 +29,14 @@ const emergencySlice = createSlice({
             const id = action.payload
             state.info_id = id
         },
-        toggleModal(state) {
+        toggleInfoModal(state, action) {
             state.modal_info_visible = !state.modal_info_visible
+            const id = action.payload
+            if (id == -1) {
+                state.info_id == null
+            } else {
+                state.info_id = id
+            }
         },
         toggleSituation(state) {
             state.situation_modal_visible = !state.situation_modal_visible

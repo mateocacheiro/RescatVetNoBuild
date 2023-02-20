@@ -18,8 +18,10 @@ const AnimalEmergencyScreen = ({navigation}) => {
     const animalID = useSelector(state => state.search.animalSelected_id)
     const answeredList = useSelector(state => state.emergency.answeredList)
     const currentLanguage = useSelector(state => state.language.selectedLenguage)
-    
+    const modal_info_visible = useSelector(state => state.emergency.modal_info_visible)
+
     const [SituationModalVisible, setSituationModalVisible] = useState(false)
+    const [InfoModalVisible, setInfoModalVisible] = useState(false)
     const [EmergencyHelpShown, setEmergencyHelpShown] = useState(false)
     const [EmergencyFormQuestions, setEmergencyFormQuestions] = useState()
     const [questionsReady, setQuestionsReady] = useState(false)
@@ -27,10 +29,12 @@ const AnimalEmergencyScreen = ({navigation}) => {
     const [formPages, setFormPages] = useState(1)
     const [pagStartIndex, setPagStartIndex] = useState(0)
     const [pagEndIndex, setPagEndIndex] = useState(4)
-    const [arrowLeftBg, setArrowLeftBg] = useState("#aaa")
-    const [arrowRightBg, setArrowRightBg] = useState(Colors.primary)
     const [formCompleted, setFormCompleted] = useState(false)
     const [questionNum, setQuestionNum] = useState()
+    const [animalTitle, setAnimalTitle] = useState()
+    const [homeTitle, setHomeTitle] = useState()
+    const [emergencyBCTitle, setEmergencyBCTitle] = useState()
+    const [emergencyTitle, setEmergencyTitle] = useState()
 
 
     useEffect(() => {
@@ -51,19 +55,49 @@ const AnimalEmergencyScreen = ({navigation}) => {
 
     useEffect(() => {
         if (questionsReady) {renderQuestions()}
+        const animalObj = AnimalsData.filter(function(element){return element.ID == animalID})[0]
+        if (currentLanguage == 'ES') {
+            setAnimalTitle(animalObj.NameES)
+            setHomeTitle("Inicio")
+            setEmergencyBCTitle("Emergencias")
+            setEmergencyTitle("Formulario de Emergencias")
+        } else {
+            setAnimalTitle(animalObj.NameEN)
+            setHomeTitle("Home")
+            setEmergencyBCTitle("Emergencies")
+            setEmergencyTitle("Emergency Form")
+        }
     }, [currentLanguage])
 
+    useEffect(() => {
+        console.log(modal_info_visible)
+        if (modal_info_visible) {
+            setInfoModalVisible(true)
+        } else {
+            setInfoModalVisible(false)
+        }
+    }, [modal_info_visible])
+
     const renderAnswers = () => {
+        let accordionList = []
+        answeredList.map((element) => {
+            const element_id = element.id
+            const answer = element.answer
+            switch(element_id) {
+                case 1: {
+                    if (answer == 'yes') {
+                        accordionList.push(2)
+                    }
+                }
+            }
+        })
         return(
             <View style={styles.formContainer}>
                 {formCompleted && <View>
                     <Text style={styles.text}>FORM COMPLETED</Text>
-                    {answeredList.map(function(element, idx){
+                    {accordionList.map(function(element, idx){
                         return(
-                            <View key={idx} style={{marginVertical: 10}}>
-                                <Text style={styles.text}>Question ID: {element.id}</Text>
-                                <Text style={styles.text}>Question Answer: {element.answer}</Text>
-                            </View>
+                            <AccordionItem id={element} key={idx} type="emergency" />
                         )
                     })}
                 </View>}
@@ -163,35 +197,36 @@ const AnimalEmergencyScreen = ({navigation}) => {
 
     return (
         <View style={{backgroundColor: "#333", height: '100%'}}>
-        {EmergencyHelpShown && renderHelp()}
-        {SituationModalVisible && <SituationModal />}
-        <ScrollView contentContainerStyle={styles.container}>
-                <View style={styles.breadCrumbs}>
-                    <TouchableWithoutFeedback>
-                        <Text style={styles.text}>Inicio</Text>
-                    </TouchableWithoutFeedback>
-                    <Text style={styles.text}>&gt;</Text>
-                    <Text style={styles.text}>Paloma</Text>
-                    <Text style={styles.text}>&gt;</Text>
-                    <Text style={styles.text}>Emergencias</Text>
+            {EmergencyHelpShown && renderHelp()}
+            {SituationModalVisible && <SituationModal />}
+            {InfoModalVisible && <InfoModal />}
+            <ScrollView contentContainerStyle={styles.container}>
+                    <View style={styles.breadCrumbs}>
+                        <TouchableWithoutFeedback>
+                            <Text style={styles.text}>{homeTitle}</Text>
+                        </TouchableWithoutFeedback>
+                        <Text style={styles.text}>&gt;</Text>
+                        <Text style={styles.text}>{animalTitle}</Text>
+                        <Text style={styles.text}>&gt;</Text>
+                        <Text style={styles.text}>{emergencyBCTitle}</Text>
+                    </View>
+                    <View style={{justifyContent: 'center', alignItems: 'center', marginBottom: 10}}>
+                        <MaterialIcons name='local-hospital' size={70} color={Colors.primary} />
+                    </View>
+                    <Text style={styles.title}>{emergencyTitle}</Text>
+                <View style={styles.formContainer}>
+                    <AccordionItem id={1} type="emergency" />
                 </View>
-                <View style={{justifyContent: 'center', alignItems: 'center', marginBottom: 10}}>
-                    <MaterialIcons name='local-hospital' size={70} color={Colors.primary} />
+                <View style={styles.formContainer}>
+                    {questionsReady && renderQuestions()}
+                    <View style={styles.arrows}>
+                        <TouchableOpacity onPress={() => {formPageHandler('left')}}><MaterialCommunityIcons name={'arrow-left'} size={30} color={formPageActive == 1 ? "#aaa" : Colors.primary} /></TouchableOpacity>
+                        <Text style={styles.text}>{formPageActive}/{formPages}</Text>
+                        <TouchableOpacity onPress={() => {formPageHandler('right')}}><MaterialCommunityIcons name={'arrow-right'} size={30} color={formPageActive == formPages ? "#aaa" : Colors.primary} /></TouchableOpacity>
+                    </View>
                 </View>
-                <Text style={styles.title}>Formulario de emergencias</Text>
-            
-            <View style={styles.formContainer}>
-                {questionsReady && renderQuestions()}
-                <View style={styles.arrows}>
-                    <TouchableOpacity onPress={() => {formPageHandler('left')}}><MaterialCommunityIcons name={'arrow-left'} size={30} color={formPageActive == 1 ? "#aaa" : Colors.primary} /></TouchableOpacity>
-                    <Text style={styles.text}>{formPageActive}/{formPages}</Text>
-                    <TouchableOpacity onPress={() => {formPageHandler('right')}}><MaterialCommunityIcons name={'arrow-right'} size={30} color={formPageActive == formPages ? "#aaa" : Colors.primary} /></TouchableOpacity>
-                </View>
-            </View>
-            <View style={styles.formContainer}>
-                <AccordionItem id={1} type="emergency" />
-            </View>
-        </ScrollView>
+                {formCompleted && renderAnswers()}
+            </ScrollView>
         </View>
     )
 }
@@ -259,9 +294,9 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start'
     },
     headerBlock: {
-        width: Dimensions.get('window').width*0.97,
+        width: d_width * 0.97,
         zIndex: 1,
-        marginTop: Dimensions.get('window').height * 0.01,
+        marginTop: d_width * 0.01,
         justifyContent: 'space-between',
         paddingBottom: 40,
         paddingTop: 20,

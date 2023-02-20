@@ -1,50 +1,34 @@
 import { StyleSheet, Text, View, Modal, Pressable } from 'react-native'
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import { emergencyActions } from '../store/emergency-slice'
 import Colors from '../constants/Colors'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
+import EmergencyQuestions from '../assets/database/EmergencyQuestions.json'
 
 const InfoModal = (props) => {
 
     const modalVisible = useSelector(state => state.emergency.modal_info_visible)
     const dispatch = useDispatch()
-    const id = props.id
     let info_text
-    if(id == 0) {
-        info_text = "Si no estás segure, puede poner la mano sobre un lado de su pecho, sobre las costillas"
-    }
-    if(id == 1) {
-        info_text = "Puedes poner la mano debajo del ala, y así deberías de notarle el pulso"
-    }
-    if(id == 2) {
-        info_text = "Puedes alumbrarle un ojo con la linterna del móvil y apartarla, para ver si la pupila cambia de tamaño."
-    }
-    if(id == 3) {
-        info_text = "Las palomas tienen una temperatura corporal un poco mayor a la del ser humano, debemos notarlas calentitas. Si dispones de termómetro, se debe introducir por la cloaca, preferentemente lubricado con aceite vegetal o vaselina. Debe estar a unos 38-39ºC. Si no, coloca dos dedos bajo su ala."
-    }
-    if(id == 4) {
-        info_text = "El estado natural de las palomas es alerta, con los ojos abiertos y una postura atenta."
-    }
-    if(id == 5) {
-        info_text = "Cabeza torcida sin posibilidad de ponerla recta."
-    }
-    if(id == 6) {
-        info_text = "La posición natural de las alas es plegadas hacia atrás y pegadas a la cola por arriba o por abajo, pero nunca caídas."
-    }
-    if(id == 7) {
-        info_text = "La cloaca es por donde salen las heces."
-    }
-    if(id == 8) {
-        info_text = "Las pápulas son bultos con herida que se pueden presentar en patas, cuello, pico u ojos."
-    }
-    if(id == 9) {
-        info_text = "Un cuerpo extraño es un objeto ajeno al animal, como una ramita, espiga, pincho, clavo, etc."
+    const currentLanguage = useSelector(state => state.language.selectedLenguage)
+    console.log(currentLanguage)
+    const id = useSelector(state => state.emergency.info_id)
+    useEffect(() => {
+        
+    }, [modalVisible])
+    const emergencyQuestionsObj = EmergencyQuestions.filter(function(element){return element.ID == id})[0]
+    if (currentLanguage == 'ES') {
+        info_text = emergencyQuestionsObj.InfoES
+    } else {
+        info_text = emergencyQuestionsObj.InfoEN
     }
 
     return (
         <Modal animationType='fade' animationInTiming={0.5} animationOutTiming={0.5} transparent={true} visible={modalVisible}>
-            <Pressable style={styles.modal} onPress={() => dispatch(emergencyActions.toggleModal())}>
+            <Pressable style={styles.modal} onPress={() => {
+                dispatch(emergencyActions.toggleInfoModal(-1))
+            }}>
             <View style={styles.inner}>
                 <View style={styles.close}>
                     <MaterialCommunityIcons name="close" size={25} color="#fff" />

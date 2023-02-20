@@ -33,12 +33,17 @@ const AccordionItem = (props) => {
 
         if (description.includes("<sub>")) {
             splitData = description.split('<sub>')
-            splitData.shift()
+            //splitData.shift()
         } else {
             splitData = splitData.concat(description)
+            //console.log(splitData)
         }
 
-        const getStr = (splitDescription, type) => {
+        const scrollHandler = (src) => {
+            console.log("Scroll to " + src)
+        }
+
+        const getStr = (splitDescription) => {
             let out_value = []
             {splitDescription.map(function(element){
                 if(!element.includes("<src1>") && !element.includes("<src2") && !element.includes("<bold>")) {
@@ -54,13 +59,12 @@ const AccordionItem = (props) => {
                     splitScroll.shift()
                     const src_scroll = splitScroll[0]
                     const text_scroll = splitScroll[1]
-                    out_value.push(<View><TouchableOpacity onPress={() => {console.log("Scroll to"+src_scroll)}}><Text style={styles.hypertext}>{text_scroll}</Text></TouchableOpacity></View>)
+                    out_value.push(<View><TouchableOpacity onPress={() => {scrollHandler(src_scroll)}}><Text style={styles.hypertext}>{text_scroll}</Text></TouchableOpacity></View>)
                 } else if (element.includes("<bold>")) {
                     const splitBold = element.split(/(<bold>)/)
                     splitBold.map(function(element){
                         if (element.startsWith('<s>') && element.endsWith('<s>')){
                             const bold_text = element.split('<s>')[1]
-                            console.log(bold_text)
                             out_value.push(<Text style={styles.textBold}>{bold_text}</Text>)
                         } else if (element == "<bold>") {
                             return
@@ -83,21 +87,22 @@ const AccordionItem = (props) => {
             <View style={styles.content}>
                 {splitData.map(function(element, idx) {
                     const e_index = splitData.indexOf(element)
+                    
                     if (!element.includes('<link>') && !element.includes('<scroll>')) {
-                        if (e_index % 2 == 0) {
+                        if (e_index % 2 != 0) {
                             return (
                                 <View>
                                     <Text style={styles.title}>{element}</Text>
                                     <View style={styles.subdivider} />
                                 </View>
                             )
-                        } else if (e_index % 2 != 0 && !element.includes("<bold>")) {
+                        } else if (e_index % 2 == 0 && !element.includes("<bold>")) {
                             return(
                                 <View>
                                     <Text style={styles.text}>{element}</Text>
                                 </View>
                             )
-                        } else if (e_index % 2 != 0 && element.includes("<bold>")) {
+                        } else if (e_index % 2 == 0 && element.includes("<bold>")) {
                             const element_a = [element]
                             return(
                                 getStr(element_a)
@@ -153,12 +158,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         height: 50,
         alignItems: 'center',
-        marginVertical: 10,
-        width: '100%'
+        width: '92%',
+        marginVertical: 5
     },
     title: {
         fontFamily: 'montserrat-bold',
-        fontSize: 18,
+        fontSize: 16,
         color: Colors.primary,
         maxWidth: '85%'
     },
@@ -170,19 +175,18 @@ const styles = StyleSheet.create({
         fontFamily: 'montserrat',
         color: 'white',
         fontSize: 14,
-        marginBottom: 10
+        maxWidth: '95%'
     },
     title2: {
         fontFamily: 'montserrat-bold',
         fontSize: 16,
-        color: Colors.primary,
-        marginBottom: 5
+        color: Colors.primary
     },
     subdivider: {
         height: 2,
         width: Dimensions.get('window').width*0.87,
         backgroundColor: "#aaa",
-        marginBottom: 10
+        marginBottom: 5
     },
     hypertext: {
         fontFamily: 'montserrat-bold',
