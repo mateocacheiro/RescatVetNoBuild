@@ -18,7 +18,7 @@ const FormQuestion = (props) => {
     const newFormPage = useSelector(state => state.emergency.newFormPage)
     const [infoID, setInfoID] = useState('')
     const [newQuestionLoaded, setNewQuestionLoaded] = useState(false)
-    const currentLanguage = useSelector(state => state.language.selectedLenguage)
+    const currentLanguage = useSelector(state => state.language.selectedLanguage)
     const [indexUpdated, setIndexUpdated] = useState(false)
 
     let questionTitle

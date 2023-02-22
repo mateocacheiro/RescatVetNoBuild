@@ -11,7 +11,7 @@ const InfoModal = (props) => {
     const modalVisible = useSelector(state => state.emergency.modal_info_visible)
     const dispatch = useDispatch()
     let info_text
-    const currentLanguage = useSelector(state => state.language.selectedLenguage)
+    const currentLanguage = useSelector(state => state.language.selectedLanguage)
     console.log(currentLanguage)
     const id = useSelector(state => state.emergency.info_id)
     useEffect(() => {

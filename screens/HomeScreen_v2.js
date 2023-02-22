@@ -25,7 +25,7 @@ const HomeScreen_v2 = ({ navigation }) => {
         })
     }, [navigation])
 
-    const currentLanguage = useSelector(state => state.language.selectedLenguage)
+    const currentLanguage = useSelector(state => state.language.selectedLanguage)
     const interface_id = useSelector(state => state.screen.interfaceHelp)
     const interface_help_shown = useSelector(state => state.screen.interfaceHelpShown)
 

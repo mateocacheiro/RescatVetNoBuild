@@ -3,15 +3,16 @@ import React, { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons'
 import Colors from '../constants/Colors'
 import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { careActions } from '../store/care-slice';
 import EmergencyInfo from '../assets/database/EmergencyInfo.json'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import PrimaryCareInfo from '../assets/database/PrimaryCareInfo.json'
 
 
 const AccordionItem = (props) => {
     const dispatch = useDispatch()
     const navigation = useNavigation()
+    const currentLanguage = useSelector(state => state.language.selectedLanguage)
     const [isContentHidden, setIsContentHidden] = useState(true)
     const [iconName, setIconName] = useState('down')
     const type = props.type
@@ -19,11 +20,22 @@ const AccordionItem = (props) => {
     let title
     let description
     if (type == "emergency") {
-        title = EmergencyInfo[info_id-1]['TitleES']
-        description = EmergencyInfo[info_id-1]['DescriptionES']
+        if (currentLanguage === 'ES') {
+            title = EmergencyInfo[info_id-1]['TitleES']
+            description = EmergencyInfo[info_id-1]['DescriptionES']
+        } else {
+            title = EmergencyInfo[info_id-1]['TitleEN']
+            description = EmergencyInfo[info_id-1]['DescriptionEN']
+        }
     } else if (type == "care") {
         // Get title and description from the BasicCareInfo table
-        console.log("Bruh")
+        if (currentLanguage === 'ES') {
+            title = PrimaryCareInfo[info_id-1]['TitleES']
+            description = PrimaryCareInfo[info_id-1]['DescriptionES']
+        } else {
+            title = PrimaryCareInfo[info_id-1]['TitleEN']
+            description = PrimaryCareInfo[info_id-1]['DescriptionEN']
+        }
     }
 
 
@@ -76,7 +88,7 @@ const AccordionItem = (props) => {
             })}
             return(
                 <Text>
-                    {out_value.map(element => {
+                    {out_value.map((element, idx) => {
                         return element
                     })}
                 </Text>
@@ -158,8 +170,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         height: 50,
         alignItems: 'center',
-        width: '92%',
+        width: '90%',
         marginVertical: 5
+    },
+    container: {
+        width: Dimensions.get('screen').width*0.95
     },
     title: {
         fontFamily: 'montserrat-bold',
@@ -169,7 +184,7 @@ const styles = StyleSheet.create({
     },
     content: {
         justifyContent: 'flex-start',
-        width: '100%'
+        width: '95%'
     },
     text: {
         fontFamily: 'montserrat',

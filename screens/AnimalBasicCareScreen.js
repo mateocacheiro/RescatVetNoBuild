@@ -5,8 +5,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import AccordionItem from '../components/AccordionItem'
 import { useSelector, useDispatch } from 'react-redux'
 import { careActions } from '../store/care-slice'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
+import PrimaryCareInfo from '../assets/database/PrimaryCareInfo.json'
 //<Image source={require('../assets/img/pigeon_screen.jpg')} style={styles.image}/>
 
 const AnimalBasicCareScreen = () => {
@@ -25,69 +26,51 @@ const AnimalBasicCareScreen = () => {
     const [animalName, setAnimalName] = useState('')
     const [careDescription, setCareDescription] = useState('')
 
-    useEffect(() => {
-        renderSections()
-    }, [navigatedToSplay, navigatedToEggs])
-
-    const refScrollView = useRef(null);
-
-    const moveTo = (section) => {
-        if (section == 0) { // Splay Leg
-            refScrollView.current.scrollTo({y: splayPosition+3000});
-            dispatch(careActions.toggleSplayNav())
-        }
-        else if (section == 1) { // Eggs
-            refScrollView.current.scrollTo({y: eggsPosition+3000})
-            dispatch(careActions.toggleEggsNav())
-        }
-    }
+    const [primaryCareArray, setPrimaryCareArray] = useState()
 
     useEffect(() => {
-        if(animalID == 1) {
-            setSpaceTitle('Espacio de la paloma en casa')
-            setHeaderImg(require('../assets/img/pigeon_screen.jpg'))
-            setAnimalName('Paloma')
-            setCareDescription('una paloma')
-        } else if(animalID == 2) {
-            setSpaceTitle('Espacio del gato en casa')
-            setHeaderImg(require('../assets/img/2.jpg'))
-            setCareDescription('un gato')
-            setAnimalName('Gato')
-        } else if (animalID == 3) {
-            setSpaceTitle('Espacio del perro en casa')
-            setHeaderImg(require('../assets/img/3.jpg'))
-            setCareDescription('un perro')
-            setAnimalName('Perro')
-        } else if (animalID == 4) {
-            setSpaceTitle('Espacio del conejo en casa')
-            setHeaderImg(require('../assets/img/4.jpg'))
-            setCareDescription('un conejo')
-            setAnimalName('Conejo')
-        } else if (animalID == 5) {
-            setSpaceTitle('Espacio de la tortuga en casa')
-            setHeaderImg(require('../assets/img/turtle_screen.jpg'))
-            setCareDescription('una tortuga')
-            setAnimalName('Tortuga')
-            setRenderML(true)
-        } else if (animalID == 6) {
-            setSpaceTitle('Espacio de la gaviota casa')
-            setHeaderImg(require('../assets/img/5.jpg'))
-            setCareDescription('una gaviota')
-            setAnimalName('Gaviota')
-        }
-    }, [animalID])
+        const filtered = PrimaryCareInfo.filter(function(element){
+            if (element.AnimalID == animalID) {
+                return element
+            }
+        })
+        setPrimaryCareArray(filtered)
+        console.log(primaryCareArray)
+    }, [])
 
     const renderSections = () => {
         return(
-            <View style={styles.contentBlock}>
-                <Text>Basic Care Sections Go Here</Text>
+            <View style={styles.sectionContainer}>
+                <FlatList 
+                    data={primaryCareArray}
+                    style={{marginTop: 10}} 
+                    keyExtractor={item => item.ID} 
+                    renderItem={itemData => 
+                        <AccordionItem id={itemData.item.ID} type="care" keyExtractor={itemData.item.ID}/>
+                    }
+                />
             </View>
+        )
+    }
+
+    const VirtualizedList = ({children}) => {
+        return (
+            <FlatList
+                data={[]}
+                keyExtractor={() => "key"}
+                renderItem={null}
+                ListHeaderComponent={
+                    <>{children}</>
+                }
+                style={{backgroundColor: Colors.lightBG}}
+            />
         )
     }
 
     return (
         <View style={styles.container}>
-            <ScrollView ref={refScrollView}>
+            <VirtualizedList>
+            <ScrollView>
                 <ImageBackground source={headerImg} resizeMode="cover" style={styles.headerBlock}>
                     <View style={styles.breadCrumbs}>
                         <TouchableWithoutFeedback>
@@ -117,6 +100,7 @@ const AnimalBasicCareScreen = () => {
                 </TouchableOpacity>}
                 {renderSections()}
             </ScrollView>
+            </VirtualizedList>
         </View>
     )
 }
@@ -129,6 +113,19 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'flex-start',
         alignItems: 'center'
+    },
+    sectionContainer: {
+        marginBottom: 5,
+        marginTop: 5,
+        paddingVertical: 20,
+        paddingHorizontal: 20,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        backgroundColor: '#111',
+        width: d_width*0.974,
+        borderRadius: 5,
+        elevation: 10,
+        zIndex: 0
     },
     headerBlock: {
         width: Dimensions.get('window').width*0.97,

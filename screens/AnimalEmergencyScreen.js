@@ -48,7 +48,6 @@ const AnimalEmergencyScreen = ({navigation}) => {
     }, [EmergencyFormQuestions])
 
     useEffect(() => {
-        console.log('New answeredList length: ' + answeredList.length + ' for ' + questionNum + ' questions.')
         if (answeredList && answeredList.length == questionNum) {
             setFormCompleted(true)
             renderAnswers()
@@ -72,7 +71,6 @@ const AnimalEmergencyScreen = ({navigation}) => {
     }, [currentLanguage])
 
     useEffect(() => {
-        console.log(modal_info_visible)
         if (modal_info_visible) {
             setInfoModalVisible(true)
         } else {
@@ -88,155 +86,251 @@ const AnimalEmergencyScreen = ({navigation}) => {
             switch(element_id) {
                 case 1: {
                     // If it doesn't breathe: 3 (artificial breathing), 4 (contusion), 19 (choking), 20 (Asphyxiation)
-                    if (!accordionList.includes(3)) {accordionList.push(3)}
-                    if (!accordionList.includes(4)) {accordionList.push(4)}
-                    if (!accordionList.includes(19)) {accordionList.push(19)}
+                    if (answer === 'no') {
+                        if (!accordionList.includes(3)) {accordionList.push(3)}
+                        if (!accordionList.includes(4)) {accordionList.push(4)}
+                        if (!accordionList.includes(19)) {accordionList.push(19)}
+                    }
+                    break
                 }
                 case 2: {
                     // Difficulty breathing: 19 (choking), 12 (tricomonas)
-                    if (!accordionList.includes(19)) {accordionList.push(19)}
-                    if (!accordionList.includes(12)) {accordionList.push(12)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(19)) {accordionList.push(19)}
+                        if (!accordionList.includes(12)) {accordionList.push(12)}
+                    }
+                    break
                 }
                 case 3: {
                     // Slow breathing: 4 (contusion)
-                    if (!accordionList.includes(4)) {accordionList.push(4)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(4)) {accordionList.push(4)}
+                    }
+                    break
                 }
                 case 4: {
                     // Fast and superficial breathing: 4 (contusion), 15 (heat stroke), 18 (bite), 22 (laying eggs)
-                    if (!accordionList.includes(4)) {accordionList.push(4)}
-                    if (!accordionList.includes(15)) {accordionList.push(15)}
-                    if (!accordionList.includes(18)) {accordionList.push(18)}
-                    if (!accordionList.includes(22)) {accordionList.push(22)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(4)) {accordionList.push(4)}
+                        if (!accordionList.includes(15)) {accordionList.push(15)}
+                        if (!accordionList.includes(18)) {accordionList.push(18)}
+                        if (!accordionList.includes(22)) {accordionList.push(22)}
+                    }
+                    break
                 }
                 case 5: {
                     // If it's unconscious: 4 (contusion), 15 (heat stroke), 16 (hypothermia)
-                    if (!accordionList.includes(4)) {accordionList.push(4)}
-                    if (!accordionList.includes(16)) {accordionList.push(16)}
-                    if (!accordionList.includes(15)) {accordionList.push(15)}
+                    if (answer === 'no') {
+                        if (!accordionList.includes(4)) {accordionList.push(4)}
+                        if (!accordionList.includes(16)) {accordionList.push(16)}
+                        if (!accordionList.includes(15)) {accordionList.push(15)}
+                    }
+                    break
                 }
                 case 6: {
                     // Pupils not reacting to light: 4 (contusion)
-                    if (!accordionList.includes(4)) {accordionList.push(4)}
+                    if (answer === 'no') {
+                        if (!accordionList.includes(4)) {accordionList.push(4)}
+                    }
+                    break
                 }
                 case 7: {
                     // If it's unstable or falling down: 4 (contusion), 14 (poisoning), 15 (heat stroke)
-                    if (!accordionList.includes(4)) {accordionList.push(4)}
-                    if (!accordionList.includes(14)) {accordionList.push(14)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(4)) {accordionList.push(4)}
+                        if (!accordionList.includes(14)) {accordionList.push(14)}
+                    }
+                    break
+                    
                 }
                 case 8: {
                     // Blood on the feathersuit: 6 (broken wing), 18 (bite), 21 (foreign body)
-                    if (!accordionList.includes(6)) {accordionList.push(6)}
-                    if (!accordionList.includes(18)) {accordionList.push(18)}
-                    if (!accordionList.includes(21)) {accordionList.push(21)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(6)) {accordionList.push(6)}
+                        if (!accordionList.includes(18)) {accordionList.push(18)}
+                        if (!accordionList.includes(21)) {accordionList.push(21)}
+                    }
+                    break
                 }
                 case 9: {
                     // Bleeds from body orifice: 4 (contusion), 14 (poisoning)
-                    if (!accordionList.includes(4)) {accordionList.push(4)}
-                    if (!accordionList.includes(14)) {accordionList.push(14)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(4)) {accordionList.push(4)}
+                        if (!accordionList.includes(14)) {accordionList.push(14)}
+                    }
+                    break
                 }
                 case 10: {
                     // It has open wounds: 18 (bite)
-                    if (!accordionList.includes(18)) {accordionList.push(18)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(18)) {accordionList.push(18)}
+                    }
+                    break
                 }
                 case 11: {
                     // Visible guts: 4 (contusion), 18 (bite), 22 (laying eggs)
-                    if (!accordionList.includes(4)) {accordionList.push(4)}
-                    if (!accordionList.includes(18)) {accordionList.push(18)}
-                    if (!accordionList.includes(22)) {accordionList.push(22)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(4)) {accordionList.push(4)}
+                        if (!accordionList.includes(18)) {accordionList.push(18)}
+                        if (!accordionList.includes(22)) {accordionList.push(22)}
+                    }
+                    break
                 }
                 case 12: {
                     // Visible burns: 23 (burns)
-                    if (!accordionList.includes(23)) {accordionList.push(23)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(23)) {accordionList.push(23)}
+                    }
+                    break
                 }
                 case 13: {
                     // Low temperature: 4 (contusion), 14 (poisoning), 16 (hypothermia)
-                    if (!accordionList.includes(4)) {accordionList.push(4)}
-                    if (!accordionList.includes(14)) {accordionList.push(14)}
-                    if (!accordionList.includes(16)) {accordionList.push(16)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(4)) {accordionList.push(4)}
+                        if (!accordionList.includes(14)) {accordionList.push(14)}
+                        if (!accordionList.includes(16)) {accordionList.push(16)}
+                    }
+                    break
                 }
                 case 14: {
                     // Head in unnatural position: 9 (paramixovirus), 14 (poisoning)
-                    if (!accordionList.includes(9)) {accordionList.push(9)}
-                    if (!accordionList.includes(14)) {accordionList.push(14)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(9)) {accordionList.push(9)}
+                        if (!accordionList.includes(14)) {accordionList.push(14)}
+                    }
+                    break
                 }
                 case 15: {
                     // Wing in unnatural position: 4 (contusion), 5 (dislocated wing), 6 (broken wing)
-                    if (!accordionList.includes(4)) {accordionList.push(4)}
-                    if (!accordionList.includes(5)) {accordionList.push(5)}
-                    if (!accordionList.includes(6)) {accordionList.push(6)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(4)) {accordionList.push(4)}
+                        if (!accordionList.includes(5)) {accordionList.push(5)}
+                        if (!accordionList.includes(6)) {accordionList.push(6)}
+                    }
+                    break
                 }
                 case 16: {
                     // Leg in unnatural position: 4 (contusion), 7 (broken leg), 8 (dislocated leg), 22 (laying eggs)
-                    if (!accordionList.includes(4)) {accordionList.push(4)}
-                    if (!accordionList.includes(7)) {accordionList.push(7)}
-                    if (!accordionList.includes(8)) {accordionList.push(8)}
-                    if (!accordionList.includes(22)) {accordionList.push(22)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(4)) {accordionList.push(4)}
+                        if (!accordionList.includes(7)) {accordionList.push(7)}
+                        if (!accordionList.includes(8)) {accordionList.push(8)}
+                        if (!accordionList.includes(22)) {accordionList.push(22)}
+                    }
+                    break
                 }
                 case 17: {
                     // It's lethargic: 10 (coccidios), 14 (poisoning), 16 (hypothermia), 22 (laying eggs)
-                    if (!accordionList.includes(10)) {accordionList.push(10)}
-                    if (!accordionList.includes(14)) {accordionList.push(14)}
-                    if (!accordionList.includes(16)) {accordionList.push(16)}
-                    if (!accordionList.includes(22)) {accordionList.push(22)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(10)) {accordionList.push(10)}
+                        if (!accordionList.includes(14)) {accordionList.push(14)}
+                        if (!accordionList.includes(16)) {accordionList.push(16)}
+                        if (!accordionList.includes(22)) {accordionList.push(22)}
+                    }
+                    break
                 }
                 case 18: {
                     // Fluid coming out of the beak: 20 (Asphyxiation)
-                    if (!accordionList.includes(20)) {accordionList.push(20)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(20)) {accordionList.push(20)}
+                    }
+                    break
                 }
                 case 19: {
                     // Swollen crop: 4 (contusion)
-                    if (!accordionList.includes(4)) {accordionList.push(4)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(4)) {accordionList.push(4)}
+                    }
+                    break
                 }
                 case 20: {
                     // Swollen abdomen: 22 (laying eggs)
-                    if (!accordionList.includes(22)) {accordionList.push(22)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(22)) {accordionList.push(22)}
+                    }
+                    break
                 }
                 case 21: {
                     // Vomit: 17 (vomit)
-                    if (!accordionList.includes(17)) {accordionList.push(17)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(17)) {accordionList.push(17)}
+                    }
+                    break
                 }
                 case 22: {
                     // Dirty cloaca: 10 (coccidios), 12 (tricomonas)
-                    if (!accordionList.includes(10)) {accordionList.push(10)}
-                    if (!accordionList.includes(12)) {accordionList.push(12)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(10)) {accordionList.push(10)}
+                        if (!accordionList.includes(12)) {accordionList.push(12)}
+                    }
+                    break
                 }
                 case 24: {
                     // Liquid feces: 9 (paramixovirus), 10 (coccidios)
-                    if (!accordionList.includes(9)) {accordionList.push(9)}
-                    if (!accordionList.includes(10)) {accordionList.push(10)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(9)) {accordionList.push(9)}
+                        if (!accordionList.includes(10)) {accordionList.push(10)}
+                    }
+                    break
                 }
                 case 25: {
                     // Greenish feces: 10 (coccidios)
-                    if (!accordionList.includes(10)) {accordionList.push(10)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(10)) {accordionList.push(10)}
+                    }
+                    break
                 }
                 case 26: {
                     // Blood in feces: 9 (paramixovirus), 10 (coccidios)
-                    if (!accordionList.includes(9)) {accordionList.push(9)}
-                    if (!accordionList.includes(10)) {accordionList.push(10)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(9)) {accordionList.push(9)}
+                        if (!accordionList.includes(10)) {accordionList.push(10)}
+                    }
+                    break
                 }
                 case 27: {
                     // Thick feces: 10 (coccidios)
-                    if (!accordionList.includes(10)) {accordionList.push(10)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(10)) {accordionList.push(10)}
+                    }
+                    break
                 }
                 case 28: {
                     // Papules: 11 (pox)
-                    if (!accordionList.includes(11)) {accordionList.push(11)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(11)) {accordionList.push(11)}
+                    }
+                    break
                 }
                 case 29: {
                     // Plaques: 12 (tricomonas)
-                    if (!accordionList.includes(12)) {accordionList.push(12)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(12)) {accordionList.push(12)}
+                    }
+                    break
                 }
                 case 30: {
                     // Entangled hairs or threads: 13 (entangled hairs)
-                    if (!accordionList.includes(13)) {accordionList.push(13)}
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(13)) {accordionList.push(13)}
+                    }
+                    break
                 }
+                case 31: {
+                    // Foreign body: 21 (foreign body)
+                    if (answer === 'yes') {
+                        if (!accordionList.includes(21)) {accordionList.push(21)}
+                    }
+                }
+                default:
+                    break
             }
         })
         
         return(
             <View style={styles.formContainer}>
                 {formCompleted && <View>
-                    <Text style={styles.text}>FORM COMPLETED</Text>
+                    <Text style={styles.title}>Resultados</Text>
                     {accordionList.map(function(element, idx){
                         return(
                             <AccordionItem id={element} key={idx} type="emergency" />

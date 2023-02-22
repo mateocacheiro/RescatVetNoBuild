@@ -9,7 +9,7 @@ import { languageActions } from '../store/language-slice'
 const CustomDrawer = ({...props}) => {
     const dispatch = useDispatch()
     
-    const currentLanguage = useSelector(state => state.language.selectedLenguage)
+    const currentLanguage = useSelector(state => state.language.selectedLanguage)
     
     const showLanguages = useSelector(state => state.language.showLanguages)
 

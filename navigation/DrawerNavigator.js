@@ -17,7 +17,7 @@ const Drawer = createDrawerNavigator()
 
 const DrawerNavigator = ({navigation}) => {
 
-    const currentLanguage = useSelector(state => state.language.selectedLenguage)
+    const currentLanguage = useSelector(state => state.language.selectedLanguage)
 
     const currentScreen = useSelector(state => state.screen.currentScreen)
 
