@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 
 const AboutUs = () => {
     
-    const currentLanguage = useSelector(state => state.language.selectedLenguage)
+    const currentLanguage = useSelector(state => state.language.selectedLanguage)
 
     useEffect(() => {
         renderContent()

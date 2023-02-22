@@ -35,6 +35,8 @@ const AnimalEmergencyScreen = ({navigation}) => {
     const [homeTitle, setHomeTitle] = useState()
     const [emergencyBCTitle, setEmergencyBCTitle] = useState()
     const [emergencyTitle, setEmergencyTitle] = useState()
+    const [arrowLeftBg, setArrowLeftBg] = useState()
+    const [arrowRightBg, setArrowRightBg] = useState()
 
 
     useEffect(() => {
@@ -85,12 +87,152 @@ const AnimalEmergencyScreen = ({navigation}) => {
             const answer = element.answer
             switch(element_id) {
                 case 1: {
-                    if (answer == 'yes') {
-                        accordionList.push(2)
-                    }
+                    // If it doesn't breathe: 3 (artificial breathing), 4 (contusion), 19 (choking), 20 (Asphyxiation)
+                    if (!accordionList.includes(3)) {accordionList.push(3)}
+                    if (!accordionList.includes(4)) {accordionList.push(4)}
+                    if (!accordionList.includes(19)) {accordionList.push(19)}
+                }
+                case 2: {
+                    // Difficulty breathing: 19 (choking), 12 (tricomonas)
+                    if (!accordionList.includes(19)) {accordionList.push(19)}
+                    if (!accordionList.includes(12)) {accordionList.push(12)}
+                }
+                case 3: {
+                    // Slow breathing: 4 (contusion)
+                    if (!accordionList.includes(4)) {accordionList.push(4)}
+                }
+                case 4: {
+                    // Fast and superficial breathing: 4 (contusion), 15 (heat stroke), 18 (bite), 22 (laying eggs)
+                    if (!accordionList.includes(4)) {accordionList.push(4)}
+                    if (!accordionList.includes(15)) {accordionList.push(15)}
+                    if (!accordionList.includes(18)) {accordionList.push(18)}
+                    if (!accordionList.includes(22)) {accordionList.push(22)}
+                }
+                case 5: {
+                    // If it's unconscious: 4 (contusion), 15 (heat stroke), 16 (hypothermia)
+                    if (!accordionList.includes(4)) {accordionList.push(4)}
+                    if (!accordionList.includes(16)) {accordionList.push(16)}
+                    if (!accordionList.includes(15)) {accordionList.push(15)}
+                }
+                case 6: {
+                    // Pupils not reacting to light: 4 (contusion)
+                    if (!accordionList.includes(4)) {accordionList.push(4)}
+                }
+                case 7: {
+                    // If it's unstable or falling down: 4 (contusion), 14 (poisoning), 15 (heat stroke)
+                    if (!accordionList.includes(4)) {accordionList.push(4)}
+                    if (!accordionList.includes(14)) {accordionList.push(14)}
+                }
+                case 8: {
+                    // Blood on the feathersuit: 6 (broken wing), 18 (bite), 21 (foreign body)
+                    if (!accordionList.includes(6)) {accordionList.push(6)}
+                    if (!accordionList.includes(18)) {accordionList.push(18)}
+                    if (!accordionList.includes(21)) {accordionList.push(21)}
+                }
+                case 9: {
+                    // Bleeds from body orifice: 4 (contusion), 14 (poisoning)
+                    if (!accordionList.includes(4)) {accordionList.push(4)}
+                    if (!accordionList.includes(14)) {accordionList.push(14)}
+                }
+                case 10: {
+                    // It has open wounds: 18 (bite)
+                    if (!accordionList.includes(18)) {accordionList.push(18)}
+                }
+                case 11: {
+                    // Visible guts: 4 (contusion), 18 (bite), 22 (laying eggs)
+                    if (!accordionList.includes(4)) {accordionList.push(4)}
+                    if (!accordionList.includes(18)) {accordionList.push(18)}
+                    if (!accordionList.includes(22)) {accordionList.push(22)}
+                }
+                case 12: {
+                    // Visible burns: 23 (burns)
+                    if (!accordionList.includes(23)) {accordionList.push(23)}
+                }
+                case 13: {
+                    // Low temperature: 4 (contusion), 14 (poisoning), 16 (hypothermia)
+                    if (!accordionList.includes(4)) {accordionList.push(4)}
+                    if (!accordionList.includes(14)) {accordionList.push(14)}
+                    if (!accordionList.includes(16)) {accordionList.push(16)}
+                }
+                case 14: {
+                    // Head in unnatural position: 9 (paramixovirus), 14 (poisoning)
+                    if (!accordionList.includes(9)) {accordionList.push(9)}
+                    if (!accordionList.includes(14)) {accordionList.push(14)}
+                }
+                case 15: {
+                    // Wing in unnatural position: 4 (contusion), 5 (dislocated wing), 6 (broken wing)
+                    if (!accordionList.includes(4)) {accordionList.push(4)}
+                    if (!accordionList.includes(5)) {accordionList.push(5)}
+                    if (!accordionList.includes(6)) {accordionList.push(6)}
+                }
+                case 16: {
+                    // Leg in unnatural position: 4 (contusion), 7 (broken leg), 8 (dislocated leg), 22 (laying eggs)
+                    if (!accordionList.includes(4)) {accordionList.push(4)}
+                    if (!accordionList.includes(7)) {accordionList.push(7)}
+                    if (!accordionList.includes(8)) {accordionList.push(8)}
+                    if (!accordionList.includes(22)) {accordionList.push(22)}
+                }
+                case 17: {
+                    // It's lethargic: 10 (coccidios), 14 (poisoning), 16 (hypothermia), 22 (laying eggs)
+                    if (!accordionList.includes(10)) {accordionList.push(10)}
+                    if (!accordionList.includes(14)) {accordionList.push(14)}
+                    if (!accordionList.includes(16)) {accordionList.push(16)}
+                    if (!accordionList.includes(22)) {accordionList.push(22)}
+                }
+                case 18: {
+                    // Fluid coming out of the beak: 20 (Asphyxiation)
+                    if (!accordionList.includes(20)) {accordionList.push(20)}
+                }
+                case 19: {
+                    // Swollen crop: 4 (contusion)
+                    if (!accordionList.includes(4)) {accordionList.push(4)}
+                }
+                case 20: {
+                    // Swollen abdomen: 22 (laying eggs)
+                    if (!accordionList.includes(22)) {accordionList.push(22)}
+                }
+                case 21: {
+                    // Vomit: 17 (vomit)
+                    if (!accordionList.includes(17)) {accordionList.push(17)}
+                }
+                case 22: {
+                    // Dirty cloaca: 10 (coccidios), 12 (tricomonas)
+                    if (!accordionList.includes(10)) {accordionList.push(10)}
+                    if (!accordionList.includes(12)) {accordionList.push(12)}
+                }
+                case 24: {
+                    // Liquid feces: 9 (paramixovirus), 10 (coccidios)
+                    if (!accordionList.includes(9)) {accordionList.push(9)}
+                    if (!accordionList.includes(10)) {accordionList.push(10)}
+                }
+                case 25: {
+                    // Greenish feces: 10 (coccidios)
+                    if (!accordionList.includes(10)) {accordionList.push(10)}
+                }
+                case 26: {
+                    // Blood in feces: 9 (paramixovirus), 10 (coccidios)
+                    if (!accordionList.includes(9)) {accordionList.push(9)}
+                    if (!accordionList.includes(10)) {accordionList.push(10)}
+                }
+                case 27: {
+                    // Thick feces: 10 (coccidios)
+                    if (!accordionList.includes(10)) {accordionList.push(10)}
+                }
+                case 28: {
+                    // Papules: 11 (pox)
+                    if (!accordionList.includes(11)) {accordionList.push(11)}
+                }
+                case 29: {
+                    // Plaques: 12 (tricomonas)
+                    if (!accordionList.includes(12)) {accordionList.push(12)}
+                }
+                case 30: {
+                    // Entangled hairs or threads: 13 (entangled hairs)
+                    if (!accordionList.includes(13)) {accordionList.push(13)}
                 }
             }
         })
+        
         return(
             <View style={styles.formContainer}>
                 {formCompleted && <View>

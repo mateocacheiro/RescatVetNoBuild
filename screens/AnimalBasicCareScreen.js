@@ -70,10 +70,10 @@ const AnimalBasicCareScreen = () => {
             setAnimalName('Tortuga')
             setRenderML(true)
         } else if (animalID == 6) {
-            setSpaceTitle('Espacio del aye-aye en casa')
+            setSpaceTitle('Espacio de la gaviota casa')
             setHeaderImg(require('../assets/img/5.jpg'))
-            setCareDescription('un aye-aye')
-            setAnimalName('Aye-aye')
+            setCareDescription('una gaviota')
+            setAnimalName('Gaviota')
         }
     }, [animalID])
 

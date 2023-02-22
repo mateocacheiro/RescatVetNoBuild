@@ -8,7 +8,7 @@ import {MaterialIcons, MaterialCommunityIcons} from '@expo/vector-icons'
 
 const AboutTheAppScreen = () => {
 
-    const currentLanguage = useSelector(state => state.language.selectedLenguage)
+    const currentLanguage = useSelector(state => state.language.selectedLanguage)
 
     useEffect(() => {
         renderContent()
