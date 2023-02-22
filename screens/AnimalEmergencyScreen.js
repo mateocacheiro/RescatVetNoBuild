@@ -17,7 +17,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
     const dispatch = useDispatch()
     const animalID = useSelector(state => state.search.animalSelected_id)
     const answeredList = useSelector(state => state.emergency.answeredList)
-    const currentLanguage = useSelector(state => state.language.selectedLenguage)
+    const currentLanguage = useSelector(state => state.language.selectedLanguage)
     const modal_info_visible = useSelector(state => state.emergency.modal_info_visible)
 
     const [SituationModalVisible, setSituationModalVisible] = useState(false)
@@ -37,10 +37,23 @@ const AnimalEmergencyScreen = ({navigation}) => {
     const [emergencyTitle, setEmergencyTitle] = useState()
     const [arrowLeftBg, setArrowLeftBg] = useState()
     const [arrowRightBg, setArrowRightBg] = useState()
-
+    const [headerImg, setHeaderImg] = useState()
 
     useEffect(() => {
         preProcessData()
+        if (animalID == 1) {
+            setHeaderImg(require("../assets/img/pigeon_screen.jpg"))
+        } else if (animalID == 2) {
+            setHeaderImg(require("../assets/img/2.jpg"))
+        } else if (animalID == 3) {
+            setHeaderImg(require("../assets/img/3.jpg"))
+        } else if (animalID == 4) {
+            setHeaderImg(require("../assets/img/4.jpg"))
+        } else if (animalID == 5) {
+            setHeaderImg(require("../assets/img/turtle_screen.jpg"))
+        } else if (animalID == 6) {
+            setHeaderImg(require("../assets/img/6.jpg"))
+        }
     }, [])
 
     useEffect(() => {
@@ -437,6 +450,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
             {SituationModalVisible && <SituationModal />}
             {InfoModalVisible && <InfoModal />}
             <ScrollView contentContainerStyle={styles.container}>
+                <ImageBackground source={headerImg} resizeMode="cover" style={styles.headerBlock}>
                     <View style={styles.breadCrumbs}>
                         <TouchableWithoutFeedback>
                             <Text style={styles.text}>{homeTitle}</Text>
@@ -450,6 +464,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
                         <MaterialIcons name='local-hospital' size={70} color={Colors.primary} />
                     </View>
                     <Text style={styles.title}>{emergencyTitle}</Text>
+                </ImageBackground>
                 <View style={styles.formContainer}>
                     <AccordionItem id={1} type="emergency" />
                 </View>
