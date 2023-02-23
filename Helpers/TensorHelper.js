@@ -2,6 +2,8 @@ import * as tf from '@tensorflow/tfjs';
 import '@tensorflow/tfjs-react-native';
 import {bundleResourceIO, decodeJpeg} from '@tensorflow/tfjs-react-native';
 
+//bundleResourceIO doesn't work until the expo project is ejected
+
 import {Base64Binary} from '../utils/utils';
 const BITMAP_DIMENSION = 224;
 
