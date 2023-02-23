@@ -29,6 +29,7 @@ If at least one of the filters has a state of true:
 const AnimalExternalResourcesScreen = () => {
 
     const animalID = useSelector(state => state.search.animalSelected_id)
+    const currentLanguage = useSelector(state => state.language.currentLanguage)
     
     const [headerImg, setHeaderImg] = useState()
     const [animalName, setAnimalName] = useState()
@@ -40,6 +41,15 @@ const AnimalExternalResourcesScreen = () => {
     const [instagramFilterActive, setInstagramFilterActive] = useState(false)
     const [youtubeFilterActive, setYoutubeFilterActive] = useState(false)
     const [webFilterActive, setWebFilterActive] = useState(false)
+    const [description, setDescription] = useState(null)
+
+    useEffect(() => {
+        if (currentLanguage === 'ES') {
+            setDescription("En esta página tendrás acceso a enlaces de páginas y grupos de redes sociales y otras webs, relacionadas con la especie actual.")
+        } else {
+            setDescription("Here you will have access to social media pages and groups, as well as other websites related to current species.")
+        }
+    }, [currentLanguage])
 
     useEffect(() => {
         if(animalID == 1) {
@@ -205,7 +215,7 @@ const AnimalExternalResourcesScreen = () => {
             <FlatList data={filteredArray}
                 style={{marginVertical: 10}}
                 scrollEnabled={true} 
-                keyExtractor={resource => resource.ID} 
+                keyExtractor={(item, index) => String(index)} 
                 renderItem={itemData => {
                     if (itemData.item.AnimalID == animalID) {
                         return <ResourceItem title={itemData.item.Title} name={itemData.item.GroupName} onLink={() => {Linking.openURL(itemData.item.URL)}}/>
@@ -234,7 +244,7 @@ const AnimalExternalResourcesScreen = () => {
                     <Text style={styles.title}> Recursos externos</Text>
                     <View style={{justifyContent: 'center', alignItems: 'center', marginBottom: 10}}><View style={styles.divider}/></View>
                     <View style={styles.descriptionBlock}>
-                        <Text style={[styles.text, {textAlign: 'center'}]}>En esta página tendrás acceso a enlaces de páginas y grupos de redes sociales y otras webs, relacionadas con las palomas.</Text>
+                        <Text style={[styles.text, {textAlign: 'center'}]}>{description}</Text>
                     </View> 
                 </ImageBackground>
                 {!noResourcesInfo && <View style={styles.contentBlock}>

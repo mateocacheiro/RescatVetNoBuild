@@ -1,0 +1,312 @@
+[
+    {
+        "AnimalID": 0,
+        "Children": 3,
+        "ID": 1,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": null,
+        "QuestionTitleEN": "Does it breathe?",
+        "QuestionTitleES": "¿Respira?"
+    },
+    {
+        "AnimalID": 0,
+        "Children": 0,
+        "ID": 2,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": 1,
+        "QuestionTitleEN": "Is it difficult for it to breathe? Like if it had an obstruction?",
+        "QuestionTitleES": "¿Respira con dificultad, como si tuviese una obstrucción?"
+    },
+    {
+        "AnimalID": 0,
+        "Children": 0,
+        "ID": 3,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": 1,
+        "QuestionTitleEN": "Is the breathing slow and deep?",
+        "QuestionTitleES": "¿La respiración es lenta y profunda?"
+    },
+    {
+        "AnimalID": 0,
+        "Children": 0,
+        "ID": 4,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": 1,
+        "QuestionTitleEN": "Is the breathing fast and superficial?",
+        "QuestionTitleES": "¿La respiración es rápida y superficial?"
+    },
+    {
+        "AnimalID": 0,
+        "Children": 0,
+        "ID": 5,
+        "InfoEN": "You can turn the eyelid down, aim at it with the phone torch and move it away to see if the pupil changes sizes.",
+        "InfoES": null,
+        "ParentID": null,
+        "QuestionTitleEN": "Is it conscious?",
+        "QuestionTitleES": "¿Está consciente?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 6,
+        "InfoEN": "You can turn the eyelid down, aim at it with the phone torch and move it away to see if the pupil changes sizes.",
+        "InfoES": "Puedes bajar el párpado, alumbrarle un ojo con la linterna del móvil y apartarla, para ver si la pupila cambia de tamaño.",
+        "ParentID": null,
+        "QuestionTitleEN": "Do the pupils react to light?",
+        "QuestionTitleES": "¿Las pupilas reaccionan a la luz?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 7,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": null,
+        "QuestionTitleEN": "Does it wobble or fall down?",
+        "QuestionTitleES": "¿Se tambalea o se cae?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 4,
+        "ID": 8,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": null,
+        "QuestionTitleEN": "Is there blood on the feathersuit?",
+        "QuestionTitleES": "¿Tiene sangre en el plumaje?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 9,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": 8,
+        "QuestionTitleEN": "Does it bleed from a body orifice?",
+        "QuestionTitleES": "Sangra por algún orificio corporal? (pico, oídos, cloaca…)"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 10,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": 8,
+        "QuestionTitleEN": "¿Does it have open wounds?",
+        "QuestionTitleES": "¿Tiene heridas abiertas?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 11,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": 8,
+        "QuestionTitleEN": "¿Does it have visible guts?",
+        "QuestionTitleES": "¿Tiene vísceras visibles?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 12,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": 8,
+        "QuestionTitleEN": "Are there any noticeable burns?",
+        "QuestionTitleES": "¿Se aprecian quemaduras?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 13,
+        "InfoEN": "Pigeons have a slightly higher body temperature than humans, so we should feel them warm. If you have a thermometer at your disposal, it should be introduced through the cloaca, preferably lubricated with vegetable oil or vaseline and it should indicate around 38-39ºC. Otherwise, place two fingers under its wing.",
+        "InfoES": "Las palomas tienen una temperatura corporal un poco mayor a la del ser humano, debemos notarlas calentitas. Si dispones de termómetro, se debe introducir por la cloaca, preferentemente lubricado con aceite vegetal o vaselina, debe estar a unos 38-39ºC. Si no, coloca dos dedos bajo su ala.",
+        "ParentID": null,
+        "QuestionTitleEN": "Does it have a low temperature?",
+        "QuestionTitleES": "¿Tiene la temperatura baja?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 14,
+        "InfoEN": "Crooked head without possibility of straighten it up.",
+        "InfoES": "Cabeza torcida sin posibilidad de ponerla recta.",
+        "ParentID": null,
+        "QuestionTitleEN": "Is its head in an unnatural position?",
+        "QuestionTitleES": "¿Tiene la cabeza en una posición no natural? "
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 15,
+        "InfoEN": "The wings' natural position is folded towards the back and towards the upper side of the tail or otherwise the underside, but never falling down.",
+        "InfoES": "La posición natural de las alas es plegadas hacia atrás y pegadas a la cola por arriba o por abajo, pero nunca caídas.",
+        "ParentID": null,
+        "QuestionTitleEN": "Is any wing in a unnatural position?",
+        "QuestionTitleES": "¿Tiene algún ala en una posición no natural?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 16,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": null,
+        "QuestionTitleEN": "Is any leg in an unnatural position?",
+        "QuestionTitleES": "¿Tiene alguna pata en posición no natural?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 17,
+        "InfoEN": "PIgeons are naturally on high alert, with wide open eyes and a 'ready-to-go' posture.",
+        "InfoES": "El estado natural de las palomas es alerta, con los ojos abiertos y una postura atenta",
+        "ParentID": null,
+        "QuestionTitleEN": "Is it lethargic or tired?",
+        "QuestionTitleES": "¿Está aletargada o cansada?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 18,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": null,
+        "QuestionTitleEN": "Is there any liquid coming out of the beak?",
+        "QuestionTitleES": "¿Le sale líquido por el pico?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 19,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": null,
+        "QuestionTitleEN": "Is its crop swollen?",
+        "QuestionTitleES": "¿Tiene el buche hinchado?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 20,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": null,
+        "QuestionTitleEN": "Is its abdomen swollen?",
+        "QuestionTitleES": "¿Tiene el abdomen hinchado?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 21,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": null,
+        "QuestionTitleEN": "Did it puke / vomit?",
+        "QuestionTitleES": "¿Vomita/regurgita?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 22,
+        "InfoEN": "The clocaca is the orifice from which the feces come out of.",
+        "InfoES": "La cloaca es por donde salen las heces.",
+        "ParentID": null,
+        "QuestionTitleEN": "¿Is the cloaca dirty?",
+        "QuestionTitleES": "¿Tiene la cloaca sucia?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 4,
+        "ID": 23,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": null,
+        "QuestionTitleEN": "Did it poop?",
+        "QuestionTitleES": "¿Ha defecado?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 24,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": 23,
+        "QuestionTitleEN": "Are the feces liquid?",
+        "QuestionTitleES": "¿Las heces son muy líquidas?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 25,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": 23,
+        "QuestionTitleEN": "Are the feces green-ish?",
+        "QuestionTitleES": "¿Las heces son verdosas?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 26,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": 23,
+        "QuestionTitleEN": "Is there blood in the feces?",
+        "QuestionTitleES": "¿Las heces tienen sangre?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 27,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": 23,
+        "QuestionTitleEN": "Are the feces thick and dense?",
+        "QuestionTitleES": "¿Las heces son pastosas?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 28,
+        "InfoEN": "Papules are bumps with an injury that could appear on legs, neck, beak or eyes.",
+        "InfoES": "Las pápulas son bultos con herida que se pueden presentar en patas, cuello, pico u ojos.",
+        "ParentID": null,
+        "QuestionTitleEN": "Does it have papules around the body?",
+        "QuestionTitleES": "¿Tiene pápulas por el cuerpo?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 29,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": null,
+        "QuestionTitleEN": "Does it have white or yellow plaques inside or outside the beak?",
+        "QuestionTitleES": "¿Tiene placas blancas o amarillentas dentro del pico o por fuera?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 30,
+        "InfoEN": null,
+        "InfoES": null,
+        "ParentID": null,
+        "QuestionTitleEN": "Are there any hairs or threads entangled around their toes?",
+        "QuestionTitleES": "¿Tiene pelos o hilos enredados en los dedos o patas?"
+    },
+    {
+        "AnimalID": 1,
+        "Children": 0,
+        "ID": 31,
+        "InfoEN": "A foreign object is any object that doesn't pertain to the animal, like a branch, spine, nail, etc.",
+        "InfoES": "Un cuerpo extraño es un objeto ajeno al animal, como una ramita, espiga, pincho, clavo, etc.",
+        "ParentID": null,
+        "QuestionTitleEN": "Is there a foreign object piercing its body?",
+        "QuestionTitleES": "¿Tiene algún cuerpo extraño clavado en el cuerpo?"
+    }
+]

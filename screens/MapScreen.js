@@ -56,7 +56,8 @@ const MapScreen = ({navigation}) => {
         }
         let location = await Location.getCurrentPositionAsync({});
         dispatch(mapActions.updateFilter({radius: 5, open_now: 'all'}))
-        setCurrentLocation(location.coords);        
+        setCurrentLocation(location.coords);
+        console.log(location.coords)      
     }
 
     useEffect(() => {

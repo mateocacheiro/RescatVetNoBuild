@@ -25,7 +25,7 @@ const HomeScreen_v2 = ({ navigation }) => {
         })
     }, [navigation])
 
-    const currentLanguage = useSelector(state => state.language.selectedLenguage)
+    const currentLanguage = useSelector(state => state.language.selectedLanguage)
     const interface_id = useSelector(state => state.screen.interfaceHelp)
     const interface_help_shown = useSelector(state => state.screen.interfaceHelpShown)
 
@@ -33,6 +33,7 @@ const HomeScreen_v2 = ({ navigation }) => {
     const situationSelected = useSelector(state => state.search.situation_selected)
     
     const [homeHelpShown, setHomeHelpShown] = useState(false)
+    const [emergencyTitle, setEmergencyTitle] = useState(false)
 
     useEffect(() => {
         if (interface_id === 0 && interface_help_shown === true) {
@@ -43,6 +44,14 @@ const HomeScreen_v2 = ({ navigation }) => {
             setHomeHelpShown(false)
         }
     }, [interface_id, interface_help_shown])
+
+    useEffect(() => {
+        if (currentLanguage == 'ES') {
+            setEmergencyTitle("Información de emergencia y cuidados básicos")
+        } else {
+            setEmergencyTitle("Emergency information and primary care")
+        }
+    }, [currentLanguage])
 
     const VirtualizedList = ({children}) => {
         return (
@@ -118,11 +127,12 @@ const HomeScreen_v2 = ({ navigation }) => {
             </View>
         )
     }
+    
 
     const renderAnimals = () => {
         return (
             <View style={styles.animalsContainer}>
-                <Text style={styles.title}>Información de emergencia y cuidados básicos</Text>
+                <Text style={styles.title}>{emergencyTitle}</Text>
                 <View style={styles.divider} />
                 <FlatList 
                     data={AnimalsData}
@@ -133,7 +143,7 @@ const HomeScreen_v2 = ({ navigation }) => {
                     renderItem={itemData =>
                         <AnimalItem 
                             id={itemData.item.ID} 
-                            name={itemData.item.Name}
+                            name={currentLanguage == "ES" ? itemData.item.NameES : itemData.item.NameEN}
                             onNavigate={() => {
                                 dispatch(searchActions.animalSelected(itemData.item.ID))
                                 dispatch(screenActions.changeCurrentScreen('Emergency'))

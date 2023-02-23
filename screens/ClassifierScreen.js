@@ -1,11 +1,10 @@
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, ActivityIndicator, Image } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions, ActivityIndicator, Image, Alert } from 'react-native'
 import React, {useState, useRef, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import Colors from '../constants/Colors'
-import * as MediaLibrary from 'expo-media-library'
 import * as ImagePicker from 'expo-image-picker';
-//import {cropPicture} from '../helpers/image-helper.js';
+import * as Permissions from 'expo-permissions'
 
 
 const ClassifierScreen = () => {
@@ -22,7 +21,14 @@ const ClassifierScreen = () => {
 
     const [startCamera, setStartCamera] = useState(false)
 
+    const [cameraPermission, setCameraPermission] = useState(null)
+
     //const [type, setType] = useState(CameraType.back)
+
+    useEffect(() => {
+        const cameraPermissions = verifyPermissions()
+        setCameraPermission(cameraPermissions)
+    }, [])
 
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
@@ -41,10 +47,15 @@ const ClassifierScreen = () => {
     };
 
     const verifyPermissions = async () => {
-        let { status } = await ImagePicker.getCameraPermissionsAsync().catch(error => console.log)
-        if (status !== 'granted') {
-            Alert.alert('', 'Permission not granted!')
-            return false
+        // Ask the user for the permission to access the camera
+        const permissionResult = await ImagePicker.getCameraPermissionsAsync();
+        
+
+        console.log(permissionResult)
+        
+        if (permissionResult.granted === false) {
+            alert("You've refused to allow this appp to access your camera!");
+            return false;
         }
         return true
     }
@@ -61,23 +72,17 @@ const ClassifierScreen = () => {
     }, [image, imageUri])
 
     const takePicture = async () => {
-        const hasPermissions = await verifyPermissions()
-        if(hasPermissions) {
-            let result = await ImagePicker.launchCameraAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.All,
-                allowsEditing: false,
-                aspect: [4, 3],
-                quality: 0.5,
-                base64: true,
-            });
 
+            const result = await ImagePicker.launchCameraAsync({allowsEditing: false, quality: 1, base64: true});
+            
+            // Explore the result
+            
             if (!result.cancelled) {
+                setImageUri(result.uri);
                 setImage(result.base64)
-                setImageUri(result.uri)
+                console.log(result)
             }
-        } else {
-            console.log('No camera available')
-        }
+        
     }
 
     const makePrediction = (img) => {

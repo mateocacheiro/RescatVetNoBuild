@@ -5,135 +5,145 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import AccordionItem from '../components/AccordionItem'
 import { useSelector, useDispatch } from 'react-redux'
 import { careActions } from '../store/care-slice'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
+import PrimaryCareInfo from '../assets/database/PrimaryCareInfo.json'
+import Animal from '../assets/database/Animals.json'
 //<Image source={require('../assets/img/pigeon_screen.jpg')} style={styles.image}/>
 
 const AnimalBasicCareScreen = () => {
 
     const navigation = useNavigation()
-    const dispatch = useDispatch()
-    const navigatedToSplay = useSelector(state => state.care.navigatedToSplay)
-    const splayPosition = useSelector(state => state.care.splayPosition)
-    const eggsPosition = useSelector(state => state.care.eggsPosition)
-    const navigatedToEggs = useSelector(state => state.care.navigatedToEggs)
     const animalID = useSelector(state => state.search.animalSelected_id)
+    const currentLanguage = useSelector(state => state.language.selectedLanguage)
     
     const [headerImg, setHeaderImg] = useState()
-    const [spaceTitle, setSpaceTitle] = useState('')
     const [renderML, setRenderML] = useState(false)
     const [animalName, setAnimalName] = useState('')
     const [careDescription, setCareDescription] = useState('')
+    const [mLTitle, setMLTitle] = useState('')
+    const [mLDescription, setMLDescription] = useState('')
+    const [homeTitle, setHomeTitle] = useState('')
+    const [pageTitle, setPageTitle] = useState('')
+    const [pageBC, setPageBC] = useState('')
+    const [primaryCareArray, setPrimaryCareArray] = useState()
 
     useEffect(() => {
-        renderSections()
-    }, [navigatedToSplay, navigatedToEggs])
-
-    const refScrollView = useRef(null);
-
-    const moveTo = (section) => {
-        if (section == 0) { // Splay Leg
-            refScrollView.current.scrollTo({y: splayPosition+3000});
-            dispatch(careActions.toggleSplayNav())
-        }
-        else if (section == 1) { // Eggs
-            refScrollView.current.scrollTo({y: eggsPosition+3000})
-            dispatch(careActions.toggleEggsNav())
-        }
-    }
-
-    useEffect(() => {
-        if(animalID == 1) {
-            setSpaceTitle('Espacio de la paloma en casa')
-            setHeaderImg(require('../assets/img/pigeon_screen.jpg'))
-            setAnimalName('Paloma')
-            setCareDescription('una paloma')
-        } else if(animalID == 2) {
-            setSpaceTitle('Espacio del gato en casa')
-            setHeaderImg(require('../assets/img/2.jpg'))
-            setCareDescription('un gato')
-            setAnimalName('Gato')
-        } else if (animalID == 3) {
-            setSpaceTitle('Espacio del perro en casa')
-            setHeaderImg(require('../assets/img/3.jpg'))
-            setCareDescription('un perro')
-            setAnimalName('Perro')
-        } else if (animalID == 4) {
-            setSpaceTitle('Espacio del conejo en casa')
-            setHeaderImg(require('../assets/img/4.jpg'))
-            setCareDescription('un conejo')
-            setAnimalName('Conejo')
-        } else if (animalID == 5) {
-            setSpaceTitle('Espacio de la tortuga en casa')
-            setHeaderImg(require('../assets/img/turtle_screen.jpg'))
-            setCareDescription('una tortuga')
-            setAnimalName('Tortuga')
+        const filtered = PrimaryCareInfo.filter(function(element){
+            if (element.AnimalID == animalID) {
+                return element
+            }
+        })
+        setPrimaryCareArray(filtered)
+        if (animalID == 5) {
             setRenderML(true)
-        } else if (animalID == 6) {
-            setSpaceTitle('Espacio del aye-aye en casa')
-            setHeaderImg(require('../assets/img/5.jpg'))
-            setCareDescription('un aye-aye')
-            setAnimalName('Aye-aye')
+        } else {
+            setRenderML(false)
         }
-    }, [animalID])
+        
+        if (animalID == 1) {
+            setHeaderImg(require("../assets/img/pigeon_screen.jpg"))
+        } else if (animalID == 2) {
+            setHeaderImg(require("../assets/img/2.jpg"))
+        } else if (animalID == 3) {
+            setHeaderImg(require("../assets/img/3.jpg"))
+        } else if (animalID == 4) {
+            setHeaderImg(require("../assets/img/4.jpg"))
+        } else if (animalID == 5) {
+            setHeaderImg(require("../assets/img/turtle_screen.jpg"))
+        } else if (animalID == 6) {
+            setHeaderImg(require("../assets/img/6.jpg"))
+        }
+    }, [])
+
+    useEffect(() => {
+        const currentAnimal = Animal.filter(function(element){
+            if (element.ID == animalID) {
+                return element
+            }
+        })
+        
+        if (currentLanguage == 'ES') {
+            setPageBC("Cuidados básicos")
+            setHomeTitle("Inicio")
+            setPageTitle("¿Cuáles son los cuidados básicos?")
+            setAnimalName(currentAnimal[0]["NameES"])
+            setCareDescription("A continuación podrás ver toda la información necesaria para darle el mejor cuidado a la especie seleccionada.")
+            setMLTitle('¿No sabes con qué especie de tortuga te encuentras?')
+            setMLDescription('Debido a que la información proporcionada en esta página varía en función de la especie de la tortuga, te recomendamos que le saques una foto con la cámara del móvil y la aplicación detectará de qué especie se trata.\n\nTan sólo tienes que hacer click en esta tarjeta y te guiaremos por el proceso.')
+        } else {
+            setHomeTitle("Home")
+            setPageBC("Primary Care")
+            setPageTitle("What's the primary care like?")
+            setAnimalName(currentAnimal[0]["NameEN"])
+            setCareDescription("Now you will have access to all the necessary information to provide the best care for the selected species.")
+            setMLTitle('Do you have doubts about the turtle species?')
+            setMLDescription('Due to the following information being different depending on the turtle species, we recommend you take a photo and the app will help you identify it.\n\nYou only have to tap on this card and we will guide you through the process.')
+        }
+    }, [currentLanguage])
 
     const renderSections = () => {
         return(
-            <View style={styles.contentBlock}>
-                <AccordionItem animalID={0} contentID={19} title="Botiquín" />
-                <AccordionItem animalID={animalID} contentID={1} title="Alimentación" />
-                <AccordionItem animalID={animalID} contentID={2} title={spaceTitle} />
-                <View onLayout={event => {
-                    if (navigatedToSplay) {
-                        moveTo(0)
+            <View style={styles.sectionContainer}>
+                <FlatList 
+                    data={primaryCareArray}
+                    style={{marginTop: 10}} 
+                    keyExtractor={item => item.ID} 
+                    renderItem={itemData => 
+                        <AccordionItem id={itemData.item.ID} type="care" keyExtractor={itemData.item.ID}/>
                     }
-                }}>
-                    <AccordionItem animalID={animalID} contentID={3} title="Posibles complicaciones" open_default={navigatedToSplay ? true : false} />
-                </View>
-                <View onLayout={event => {
-                    if(navigatedToEggs) {
-                        moveTo(1)
-                    }
-                }}>
-                    <AccordionItem animalID={animalID} contentID={28} title="Problemas con la puesta de huevos" open_default={navigatedToEggs ? true : false} />
-                </View>
-                <AccordionItem animalID={animalID} contentID={4} title="Pensando en la liberación" />
+                />
             </View>
+        )
+    }
+
+    const VirtualizedList = ({children}) => {
+        return (
+            <FlatList
+                data={[]}
+                keyExtractor={() => "key"}
+                renderItem={null}
+                ListHeaderComponent={
+                    <>{children}</>
+                }
+                style={{backgroundColor: Colors.lightBG}}
+            />
         )
     }
 
     return (
         <View style={styles.container}>
-            <ScrollView ref={refScrollView}>
+            <VirtualizedList>
+            <ScrollView>
                 <ImageBackground source={headerImg} resizeMode="cover" style={styles.headerBlock}>
                     <View style={styles.breadCrumbs}>
                         <TouchableWithoutFeedback>
-                            <Text style={styles.text}>Inicio</Text>
+                            <Text style={styles.text}>{homeTitle}</Text>
                         </TouchableWithoutFeedback>
                         <Text style={styles.text}>&gt;</Text>
                         <Text style={styles.text}>{animalName}</Text>
                         <Text style={styles.text}>&gt;</Text>
-                        <Text style={styles.text}>Cuidados Básicos</Text>
+                        <Text style={styles.text}>{pageBC}</Text>
                     </View>
                     <View style={{justifyContent: 'center', alignItems: 'center', marginBottom: 10}}>
                         <MaterialCommunityIcons name='paw' size={70} color={Colors.primary} />
                     </View>
-                    <Text style={styles.title}> ¿Cuáles son los cuidados básicos?</Text>
+                    <Text style={styles.title}>{pageTitle}</Text>
                     <View style={{justifyContent: 'center', alignItems: 'center', marginBottom: 10}}><View style={styles.divider}/></View>
                     <View style={styles.descriptionBlock}>
-                        <Text style={[styles.text, {textAlign: 'center'}]}>A continuación podrás ver toda la información necesaria para darle el mejor cuidado a {careDescription}, separada por categorías.</Text>
+                        <Text style={[styles.text, {textAlign: 'center'}]}>{careDescription}</Text>
                     </View> 
                 </ImageBackground>
                 {renderML && <TouchableOpacity activeOpacity={0.9} style={[styles.contentBlock, {marginBottom: 30, justifyContent: 'center', alignItems: 'center'}]} onPress={() => {
                     navigation.push('ClassifierScreen')
                 }}>
                     <MaterialCommunityIcons name="image-filter-center-focus-strong-outline" size={50} color={Colors.primary} />
-                    <Text style={[styles.title, {marginVertical: 15}]}>¿No sabes con qué especie de tortuga te encuentras?</Text>
-                    <Text style={[styles.text, {width: '90%', textAlign: 'left', marginBottom: 15}]}>Debido a que la información proporcionada en esta página varía en función de la especie de la tortuga, te recomendamos que le saques una foto con la cámara del móvil y la aplicación detectará de qué especie se trata.</Text>
-                    <Text style={[styles.text, {width: '90%', textAlign: 'left'}]}>Tan sólo tienes que hacer click en esta tarjeta y te guiaremos por el proceso.</Text>
-                </TouchableOpacity>}
+                    <Text style={[styles.title, {marginVertical: 15}]}>{mLTitle}</Text>
+                    <Text style={[styles.text, {width: '90%', textAlign: 'left', marginBottom: 15}]}>{mLDescription}</Text>
+                    </TouchableOpacity>}
                 {renderSections()}
             </ScrollView>
+            </VirtualizedList>
         </View>
     )
 }
@@ -146,6 +156,19 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'flex-start',
         alignItems: 'center'
+    },
+    sectionContainer: {
+        marginBottom: 5,
+        marginTop: 5,
+        paddingVertical: 20,
+        paddingHorizontal: 20,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        backgroundColor: '#111',
+        width: d_width*0.974,
+        borderRadius: 5,
+        elevation: 10,
+        zIndex: 0
     },
     headerBlock: {
         width: Dimensions.get('window').width*0.97,
