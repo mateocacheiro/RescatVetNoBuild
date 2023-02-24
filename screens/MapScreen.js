@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, ActivityIndicator, Dimensions, Alert, TextInput, Pressable, FlatList, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, ActivityIndicator, Dimensions, Alert, TextInput, Linking, FlatList, TouchableOpacity } from 'react-native'
 import MapView, { Circle, Marker, UrlTile } from 'react-native-maps'
 import VetClinicCard from '../components/VetClinicCard';
 import * as Location from 'expo-location'
@@ -12,6 +12,8 @@ import MapAddModal from '../components/MapAddModal'
 import Suggestion from '../components/Suggestion'
 import axios from 'axios'
 import moment from 'moment';
+import {API_KEY_GOOGLE, API_KEY_GEOAPIFY} from "@env"
+import { fetchVetClinics } from '../util/http';
 
 const { width, height } = Dimensions.get('window');
 
@@ -22,6 +24,11 @@ const MapScreen = ({navigation}) => {
 
     useEffect(() => {
         getLocation()
+        const query_str = `37.3831,-5.9707&rankby=distance&types=veterinary_care&key=${API_KEY_GOOGLE}`
+        const getVetClinics = async() => {
+            response = await fetchVetClinics(query_str)
+        }
+        getVetClinics()
     }, [])
 
 
@@ -44,7 +51,7 @@ const MapScreen = ({navigation}) => {
     //const filterChanged = useSelector(state => state.map.filter.filter_changed)
     const currentOpenFilter = useSelector(state => state.map.filter.open_now)
     const currentRadius = useSelector(state => state.map.filter.radius)
-    const api_key = 'AIzaSyDSyW9eJgIXLfGLEUF91yYgWWnSOZ3F7uI'
+
 
     const getLocation = async () => {
         setSearchValue('')
@@ -92,13 +99,13 @@ const MapScreen = ({navigation}) => {
         console.log(radius)
         let google_query
         if (q_type === 1) {
-            google_query = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lon}&rankby=distance&types=veterinary_care&key=${api_key}`
+            google_query = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lon}&rankby=distance&types=veterinary_care&key=${API_KEY_GOOGLE}`
         } else if (q_type === 2) {
-            google_query = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lon}&radius=${radius}&types=veterinary_care&key=${api_key}`
+            google_query = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lon}&radius=${radius}&types=veterinary_care&key=${API_KEY_GOOGLE}`
         } else if (q_type === 3) {
-            google_query = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lon}&radius=${radius}&opennow&types=veterinary_care&key=${api_key}`
+            google_query = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lon}&radius=${radius}&opennow&types=veterinary_care&key=${API_KEY_GOOGLE}`
         } else if (q_type === 4) {
-            google_query = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lon}&rankby=distance&opennow&types=veterinary_care&key=${api_key}`
+            google_query = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lon}&rankby=distance&opennow&types=veterinary_care&key=${API_KEY_GOOGLE}`
         }
         await fetch(google_query,{
             method: 'GET',
@@ -269,8 +276,8 @@ const MapScreen = ({navigation}) => {
     const onClinicPress = (lat, lon) => {
         setCurrentMapLat(lat)
         setCurrentMapLon(lon)
-        setZoomLevelLat(0.02)
-        setZoomLevelLon(0.01)
+        setZoomLevelLat(0.003)
+        setZoomLevelLon(0.003)
     }
 
     const renderVets = () => {
@@ -365,7 +372,7 @@ const MapScreen = ({navigation}) => {
     }
 
     const getSuggestions = async (value) => {
-        const suggestionsQuery = `https://api.geoapify.com/v1/geocode/autocomplete?text=${value}&format=json&apiKey=80d0e6f30fa14ff59861326f688274c7`;
+        const suggestionsQuery = `https://api.geoapify.com/v1/geocode/autocomplete?text=${value}&format=json&apiKey=${API_KEY_GEOAPIFY}`;
         await fetch(suggestionsQuery, {method: 'GET'})
         .then(response => response.json())
         .then(data => {
@@ -602,6 +609,10 @@ const MapScreen = ({navigation}) => {
         return image
     }
 
+    const openMaps = (lat, lng) => {
+        console.log("Go to maps with coords ", lat, lng)
+    }
+
     if(!currentLat && !currentLon) {
         return (
             <View style={styles.container}>
@@ -675,7 +686,11 @@ const MapScreen = ({navigation}) => {
                     {!isLoading && dataArray.map(item => 
                         <Marker 
                             key={item.place_id} 
-                            coordinate={{latitude: item.geometry.location.lat, longitude: item.geometry.location.lng}} 
+                            coordinate={{latitude: item.geometry.location.lat, longitude: item.geometry.location.lng}}
+                            onPress={() => {
+                                //const url = `google.navigation:q=${item.geometry.location.lat}+${item.geometry.location.lng}`
+                                Linking.openURL(`geo:0,0?q=${item.geometry.location.lat},${item.geometry.location.lng}`)}
+                            } 
                             image={getMarker(item)} />)}
                 </MapView>
             </View>

@@ -40,6 +40,7 @@ const ContactScreen = ({navigation}) => {
     const [messageValid, setMessageValid] = useState()
     const [contactHelp, setContactHelp] = useState(false)
     const dispatch = useDispatch()
+    const [attachActive, setAttachActive] = useState(false)
 
     const interface_id = useSelector(state => state.screen.interfaceHelp)
     const interface_help_shown = useSelector(state => state.screen.interfaceHelpShown)
@@ -273,13 +274,13 @@ const ContactScreen = ({navigation}) => {
                     <PickerBtn title={subject_title} onSelect={() => {dispatch(contactFormActions.toggleModal(1))}} />
                     {selectedSubject === 'Other' && <TextInput style={[styles.textInput, {borderColor: subjectValid === false ? 'red' : Colors.primary}]} value={otherSubject} placeholder={other_placeholder} placeholderTextColor='#ccc' onChangeText={(value) => setOtherSubject(value)} />}
                     <TextInput multiline numberOfLines={5} value={message} style={[styles.message, {borderColor: messageValid === false ? 'red' : Colors.primary}]} placeholder={message_placeholder} placeholderTextColor='#ccc' onChangeText={(value) => setMessage(value)} />
-                    <View style={styles.attach}>
+                    {attachActive && <View style={styles.attach}>
                         <MaterialCommunityIcons name="paperclip" size={24} color={Colors.primary} />
                         <TouchableOpacity onPress={attachFile}>
                             <Text style={[styles.text, {textDecorationLine: 'underline'}]}>{attach_text}</Text>
                         </TouchableOpacity>
                         {attachedFileName !== "" && <TouchableOpacity onPress={removeFile}><MaterialCommunityIcons name='close' size={20} color='white' style={{marginLeft: 10}} /></TouchableOpacity>}
-                    </View>
+                    </View>}
                     <C_Button style={{width: Dimensions.get('window').width*0.8}} title={submit_btn_text} onHandlePress={submitFormHandler} />
                     <TouchableOpacity onPress={()=>{
                         dispatch(contactFormActions.resetForm())

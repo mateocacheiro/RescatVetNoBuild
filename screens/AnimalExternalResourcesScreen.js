@@ -52,29 +52,18 @@ const AnimalExternalResourcesScreen = () => {
     }, [currentLanguage])
 
     useEffect(() => {
-        if(animalID == 1) {
-            setHeaderImg(require('../assets/img/pigeon_screen.jpg'))
-            setAnimalName('Paloma')
-        }
-        else if(animalID == 2) {
-            setHeaderImg(require('../assets/img/2.jpg'))
-            setAnimalName('Gato')
-        }
-        else if(animalID == 3) {
-            setHeaderImg(require('../assets/img/3.jpg'))
-            setAnimalName('Perro')
-        }
-        else if(animalID == 4) {
-            setHeaderImg(require('../assets/img/4.jpg'))
-            setAnimalName('Conejo')
-        }
-        else if(animalID == 5) {
-            setHeaderImg(require('../assets/img/turtle_screen.jpg'))
-            setAnimalName('Tortuga')
-        }
-        else if(animalID == 6) {
-            setHeaderImg(require('../assets/img/6.jpg'))
-            setAnimalName('Aye-aye')
+        if (animalID == 1) {
+            setHeaderImg(require("../assets/img/pigeon_screen.jpg"))
+        } else if (animalID == 2) {
+            setHeaderImg(require("../assets/img/2.jpg"))
+        } else if (animalID == 3) {
+            setHeaderImg(require("../assets/img/3.jpg"))
+        } else if (animalID == 4) {
+            setHeaderImg(require("../assets/img/4.jpg"))
+        } else if (animalID == 5) {
+            setHeaderImg(require("../assets/img/turtle_screen.jpg"))
+        } else if (animalID == 6) {
+            setHeaderImg(require("../assets/img/6.jpg"))
         }
         console.log("Animal ID: ", animalID)
     }, [animalID])
@@ -294,7 +283,7 @@ const AnimalExternalResourcesScreen = () => {
                        
             }
             {noResourcesInfo && <View style={styles.contentBlock}>
-                <Text style={[styles.text, {alignSelf: 'center'}]}>No hay recursos externos para {animalName}</Text>
+                <Text style={[styles.text, {alignSelf: 'center'}]}>{currentLanguage == 'ES' ? 'No hay recursos externos para esta especie' : 'There are no external resources for this species'}</Text>
             </View>}
             </ScrollView>
             </VirtualizedList>

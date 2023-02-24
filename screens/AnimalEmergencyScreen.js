@@ -9,9 +9,9 @@ import Colors from '../constants/Colors'
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 import AccordionItem from '../components/AccordionItem'
 import InterfaceModal from '../components/InterfaceModal'
-import { useNavigation } from '@react-navigation/native';
 import SituationModal from '../components/SituationModal'
 import EmergencyQuestions from '../assets/database/EmergencyQuestions.json'
+
 
 const AnimalEmergencyScreen = ({navigation}) => {
     const dispatch = useDispatch()
@@ -38,6 +38,8 @@ const AnimalEmergencyScreen = ({navigation}) => {
     const [arrowLeftBg, setArrowLeftBg] = useState()
     const [arrowRightBg, setArrowRightBg] = useState()
     const [headerImg, setHeaderImg] = useState()
+    const API_Key_Google = process.env.API_Key_Google
+    
 
     useEffect(() => {
         preProcessData()
@@ -54,6 +56,7 @@ const AnimalEmergencyScreen = ({navigation}) => {
         } else if (animalID == 6) {
             setHeaderImg(require("../assets/img/6.jpg"))
         }
+        console.log(API_Key_Google)
     }, [])
 
     useEffect(() => {

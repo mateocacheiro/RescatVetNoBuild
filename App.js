@@ -7,8 +7,11 @@ import { useFonts } from 'expo-font';
 import LoadingScreen from './screens/LoadingScreen';
 import store from './store/App';
 import Colors from './constants/Colors';
+import { API_KEY } from "@env"
 
 export default function App() {
+
+  console.log(API_KEY)
 
   let [fontsLoaded] = useFonts({
     'montserrat': require('./assets/fonts/Montserrat-Regular.ttf'),

@@ -6,6 +6,7 @@ import AnimalBasicCareScreen from '../screens/AnimalBasicCareScreen';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import AnimalExternalResourcesScreen from '../screens/AnimalExternalResourcesScreen';
+import { useSelector } from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,6 +18,8 @@ tabBarActiveTintColor: 'white',
 const d_height = Dimensions.get('window').height
 
 const AnimalTabNavigator = ({ navigation }) => {
+
+    const currentLanguage = useSelector(state => state.language.selectedLanguage)
 
   return (
     <Tab.Navigator screenOptions={({route}) => ({
@@ -49,7 +52,7 @@ const AnimalTabNavigator = ({ navigation }) => {
         }
     })}>
       <Tab.Screen name="Emergency" component={AnimalEmergencyScreen} options={{
-          tabBarLabel: 'Emergency',
+          tabBarLabel: currentLanguage == 'ES' ? 'Emergencias' : 'Emergency',
           //tabBarIcon: () => <MaterialIcons name="local-hospital" size={30} />,
           tabBarActiveBackgroundColor: '#111',
           tabBarActiveTintColor: Colors.primary,
@@ -59,7 +62,7 @@ const AnimalTabNavigator = ({ navigation }) => {
           }
       }}/>
       <Tab.Screen name="BasicCare" component={AnimalBasicCareScreen} options={{
-          tabBarLabel: 'Basic Care',
+          tabBarLabel: currentLanguage == 'ES' ? 'CUidados básicos' : 'Primary Care',
           //tabBarIcon: () => <MaterialCommunityIcons name="paw" size={30} color={useIsFocused ? 'green' : 'white'} />,
           tabBarActiveBackgroundColor: '#111',
           tabBarInactiveBackgroundColor: '#111',
@@ -69,7 +72,7 @@ const AnimalTabNavigator = ({ navigation }) => {
           }
       }}/>
       <Tab.Screen name="ExternalResources" component={AnimalExternalResourcesScreen} options={{
-          tabBarLabel: 'External Resources',
+          tabBarLabel: currentLanguage == 'ES' ? 'Recursos externos' : 'External Resources',
           //tabBarIcon: () => <MaterialIcons name="launch" size={30} color={useIsFocused ? 'green' : 'white'} />,
           tabBarActiveBackgroundColor: '#111',
           tabBarActiveTintColor: Colors.primary,
